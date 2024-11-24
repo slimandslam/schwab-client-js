@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // The target JavaScript version.
+    "module": "ESNext", // Use ES modules.
+    "moduleResolution": "node", // Resolve modules like Node.js.
+    "outDir": "./dist", // Output directory for compiled files.
+    "rootDir": "./src", // Root directory of TypeScript files.
+    "declaration": true, // Generate .d.ts files for type definitions.
+    "declarationMap": true, // Generate .d.ts.map files for easier debugging.
+    "sourceMap": true, // Enable source maps for debugging.
+    "strict": true, // Enable all strict type-checking options.
+    "esModuleInterop": true, // Allows default imports from CommonJS modules.
+    "forceConsistentCasingInFileNames": true, // Ensure consistent file naming.
+    "skipLibCheck": true, // Skip type-checking of library files.
+    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src/**/*"], // Include all files in the src directory.
+  "exclude": ["node_modules", "dist"]
+}

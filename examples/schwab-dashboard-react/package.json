@@ -1,0 +1,32 @@
+{
+  "name": "schwab-dashboard-react",
+  "Author": "Jason Levitt",
+  "description": "A NodeJS stock dashboard Using recharts and the schwab-client-js library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.13.3",
+    "schwab-client-js": "^1.0.0"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "dev": "concurrently \"yarn client\" \"yarn server\" \"yarn open\"",
+    "client": "vite",
+    "server": "node server/server.js",
+    "open": "node -e \"const { exec } = require('child_process'); const openCmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open'; exec(openCmd + ' http://localhost:5173');\""
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "concurrently": "^9.1.0",
+    "prettier": "^3.3.3",
+    "vite": "^5.4.10"
+  },
+  "engines": {
+    "node": ">= 18"
+  }
+}

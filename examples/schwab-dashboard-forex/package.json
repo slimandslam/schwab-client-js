@@ -1,0 +1,29 @@
+{
+  "name": "schwab-dashboard-forex",
+  "Author": "Jason Levitt",
+  "version": "1.0.0",
+  "description": "A NodeJS Financial Dashboard Using Lightweight-Charts and the schwab-client-js library",
+  "main": "server.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "client": "vite",
+    "server": "nodemon src/server.js",
+    "dev": "concurrently \"yarn client\" \"yarn server\" \"yarn open\"",
+    "open": "node -e \"const { exec } = require('child_process'); const openCmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open'; exec(openCmd + ' http://localhost:5173');\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "lightweight-charts": "^4.2.1",
+    "schwab-client-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "vite": "^5.4.10"
+  },
+  "engines": {
+    "node": ">= 18"
+  }
+}
