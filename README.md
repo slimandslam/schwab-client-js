@@ -90,6 +90,7 @@ SCHWAB_REFRESH_TOKEN=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 ### Getting Market Data (see the examples directory for more examples)
 
 ```
+import { MarketApiClient } from  "schwab-client-js";
 const mktclient = new MarketApiClient();
 
 // Get stock information by ticker symbol
@@ -108,6 +109,7 @@ console.log("markets DATA=", JSON.stringify(data3));
 ### Trading And Trading Data (see the examples directory for more examples)
 
 ```
+import { TradingApiClient } from  "schwab-client-js";
 const trdclient = new TradingApiClient();
 
 // Get your authorized Schwab account numbers and hashed account numbers
