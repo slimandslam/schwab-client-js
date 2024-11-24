@@ -67,8 +67,10 @@ SCHWAB_SECRET=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 ```
 
 2. Run `schwab-authorize` . After installing schwab-client-js, you should run the helper app named `schwab-authorize`. You should be able to run it from the command line when you're at the root of your project by typing `schwab-authorize`. It will construct a special Schwab login URL using your public key and try to open your desktop web browser at that URL. You will need to login with your schwab.com credentials (NOT your developer.schwab.com credentials). When you get to the final step, **your browser will likely give you a warning** because `schwab-authorize` is using a self-signed certificate to retrieve the returned https URL. Allow `schwab-authorize` to do its job and it will add the resulting SCHWAB_REFRESH_TOKEN to your .env file. <br />
-   ▪ Note1: Schwab only lets you have one SCHWAB_REFRESH_TOKEN working per Schwab login. So, if you have multiple projects using schwab-client-js, you'll need to use the same SCHWAB_REFRESH_TOKEN for all of them. Creating a new SCHWAB_REFRESH_TOKEN invalidates the old ones. <br />
-   ▪ Note2: `schwab-authorize` is written in Javascript. You can review the source at `node_modules/schwab-client-js/bin/schwab-authorize.js` . The self-signed cert is in the directory `node_modules/schwab-client-js/bin/sslcert` <br />
+   ▪ Note1: On Windows, you may have to run it directly:  
+     `C:\> node node_modules/schwab-client-js/bin/schwab-authorize.js`  <br />
+   ▪ Note2: Schwab only lets you have one SCHWAB_REFRESH_TOKEN working per Schwab login. So, if you have multiple projects using schwab-client-js, you'll need to use the same SCHWAB_REFRESH_TOKEN for all of them. Creating a new SCHWAB_REFRESH_TOKEN invalidates the old ones. <br />
+   ▪ Note3: `schwab-authorize` is written in Javascript. You can review the source at `node_modules/schwab-client-js/bin/schwab-authorize.js` . The self-signed cert is in the directory `node_modules/schwab-client-js/bin/sslcert` <br />
 
 3. Your `.env` file should now look like this (as previously mentioned, the SCHWAB_CALLBACK_URL is optional and will default to `https://127.0.0.1` if not provided):
 
