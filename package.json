@@ -12,13 +12,15 @@
     ".": "./dist/schwab-client-js.js"
   },
   "files": [
-    "dist"
+  "dist",
+  "bin",
+  "README.md"
   ],
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/slimandslam/schwab-client-js.git"
+    "url": "git+https://github.com/slimandslam/schwab-client-js.git"
   },
   "keywords": [
     "Schwab",
@@ -35,7 +37,7 @@
     "lint": "eslint ."
   },
   "bin": {
-    "schwab-authorize": "./bin/schwab-authorize.js"
+    "schwab-authorize": "bin/schwab-authorize.js"
   },
   "dependencies": {
     "@types/debug": "^4.1.12",
