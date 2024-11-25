@@ -37,9 +37,10 @@ or
 npm run dev
 ```
 
-This will try to open your default web browser and launch the
-server running nodejs. If you see some kind of `can't connect` in your web browser,
-try refreshing the page. The dashboard uses SSE (Server-Sent Events) to send the
+Those commands will try to open the frontend in your default web browser and launch the
+server running nodejs. If you see some kind of `can't connect` message in your web browser,
+try refreshing your web browser (sometimes the frontend launches before the backend is ready). 
+The dashboard uses SSE (Server-Sent Events) to send the
 data from the server to the web browser.
 
 ## MIT License
