@@ -25,14 +25,16 @@ if (!process.env.SCHWAB_SECRET) {
   throw new Error("Environment variable SCHWAB_SECRET is not set.");
 }
 if (!process.env.SCHWAB_CALLBACK_URL) {
-  console.log("SCHWAB_CALLBACK_URL is not set. That is ok, but that will only work if the callback URL is defined as https://127.0.0.1 in your app settings on developer.schwab.com.")
+  console.log(
+    "SCHWAB_CALLBACK_URL is not set. That is ok, but that will only work if the callback URL is defined as https://127.0.0.1 in your app settings on developer.schwab.com.",
+  );
 }
 
 // Generate a self-signed certificate valid for localhost
 const attrs = [{ name: "commonName", value: "localhost" }];
 const pems = selfsigned.generate(attrs, {
   keySize: 2048,
-  days: 1, 
+  days: 1,
   algorithm: "sha256",
   extensions: [
     {
@@ -85,7 +87,6 @@ const port = urlObj.port || 8443;
 
 // Function to update .env file with a new refresh token
 function updateEnv(newToken) {
-
   const envFilePath = path.resolve(process.cwd(), ".env");
 
   let envContent = fs.existsSync(envFilePath)
@@ -95,7 +96,7 @@ function updateEnv(newToken) {
   if (envContent.includes("SCHWAB_REFRESH_TOKEN")) {
     envContent = envContent.replace(
       /SCHWAB_REFRESH_TOKEN=.*/,
-      `SCHWAB_REFRESH_TOKEN=${newToken}`
+      `SCHWAB_REFRESH_TOKEN=${newToken}`,
     );
   } else {
     envContent += `\nSCHWAB_REFRESH_TOKEN=${newToken}`;
@@ -120,11 +121,13 @@ async function getAuthorizationResponse() {
     server.listen(port, () => {
       console.log(`Listening for the HTTPS callback on ${callbackUrl}`);
       open(authorizationUrl).catch((error) =>
-        reject(new Error(`Failed to open URL: ${error.message}`))
+        reject(new Error(`Failed to open URL: ${error.message}`)),
       );
     });
 
-    server.on("error", (err) => reject(new Error(`Server error: ${err.message}`)));
+    server.on("error", (err) =>
+      reject(new Error(`Server error: ${err.message}`)),
+    );
   });
 }
 
@@ -136,11 +139,11 @@ async function getAuthorizationResponse() {
 
     const receivedObj = new URL(receivedUrl);
     const authCode = decodeURIComponent(
-      receivedObj.searchParams.get("code") || ""
+      receivedObj.searchParams.get("code") || "",
     );
 
     const basicAuth = Buffer.from(
-      `${process.env.SCHWAB_APP_KEY}:${process.env.SCHWAB_SECRET}`
+      `${process.env.SCHWAB_APP_KEY}:${process.env.SCHWAB_SECRET}`,
     ).toString("base64");
 
     const response = await fetch("https://api.schwabapi.com/v1/oauth/token", {
@@ -159,7 +162,7 @@ async function getAuthorizationResponse() {
 
     if (!response.ok) {
       throw new Error(
-        `Failed to generate token: ${response.status} - ${response.statusText}`
+        `Failed to generate token: ${response.status} - ${response.statusText}`,
       );
     }
 
