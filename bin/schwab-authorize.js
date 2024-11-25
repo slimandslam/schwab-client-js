@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 
 // schwab-authorize.js
-// Launches a web browser to create a new SCHWAB_REFRESH_TOKEN
+// Author: Jason Levitt
+// Launches a web browser to create a new SCHWAB_REFRESH_TOKEN.
+// Uses the selfsigned nodejs library to dynamically generated
+// a self-signed certificate at each invocation.
 
 import open from "open";
 import dotenv from "dotenv";
 import https from "https";
+import selfsigned from "selfsigned";
 import fs from "fs";
-import path from "path";
 import { fileURLToPath } from "url";
+import path from "path";
 
 // Load environment variables
 dotenv.config();
@@ -17,42 +21,71 @@ dotenv.config();
 if (!process.env.SCHWAB_APP_KEY) {
   throw new Error("Environment variable SCHWAB_APP_KEY is not set.");
 }
-
-// Get the directory of this script
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Resolve paths to SSL certificate files
-const sslDir = path.resolve(__dirname, "sslcert");
-const keyPath = path.join(sslDir, "key.pem");
-const certPath = path.join(sslDir, "cert.pem");
-
-// Verify that SSL files exist
-if (!fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
-  throw new Error(
-    `Missing SSL certificate files in ${sslDir}. Ensure key.pem and cert.pem are present.`
-  );
+if (!process.env.SCHWAB_SECRET) {
+  throw new Error("Environment variable SCHWAB_SECRET is not set.");
+}
+if (!process.env.SCHWAB_CALLBACK_URL) {
+  console.log("SCHWAB_CALLBACK_URL is not set. That is ok, but that will only work if the callback URL is defined as https://127.0.0.1 in your app settings on developer.schwab.com.")
 }
 
-// Load SSL options
+// Generate a self-signed certificate valid for localhost
+const attrs = [{ name: "commonName", value: "localhost" }];
+const pems = selfsigned.generate(attrs, {
+  keySize: 2048,
+  days: 1, 
+  algorithm: "sha256",
+  extensions: [
+    {
+      name: "basicConstraints",
+      cA: true,
+    },
+    {
+      name: "keyUsage",
+      keyCertSign: true,
+      digitalSignature: true,
+      keyEncipherment: true,
+    },
+    {
+      name: "extKeyUsage",
+      serverAuth: true,
+      clientAuth: true,
+    },
+    {
+      name: "subjectAltName",
+      altNames: [
+        {
+          type: 2, // DNS
+          value: "localhost", // Restrict to localhost
+        },
+        {
+          type: 7, // IP
+          ip: "127.0.0.1", // Restrict to local IP
+        },
+      ],
+    },
+  ],
+});
+
 const options = {
-  key: fs.readFileSync(keyPath, "utf-8"),
-  cert: fs.readFileSync(certPath, "utf-8"),
+  key: pems.private,
+  cert: pems.cert,
 };
 
-// Default callback URL
-const callbackUrl = process.env.SCHWAB_CALLBACK_URL || "https://127.0.0.1";
+// Default callback URL (local only)
+const callbackUrl = process.env.SCHWAB_CALLBACK_URL || "https://127.0.0.1:8443";
 
-// Construct authorization URL
+// Authorization URL for Schwab API
 const authorizationUrl =
   `https://api.schwabapi.com/v1/oauth/authorize?client_id=${process.env.SCHWAB_APP_KEY}` +
   `&redirect_uri=${callbackUrl}`;
 
-// Extract port from the callback URL
+// Extract port from callback URL
 const urlObj = new URL(callbackUrl);
-const port = urlObj.port || (urlObj.protocol === "https:" ? "443" : "80");
+const port = urlObj.port || 8443;
 
-// Function to update .env with new token
+// Function to update .env file with a new refresh token
 function updateEnv(newToken) {
+
   const envFilePath = path.resolve(process.cwd(), ".env");
 
   let envContent = fs.existsSync(envFilePath)
