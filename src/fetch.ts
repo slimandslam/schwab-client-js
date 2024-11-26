@@ -24,7 +24,9 @@ async function fetchData(
   url: string,
   args: RequestArgs = {},
 ): Promise<Record<string, unknown>> {
-  logger("fetch", "args", "fetch call args: ", args);
+  // Just for logging, let's combine url into args
+  const combinedArgs = { ...args, url };
+  logger("fetch", "args", "fetch call args: ", combinedArgs);
 
   try {
     // Construct the fetch options

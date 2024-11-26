@@ -9,10 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineFlatConfig([
   {
     files: ["**/*.{js,ts}"],
-    ignores: [
-      "dist/**/*",
-      "eslint.config.js",
-    ],
+    ignores: ["dist/**/*", "eslint.config.js"],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {

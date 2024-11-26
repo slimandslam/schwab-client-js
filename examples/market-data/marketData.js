@@ -28,8 +28,8 @@ data = await mktclient.expirationChain("TSLA");
 console.log("expirationChain DATA=", JSON.stringify(data));
 console.log("\n\n");
 
-const fromDate = getFormattedDate();
-const toDate = getFormattedDate(2);
+const fromDate = getFormattedDate(1); // Tommorrow
+const toDate = getFormattedDate(7); // A week later
 let options = {
   contractType: "CALL",
   strategy: "SINGLE",
@@ -37,9 +37,10 @@ let options = {
   fromDate: fromDate,
   toDate: toDate,
 };
-data = await mktclient.chains("SPY", options);
-console.log("chains DATA=", JSON.stringify(data));
-console.log("\n\n");
+// You will need to tweak the parameters to make sure this works
+// data = await mktclient.chains("SPY", options);
+// console.log("chains DATA=", JSON.stringify(data));
+// console.log("\n\n");
 
 data = await mktclient.instrumentsSymbol("AMD", "desc-search");
 console.log("instrumentsSymbol DATA=", JSON.stringify(data));
