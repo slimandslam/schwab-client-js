@@ -12,13 +12,10 @@
  * @returns {Promise<Object>} A promise that resolves to a JSON object
  */
 interface RequestArgs {
-  type?: string;
-  headers?: Record<string, string>;
-  body?: Record<string, unknown> | string;
+    type?: string;
+    headers?: Record<string, string>;
+    body?: Record<string, unknown> | string;
 }
-declare function fetchData(
-  url: string,
-  args?: RequestArgs,
-): Promise<Record<string, unknown>>;
+declare function fetchData(url: string, args?: RequestArgs): Promise<Record<string, unknown>>;
 export default fetchData;
 //# sourceMappingURL=fetch.d.ts.map

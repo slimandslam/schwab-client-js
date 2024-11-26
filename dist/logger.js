@@ -15,17 +15,19 @@
 import "./initenv.js";
 import debug from "debug";
 export default function logger(namespace, level, message, context) {
-  const log = debug(`${namespace}:${level}`); // Use the correct namespace
-  if (log.enabled) {
-    if (context !== undefined) {
-      if (typeof context === "object" && context !== null) {
-        log(`${message}`, context); // Log structured data
-      } else {
-        log(`${message}`, { context }); // Wrap primitives in an object
-      }
-    } else {
-      log(message); // Log message without context
+    const log = debug(`${namespace}:${level}`); // Use the correct namespace
+    if (log.enabled) {
+        if (context !== undefined) {
+            if (typeof context === "object" && context !== null) {
+                log(`${message}`, context); // Log structured data
+            }
+            else {
+                log(`${message}`, { context }); // Wrap primitives in an object
+            }
+        }
+        else {
+            log(message); // Log message without context
+        }
     }
-  }
 }
 //# sourceMappingURL=logger.js.map
