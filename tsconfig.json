@@ -14,6 +14,6 @@
     "skipLibCheck": true, // Skip type-checking of library files.
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/**/*"], // Include all files in the src directory.
+  "include": ["src/**/*", "bin/**/*.js", "examples/**/*.js"], 
   "exclude": ["node_modules", "dist"]
 }

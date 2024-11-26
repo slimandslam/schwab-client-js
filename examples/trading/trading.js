@@ -1,7 +1,7 @@
 // trading.js -- some examples of getting trading data using schwab-client-js
 //
 
-import { TradingAPIClient } from "schwab-client-js";
+import { TradingApiClient } from "schwab-client-js";
 
 const trdclient = new TradingApiClient();
 

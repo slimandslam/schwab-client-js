@@ -11,9 +11,7 @@ export default defineFlatConfig([
     files: ["**/*.{js,ts}"],
     ignores: [
       "dist/**/*",
-      "bin/schwab-authorize.js",
       "eslint.config.js",
-      "examples/**/*",
     ],
     languageOptions: {
       parser: typescriptParser,
@@ -29,6 +27,15 @@ export default defineFlatConfig([
       ...typescriptPlugin.configs.recommended.rules,
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
+  {
+    // Disable type-aware linting for JavaScript files
+    files: ["bin/**/*.js", "examples/**/*.js"],
+    languageOptions: {
+      parserOptions: {
+        project: null,
+      },
     },
   },
 ]);
