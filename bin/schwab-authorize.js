@@ -3,7 +3,7 @@
 // schwab-authorize.js
 // Author: Jason Levitt
 // Launches a web browser to create a new SCHWAB_REFRESH_TOKEN.
-// Uses the selfsigned nodejs library to dynamically generated
+// Uses the selfsigned nodejs library to dynamically generate
 // a self-signed certificate at each invocation.
 
 import open from "open";
@@ -11,7 +11,6 @@ import dotenv from "dotenv";
 import https from "https";
 import selfsigned from "selfsigned";
 import fs from "fs";
-import { fileURLToPath } from "url";
 import path from "path";
 
 // Load environment variables

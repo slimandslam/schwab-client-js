@@ -10,7 +10,7 @@
     "client": "vite",
     "server": "nodemon src/server.js",
     "dev": "concurrently \"yarn client\" \"yarn server\" \"yarn open\"",
-    "open": "node -e \"const { exec } = require('child_process'); const openCmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open'; exec(openCmd + ' http://localhost:5173');\""
+    "open": "node -e \"setTimeout(() => { const { exec } = require('child_process'); const openCmd = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open'; exec(openCmd + ' http://localhost:5173'); }, 2000);\""
   },
   "dependencies": {
     "cors": "^2.8.5",
