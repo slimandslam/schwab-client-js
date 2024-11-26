@@ -2,7 +2,7 @@
 
 ## A modern wrapper around the Schwab financial API for Typescript and Javascript projects
 
-[![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![Donate Venmo](https://img.shields.io/badge/Donate%20via-Venmo-blue)](https://venmo.com/JasonLevitt) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js)
+[![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![Donate Venmo](https://img.shields.io/badge/Donate%20via-Venmo-blue)](https://venmo.com/JasonLevitt) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/slimandslam/schwab-client-js/total)
 
 Disclaimer: This project is not affiliated with, endorsed by, or associated with The Charles Schwab Corporation. All registered trademarks are the property of their respective owners. Use of these names, logos, and brands is for identification purposes only. This project is licensed under the MIT license, and acts in accordance with Schwab's API terms and conditions.
 
