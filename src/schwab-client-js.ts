@@ -57,15 +57,15 @@ interface ChainsOptions {
   strikeCount?: number;
   includeUnderlyingQuote?: boolean;
   strategy?: string;
-  interval?: number; // $double
-  strike?: number; // $double
+  interval?: number;
+  strike?: number;
   range?: string;
-  fromDate?: string; // $date
-  toDate?: string; // $date
-  volatility?: number; // $double
-  underlyingPrice?: number; // $double
-  interestRate?: number; // $double
-  daysToExpiration?: number; // $int32
+  fromDate?: string;
+  toDate?: string;
+  volatility?: number;
+  underlyingPrice?: number;
+  interestRate?: number;
+  daysToExpiration?: number;
   expMonth?: string;
   optionType?: string;
   entitlement?: string;

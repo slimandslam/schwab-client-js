@@ -14,6 +14,19 @@
 
 import logger from "./logger.js";
 
+function isErrorResponse(obj: any): obj is { errors: { detail: string }[] } {
+  return (
+    obj &&
+    typeof obj === "object" &&
+    Array.isArray(obj.errors) &&
+    typeof obj.errors[0]?.detail === "string"
+  );
+}
+
+function isMessageResponse(obj: any): obj is { message: string } {
+  return obj && typeof obj === "object" && typeof obj.message === "string";
+}
+
 interface RequestArgs {
   type?: string; // e.g., "GET", "POST"
   headers?: Record<string, string>; // HTTP headers as key-value pairs
@@ -50,27 +63,44 @@ async function fetchData(
 
     // Handle non-OK responses
     if (!response.ok) {
-      const rt = await response.json();
-      throw new Error(
-        `Error: ${response.status} - ${response.statusText} - Details: ${rt.message}`,
-      );
-    }
-
-    // Handle the case where nothing is returned but the call is successful (e.g. trades)
-    // Why does Schwab put the orderId in the location header?
-    const responseText = await response.text();
-    if (responseText) {
-      const data: Record<string, unknown> = JSON.parse(responseText);
-      return data;
-    } else {
-      const orderId =
-        response.headers.get("location")?.split("/").pop() || null;
-      if (orderId) {
-        const jsonResponse = { orderId: orderId };
-        return jsonResponse;
+      let rt: object | string = await response.text();
+      // Check for garbage nothingness that Schwab returns sometimes
+      const cleanedString = rt.toString().replace(/\s+/g, "");
+      if (rt && cleanedString.length !== 0) {
+        rt = JSON.parse(rt);
+        if (isErrorResponse(rt)) {
+          if (rt.errors[0]?.detail) {
+            rt = rt.errors[0].detail;
+          }
+        } else if (isMessageResponse(rt)) {
+          rt = rt.message;
+        } else {
+          rt = "No details were returned";
+        }
       } else {
-        // Empty response body happens on orderDelete call
-        return null;
+        rt = "no details were returned";
+      }
+      throw new Error(
+        `Error: ${response.status} - ${response.statusText} - Details: ${rt}`,
+      );
+    } else {
+      // Handle the case where nothing is returned but the call is successful (e.g. trades)
+      // Why does Schwab put the orderId in the location header?
+      // In the case of deleteOrder(), return null.
+      const responseText = await response.text();
+      if (responseText) {
+        const data: Record<string, unknown> = JSON.parse(responseText);
+        return data;
+      } else {
+        const orderId =
+          response.headers.get("location")?.split("/").pop() || null;
+        if (orderId) {
+          const jsonResponse = { orderId: orderId };
+          return jsonResponse;
+        } else {
+          // Empty response body happens on orderDelete call
+          return null;
+        }
       }
     }
   } catch (error) {
