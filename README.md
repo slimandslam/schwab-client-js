@@ -239,51 +239,53 @@ When fetch() calls throw an exception, the error is printed on the console.
 - In some method calls, the order of parameters is slightly different than the Schwab documentation. Those changes were made to make it easier to create method calls (putting the required arguments first).
 - In two cases, placeOrderByAcct() and orderDelete(), I return slightly different things when the call succeeds. placeOrderByAcct() returns a JSON object with the orderId, and orderDelete() returns null.
 
-| **Subclass \| Description**                       | **Method**               | **Parameters**                           |
-|-------------------------|------------------|-------------------------------------------|
-| **MarketApiClient**     |                                       |                                      |                                           |
-| Get option chain for an optionable symbol.                      |             `chains`                 | ``` symbol: string, options: ChainsOptions = {
-contractType?: string,
-  strikeCount?: number,
-  includeUnderlyingQuote?: boolean,
-  strategy?: string,
-  interval?: number,
-  strike?: number,
-  range?: string,
-  fromDate?: string,
-  toDate?: string,
-  volatility?: number,
-  underlyingPrice?: number,
-  interestRate?: number,
-  daysToExpiration?: number,
-  expMonth?: string,
-  optionType?: string,
-  entitlement?: string,
-} ``` |
-| Get Option Expiration info for an optionable symbol.            |             `expirationChain`        | `symbol: string`                          |
-| Get instrument details by CUSIP ID.                             |             `instrumentsCusip`       | `cusip_id: string`                        |
-| Get instrument details by symbol and projection.                |             `instrumentsSymbol`      | `symbol: string, projection: string`      |
-| Get market hours for a single market.                           |             `marketById`             | `market_id: string, date?: string = null` |
-| Get market hours for a list of markets.                         |             `markets`                | `markets: string, date?: string = null`   |
-| Get a list of top 10 securities movers by index.                |             `movers`                 | `symbol_id: string, sort?: string = null, frequency?: string = null` |
-| Get price history for a given symbol ID.                        |             `priceHistory`           | `symbol: string, options: PriceHistoryOptions = {}` |
-| Get a quote by symbol ID.                                       |             `quoteById`              | `symbol_id: string, fields?: string = null` |
-| Get multiple quotes for a list of symbols.                      |             `quotes`                 | `symbols: string, fields?: string = null, indicative?: string = null` |
-| **TradingApiClient**     |                                      |                                      |                                           |
-| Get balances and positions for all accounts.                    |             `accountsAll`            | `fields?: string = null`                  |
-| Get balance and positions for a specific account.               |             `accountsDetails`        | `accountHash: string, fields?: string = null` |
-| Get all authorized account numbers with hashes.                 |             `accountsNumbers`        | None                                      |
-| Get all orders for all authorized accounts.                     |             `orderAll`               | `fromEnteredTime: string, toEnteredTime: string, status?: string = null, maxResults?: number = null` |
-| Get details of a specific order by its ID.                      |             `orderById`              | `accountHash: string, orderId: string`    |
-| Delete an order by its ID. Returns null if successful.          |             `orderDelete`            | `accountHash: string, orderId: number`    |
-| Preview an order.                                               |             `orderPreview`           | `accountHash: string, orderObj: OrderObject` |
-| **StreamingApiClient**   |                                |     |                                      |
-| Initialize the WebSocket stream.                                |             `streamInit`             | None                                      |
-| Log in to the Schwab streaming service.                         |             `streamSchwabLogin`      | None                                      |
-| Log out of the Schwab streaming service.                        |             `streamSchwabLogout`     | None                                      |
-| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}` ** |
-| Listen for events from the WebSocket stream.    |    `streamListen`   | `eventName: string, listener: function()`                                      |
-| Close the WebSocket stream.                                   |  `streamClose`            | None                                      |
+| **Subclass \| Description**                       | **Method**               | **Parameters**                                                                                                   |
+|---------------------------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------|
+| **MarketApiClient**                               |                          |                                                                                                                 |
+| Get option chain for an optionable symbol.        | `chains`                 | ```ts                                                                                                           |
+|                                                   |                          | symbol: string, options: ChainsOptions = {                                                                      |
+|                                                   |                          |   contractType?: string,                                                                                       |
+|                                                   |                          |   strikeCount?: number,                                                                                        |
+|                                                   |                          |   includeUnderlyingQuote?: boolean,                                                                            |
+|                                                   |                          |   strategy?: string,                                                                                           |
+|                                                   |                          |   interval?: number,                                                                                           |
+|                                                   |                          |   strike?: number,                                                                                             |
+|                                                   |                          |   range?: string,                                                                                              |
+|                                                   |                          |   fromDate?: string,                                                                                           |
+|                                                   |                          |   toDate?: string,                                                                                             |
+|                                                   |                          |   volatility?: number,                                                                                         |
+|                                                   |                          |   underlyingPrice?: number,                                                                                    |
+|                                                   |                          |   interestRate?: number,                                                                                       |
+|                                                   |                          |   daysToExpiration?: number,                                                                                   |
+|                                                   |                          |   expMonth?: string,                                                                                           |
+|                                                   |                          |   optionType?: string,                                                                                         |
+|                                                   |                          |   entitlement?: string                                                                                         |
+|                                                   |                          | }                                                                                                               |
+|                                                   |                          | ```                                                                                                             |
+| Get Option Expiration info for an optionable symbol. | `expirationChain`      | `symbol: string`                                                                                               |
+| Get instrument details by CUSIP ID.              | `instrumentsCusip`       | `cusip_id: string`                                                                                             |
+| Get instrument details by symbol and projection. | `instrumentsSymbol`      | `symbol: string, projection: string`                                                                           |
+| Get market hours for a single market.            | `marketById`             | `market_id: string, date?: string = null`                                                                      |
+| Get market hours for a list of markets.          | `markets`                | `markets: string, date?: string = null`                                                                        |
+| Get a list of top 10 securities movers by index. | `movers`                 | `symbol_id: string, sort?: string = null, frequency?: string = null`                                           |
+| Get price history for a given symbol ID.         | `priceHistory`           | `symbol: string, options: PriceHistoryOptions = {}`                                                            |
+| Get a quote by symbol ID.                        | `quoteById`              | `symbol_id: string, fields?: string = null`                                                                    |
+| Get multiple quotes for a list of symbols.       | `quotes`                 | `symbols: string, fields?: string = null, indicative?: string = null`                                          |
+| **TradingApiClient**                              |                          |                                                                                                                 |
+| Get balances and positions for all accounts.     | `accountsAll`            | `fields?: string = null`                                                                                       |
+| Get balance and positions for a specific account.| `accountsDetails`        | `accountHash: string, fields?: string = null`                                                                  |
+| Get all authorized account numbers with hashes.  | `accountsNumbers`        | None                                                                                                           |
+| Get all orders for all authorized accounts.      | `orderAll`               | `fromEnteredTime: string, toEnteredTime: string, status?: string = null, maxResults?: number = null`            |
+| Get details of a specific order by its ID.       | `orderById`              | `accountHash: string, orderId: string`                                                                         |
+| Delete an order by its ID. Returns null if successful. | `orderDelete`       | `accountHash: string, orderId: number`                                                                         |
+| Preview an order.                                | `orderPreview`           | `accountHash: string, orderObj: OrderObject`                                                                   |
+| **StreamingApiClient**                           |                          |                                                                                                                 |
+| Initialize the WebSocket stream.                 | `streamInit`             | None                                                                                                           |
+| Log in to the Schwab streaming service.          | `streamSchwabLogin`      | None                                                                                                           |
+| Log out of the Schwab streaming service.         | `streamSchwabLogout`     | None                                                                                                           |
+| Send a request to the Schwab streaming service.  | `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}`                                           |
+| Listen for events from the WebSocket stream.     | `streamListen`           | `eventName: string, listener: (...args: any[]) => void`                                                        |
+| Close the WebSocket stream.                      | `streamClose`            | None                                                                                                           |
 
 ** **See Schwab developer documentation for details of this structure**
 
