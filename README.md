@@ -242,7 +242,7 @@ When fetch() calls throw an exception, the error is printed on the console.
 | **Subclass \| Description**                       | **Method**               | **Parameters**                           |
 |-------------------------|------------------|-------------------------------------------|
 | **MarketApiClient**     |                                       |                                      |                                           |
-| Get option chain for an optionable symbol.                      |             `chains`                 | `symbol: string, options: ChainsOptions = {
+| Get option chain for an optionable symbol.                      |             `chains`                 | ``` symbol: string, options: ChainsOptions = {
 contractType?: string,
   strikeCount?: number,
   includeUnderlyingQuote?: boolean,
@@ -259,7 +259,7 @@ contractType?: string,
   expMonth?: string,
   optionType?: string,
   entitlement?: string,
-}` |
+} ``` |
 | Get Option Expiration info for an optionable symbol.            |             `expirationChain`        | `symbol: string`                          |
 | Get instrument details by CUSIP ID.                             |             `instrumentsCusip`       | `cusip_id: string`                        |
 | Get instrument details by symbol and projection.                |             `instrumentsSymbol`      | `symbol: string, projection: string`      |
