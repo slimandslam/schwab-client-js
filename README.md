@@ -203,43 +203,6 @@ await streamclient.streamSchwabLogout()
 streamclient.streamClose();
 ```
 
-## Subclasses and Methods for Class SchwabAPIclient
-
-| **Subclass**           | **Method**              | **Description**                                      |
-| ---------------------- | ----------------------- | ---------------------------------------------------- |
-| **MarketApiClient**    |                         |                                                      |
-|                        | `chains()`              | Get option chain for an optionable symbol.           |
-|                        | `expirationChain()`     | Get Option Expiration info for an optionable symbol. |
-|                        | `instrumentsCusip()`    | Get instrument details by CUSIP ID.                  |
-|                        | `instrumentsSymbol()`   | Get instrument details by symbol and projection.     |
-|                        | `marketById()`          | Get market hours for a single market.                |
-|                        | `markets()`             | Get market hours for a list of markets.              |
-|                        | `movers()`              | Get a list of top 10 securities movers by index.     |
-|                        | `priceHistory()`        | Get price history for a given symbol ID.             |
-|                        | `quoteById()`           | Get a quote by symbol ID.                            |
-|                        | `quotes()`              | Get multiple quotes for a list of symbols.           |
-| **TradingApiClient**   |                         |                                                      |
-|                        | `accountsAll()`         | Get balances and positions for all your accounts.    |
-|                        | `accountsDetails()`     | Get balance and positions for a specific account.    |
-|                        | `accountsNumbers()`     | Get all authorized account numbers with hashes.      |
-|                        | `orderAll()`            | Get all orders for all your authorized accounts.     |
-|                        | `orderById()`           | Get details of a specific order by its ID.           |
-|                        | `orderDelete()`         | Delete an order by its ID.                           |
-|                        | `orderPreview()`        | Preview an order [Schwab has not released this yet]. |
-|                        | `ordersByAccount()`     | Get orders for a specific account.                   |
-|                        | `placeOrderByAcct()`    | Place an order for a specific account.               |
-|                        | `prefs()`               | Get user preferences and streaming parameters.       |
-|                        | `transactByAcct()`      | Get transactions for a specific account.             |
-|                        | `transactById()`        | Get details of a specific transaction by its ID.     |
-|                        | `updateOrderById()`     | Update an order by its ID.                           |
-| **StreamingApiClient** |                         |                                                      |
-|                        | `streamInit()`          | Initialize the WebSocket stream.                     |
-|                        | `streamSchwabLogin()`   | Log in to the Schwab streaming service.              |
-|                        | `streamSchwabLogout()`  | Log out of the Schwab streaming service.             |
-|                        | `streamSchwabRequest()` | Send a request to the Schwab streaming service.      |
-|                        | `streamListen()`        | Listen for events from the WebSocket stream.         |
-|                        | `streamClose()`         | Close the WebSocket stream.                          |
-
 ## Debugging
 
 schwab-client-js uses the [debug](https://www.npmjs.com/package/debug) package for quick and easy
@@ -270,6 +233,46 @@ When fetch() calls throw an exception, the error is printed on the console.
      <img src="examples/schwab-dashboard-react/public/stockdashboard.png" alt="Description" width="800">
      <figcaption>schwab-dashboard-react</figcaption>
 </figure>
+
+## Subclasses and Methods for Class SchwabAPIclient
+
+- In some method calls, the order of parameters is slightly different than the Schwab documentation. Those changes were made to make it easier to create method calls (putting the required arguments first).
+- In two cases, placeOrderByAcct() and orderDelete(), I return slightly different things when the call succeeds. placeOrderByAcct() returns a JSON object with the orderId, and orderDelete() returns null.
+
+| **Subclass**           | **Method**              | **Description**                                       | **Parameters**                                                                                                     |
+| ---------------------- | ----------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **MarketApiClient**    |                         |                                                       |                                                                                                                    |
+|                        | `chains()`              | Get option chain for an optionable symbol.            | `symbol: string, options: ChainsOptions = {}`                                                                      |
+|                        | `expirationChain()`     | Get Option Expiration info for an optionable symbol.  | `symbol: string`                                                                                                   |
+|                        | `instrumentsCusip()`    | Get instrument details by CUSIP ID.                   | `cusip_id: string`                                                                                                 |
+|                        | `instrumentsSymbol()`   | Get instrument details by symbol and projection.      | `symbol: string, projection: string`                                                                               |
+|                        | `marketById()`          | Get market hours for a single market.                 | `market_id: string, date: string \| null = null`                                                                   |
+|                        | `markets()`             | Get market hours for a list of markets.               | `markets: string, date: string \| null = null`                                                                     |
+|                        | `movers()`              | Get a list of top 10 securities movers by index.      | `symbol_id: string, sort: string \| null = null, frequency: string \| null = null`                                 |
+|                        | `priceHistory()`        | Get price history for a given symbol ID.              | `symbol: string, options: PriceHistoryOptions = {}`                                                                |
+|                        | `quoteById()`           | Get a quote by symbol ID.                             | `symbol_id: string, fields: string \| null = null`                                                                 |
+|                        | `quotes()`              | Get multiple quotes for a list of symbols.            | `symbols: string, fields: string \| null = null, indicative: string \| null = null`                                |
+| **TradingApiClient**   |                         |                                                       |                                                                                                                    |
+|                        | `accountsAll()`         | Get balances and positions for all your accounts.     | `fields: string \| null = null`                                                                                    |
+|                        | `accountsDetails()`     | Get balance and positions for a specific account.     | `accountHash: string, fields: string \| null = null`                                                               |
+|                        | `accountsNumbers()`     | Get all authorized account numbers with hashes.       | None                                                                                                               |
+|                        | `orderAll()`            | Get all orders for all your authorized accounts.      | `fromEnteredTime: string, toEnteredTime: string, status: string \| null = null, maxResults: number \| null = null` |
+|                        | `orderById()`           | Get details of a specific order by its ID.            | `accountHash: string, orderId: string`                                                                             |
+|                        | `orderDelete()`         | Delete an order by its ID. Returns null if successful | `accountHash: string, orderId: number`                                                                             |
+|                        | `orderPreview()`        | Preview an order.                                     | `accountHash: string, orderObj: OrderObject`                                                                       |
+|                        | `ordersByAccount()`     | Get orders for a specific account.                    | `accountHash: string, fromEnteredTime: string, toEnteredTime: string, status: string \| null = null`               |
+|                        | `placeOrderByAcct()`    | Place an order. Returns the order id.                 | `accountHash: string, orderObj: OrderObject`                                                                       |
+|                        | `prefs()`               | Get user preferences and streaming parameters.        | None                                                                                                               |
+|                        | `transactByAcct()`      | Get transactions for a specific account.              | `accountHash: string, types: string, startDate: string, endDate: string, symbol: string \| null = null`            |
+|                        | `transactById()`        | Get details of a specific transaction by its ID.      | `accountHash: string, transId: string`                                                                             |
+|                        | `updateOrderById()`     | Update an order by its ID.                            | `accountHash: string, orderId: number, orderObj: OrderObject`                                                      |
+| **StreamingApiClient** |                         |                                                       |                                                                                                                    |
+|                        | `streamInit()`          | Initialize the WebSocket stream.                      | None                                                                                                               |
+|                        | `streamSchwabLogin()`   | Log in to the Schwab streaming service.               | None                                                                                                               |
+|                        | `streamSchwabLogout()`  | Log out of the Schwab streaming service.              | None                                                                                                               |
+|                        | `streamSchwabRequest()` | Send a request to the Schwab streaming service.       | `command: string, service: string, params: Record<string, any> = {}`                                               |
+|                        | `streamListen()`        | Listen for events from the WebSocket stream.          | None                                                                                                               |
+|                        | `streamClose()`         | Close the WebSocket stream.                           | None                                                                                                               |
 
 ## MIT License
 

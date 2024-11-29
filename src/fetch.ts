@@ -23,7 +23,7 @@ interface RequestArgs {
 async function fetchData(
   url: string,
   args: RequestArgs = {},
-): Promise<Record<string, unknown>> {
+): Promise<Record<string, unknown> | null> {
   // Just for logging, let's combine url into args
   const combinedArgs = { ...args, url };
   logger("fetch", "args", "fetch call args: ", combinedArgs);
@@ -50,7 +50,10 @@ async function fetchData(
 
     // Handle non-OK responses
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      const rt = await response.json();
+      throw new Error(
+        `Error: ${response.status} - ${response.statusText} - Details: ${rt.message}`,
+      );
     }
 
     // Handle the case where nothing is returned but the call is successful (e.g. trades)
@@ -66,7 +69,8 @@ async function fetchData(
         const jsonResponse = { orderId: orderId };
         return jsonResponse;
       } else {
-        throw new Error("Empty response body");
+        // Empty response body happens on orderDelete call
+        return null;
       }
     }
   } catch (error) {

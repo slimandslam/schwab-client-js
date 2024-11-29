@@ -248,7 +248,7 @@ class TradingApiClient extends SchwabAPIclient {
     });
   }
 
-  async orderDelete(accountHash: string, orderId: string): Promise<any> {
+  async orderDelete(accountHash: string, orderId: number): Promise<any> {
     await this.checkAccessToken(_credentials.get(this)!);
 
     if (!accountHash || accountHash.trim().length === 0) {
@@ -257,11 +257,11 @@ class TradingApiClient extends SchwabAPIclient {
       );
     }
 
-    if (!orderId || orderId.trim().length === 0) {
-      throw new Error("Error: Order Id parameter is not a string or is empty.");
+    if (!orderId) {
+      throw new Error("Error: Order Id parameter is missing.");
     }
 
-    const url = endpoint.ORDID(accountHash, orderId);
+    const url = endpoint.ORDID(accountHash, orderId.toString());
     return fetchData(url, {
       type: "DELETE",
       headers: {
@@ -273,7 +273,7 @@ class TradingApiClient extends SchwabAPIclient {
 
   async updateOrderById(
     accountHash: string,
-    orderId: string,
+    orderId: number,
     orderObj: OrderObject,
   ): Promise<any> {
     await this.checkAccessToken(_credentials.get(this)!);
@@ -284,8 +284,8 @@ class TradingApiClient extends SchwabAPIclient {
       );
     }
 
-    if (!orderId || orderId.trim().length === 0) {
-      throw new Error("Error: Order Id parameter is not a string or is empty.");
+    if (!orderId) {
+      throw new Error("Error: Order Id parameter is missing.");
     }
 
     if (!orderObj || Object.keys(orderObj).length === 0) {
@@ -294,11 +294,12 @@ class TradingApiClient extends SchwabAPIclient {
       );
     }
 
-    const url = endpoint.ORDID(accountHash, orderId);
+    const url = endpoint.ORDID(accountHash, orderId.toString());
 
     return fetchData(url, {
       type: "PUT",
       headers: {
+        "Content-Type": "application/json",
         accept: "application/json",
         Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
       },
@@ -307,10 +308,6 @@ class TradingApiClient extends SchwabAPIclient {
   }
 
   async orderPreview(accountHash: string, orderObj: OrderObject): Promise<any> {
-    throw new Error(
-      "NOTICE: This API call has not yet been implemented by Schwab.",
-    );
-
     await this.checkAccessToken(_credentials.get(this)!);
 
     if (!accountHash || accountHash.trim().length === 0) {
@@ -330,6 +327,7 @@ class TradingApiClient extends SchwabAPIclient {
     return fetchData(url, {
       type: "POST",
       headers: {
+        "Content-Type": "application/json",
         accept: "application/json",
         Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
       },

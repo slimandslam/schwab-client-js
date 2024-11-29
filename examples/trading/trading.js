@@ -50,13 +50,13 @@ let tradeObj = {
   session: "NORMAL",
   duration: "DAY",
   orderStrategyType: "SINGLE",
-  price: "1.00",
+  price: "0.10",
   orderLegCollection: [
     {
       instruction: "BUY",
       quantity: 1,
       instrument: {
-        symbol: "CTRN",
+        symbol: "CDT",
         assetType: "EQUITY",
       },
     },
@@ -66,3 +66,6 @@ let tradeObj = {
 // let data = await trdclient.placeOrderByAcct(acctHash, tradeObj);
 // This call will return an orderID which you can use in subsequent
 // calls to check status, etc....
+// For example, to delete the order:
+// let data = await trdclient.orderDelete(acctHash, orderid);
+// orderDelete returns null if successful
