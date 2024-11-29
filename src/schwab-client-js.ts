@@ -42,9 +42,14 @@ interface LoginMessage {
 }
 
 interface PriceHistoryOptions {
-  startDate?: string;
-  endDate?: string;
-  [key: string]: string | undefined;
+  periodType?: string;
+  period?: number;
+  frequencyType?: string;
+  frequency?: number;
+  startDate?: number;
+  endDate?: number;
+  needExtendedHoursData?: boolean;
+  needPreviousClose?: boolean;
 }
 
 interface ChainsOptions {
@@ -571,18 +576,16 @@ class MarketApiClient extends SchwabAPIclient {
   }
 
   async priceHistory(
-    symbol_id: string,
+    symbol: string,
     options: PriceHistoryOptions = {},
   ): Promise<any> {
-    if (!symbol_id || symbol_id.trim().length === 0) {
-      throw new Error(
-        "Error: symbol_id parameter is not a string or is empty.",
-      );
+    if (!symbol || symbol.trim().length === 0) {
+      throw new Error("Error: symbol parameter is not a string or is empty.");
     }
 
     await this.checkAccessToken(_credentials.get(this)!);
 
-    const params = new URLSearchParams({ symbol_id });
+    const params = new URLSearchParams({ symbol });
 
     for (const [key, value] of Object.entries(options)) {
       if (value) params.append(key, value);

@@ -58,3 +58,16 @@ const futureDate = getFormattedDate(4);
 data = await mktclient.marketById("equity", futureDate);
 console.log("marketById DATA=", JSON.stringify(data));
 console.log("\n\n");
+
+// startDate is Nov 1, 2024  -- milliseconds since the epoch:  1730432440000
+// endDate is Nov 25, 2024 -- milliseconds since the epoch:  1732074040000
+let params = {
+  periodType: "month",
+  period: 3,
+  frequencyType: "daily",
+  startDate: 1730432440000,
+  endDate: 1732074040000,
+};
+data = await mktclient.priceHistory("AMD", params);
+console.log("priceHistory DATA=", JSON.stringify(data));
+console.log("\n\n");
