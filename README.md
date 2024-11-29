@@ -239,7 +239,7 @@ When fetch() calls throw an exception, the error is printed on the console.
 - In some method calls, the order of parameters is slightly different than the Schwab documentation. Those changes were made to make it easier to create method calls (putting the required arguments first).
 - In two cases, placeOrderByAcct() and orderDelete(), I return slightly different things when the call succeeds. placeOrderByAcct() returns a JSON object with the orderId, and orderDelete() returns null.
 
-| **Subclass**                       | **Method**               | **Parameters**                           |
+| **Subclass \| Description**                       | **Method**               | **Parameters**                           |
 |-------------------------|------------------|-------------------------------------------|
 | **MarketApiClient**     |                                       |                                      |                                           |
 | Get option chain for an optionable symbol.                      |             `chains`                 | `symbol: string, options: ChainsOptions = {}` |
