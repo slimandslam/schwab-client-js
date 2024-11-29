@@ -241,32 +241,32 @@ When fetch() calls throw an exception, the error is printed on the console.
 
 | **Subclass**                       | **Method**               | **Parameters**                           |
 |-------------------------|------------------|-------------------------------------------|
-| **MarketApiClient**     |                                                                             |                                           |
-| Get option chain for an optionable symbol.                                   `chains`                 | `symbol: string, options: ChainsOptions = {}` |
-| Get Option Expiration info for an optionable symbol.                         `expirationChain`        | `symbol: string`                          |
-| Get instrument details by CUSIP ID.                                          `instrumentsCusip`       | `cusip_id: string`                        |
-| Get instrument details by symbol and projection.                             `instrumentsSymbol`      | `symbol: string, projection: string`      |
-| Get market hours for a single market.                                        `marketById`             | `market_id: string, date?: string = null` |
-| Get market hours for a list of markets.                                      `markets`                | `markets: string, date?: string = null`   |
-| Get a list of top 10 securities movers by index.                             `movers`                 | `symbol_id: string, sort?: string = null, frequency?: string = null` |
-| Get price history for a given symbol ID.                                     `priceHistory`           | `symbol: string, options: PriceHistoryOptions = {}` |
-| Get a quote by symbol ID.                                                    `quoteById`              | `symbol_id: string, fields?: string = null` |
-| Get multiple quotes for a list of symbols.                                   `quotes`                 | `symbols: string, fields?: string = null, indicative?: string = null` |
-| **TradingApiClient**     |                                                                            |                                           |
-| Get balances and positions for all accounts.                                 `accountsAll`            | `fields?: string = null`                  |
-| Get balance and positions for a specific account.                            `accountsDetails`        | `accountHash: string, fields?: string = null` |
-| Get all authorized account numbers with hashes.                              `accountsNumbers`        | None                                      |
-| Get all orders for all authorized accounts.                                  `orderAll`               | `fromEnteredTime: string, toEnteredTime: string, status?: string = null, maxResults?: number = null` |
-| Get details of a specific order by its ID.                                   `orderById`              | `accountHash: string, orderId: string`    |
-| Delete an order by its ID. Returns null if successful.                       `orderDelete`            | `accountHash: string, orderId: number`    |
-| Preview an order.                                                            `orderPreview`           | `accountHash: string, orderObj: OrderObject` |
-| **StreamingApiClient**   |                                |                                           |
-| Initialize the WebSocket stream.                                             `streamInit`             | None                                      |
-| Log in to the Schwab streaming service.                                      `streamSchwabLogin`      | None                                      |
-| Log out of the Schwab streaming service.                                     `streamSchwabLogout`     | None                                      |
-| Send a request to the Schwab streaming service.                              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}` |
-| Listen for events from the WebSocket stream.                                 `streamListen`           | None                                      |
-| Close the WebSocket stream.                                     `streamClose`            | None                                      |
+| **MarketApiClient**     |                                       |                                      |                                           |
+| Get option chain for an optionable symbol.                      |             `chains`                 | `symbol: string, options: ChainsOptions = {}` |
+| Get Option Expiration info for an optionable symbol.            |             `expirationChain`        | `symbol: string`                          |
+| Get instrument details by CUSIP ID.                             |             `instrumentsCusip`       | `cusip_id: string`                        |
+| Get instrument details by symbol and projection.                |             `instrumentsSymbol`      | `symbol: string, projection: string`      |
+| Get market hours for a single market.                           |             `marketById`             | `market_id: string, date?: string = null` |
+| Get market hours for a list of markets.                         |             `markets`                | `markets: string, date?: string = null`   |
+| Get a list of top 10 securities movers by index.                |             `movers`                 | `symbol_id: string, sort?: string = null, frequency?: string = null` |
+| Get price history for a given symbol ID.                        |             `priceHistory`           | `symbol: string, options: PriceHistoryOptions = {}` |
+| Get a quote by symbol ID.                                       |             `quoteById`              | `symbol_id: string, fields?: string = null` |
+| Get multiple quotes for a list of symbols.                      |             `quotes`                 | `symbols: string, fields?: string = null, indicative?: string = null` |
+| **TradingApiClient**     |                                      |                                      |                                           |
+| Get balances and positions for all accounts.                    |             `accountsAll`            | `fields?: string = null`                  |
+| Get balance and positions for a specific account.               |             `accountsDetails`        | `accountHash: string, fields?: string = null` |
+| Get all authorized account numbers with hashes.                 |             `accountsNumbers`        | None                                      |
+| Get all orders for all authorized accounts.                     |             `orderAll`               | `fromEnteredTime: string, toEnteredTime: string, status?: string = null, maxResults?: number = null` |
+| Get details of a specific order by its ID.                      |             `orderById`              | `accountHash: string, orderId: string`    |
+| Delete an order by its ID. Returns null if successful.          |             `orderDelete`            | `accountHash: string, orderId: number`    |
+| Preview an order.                                               |             `orderPreview`           | `accountHash: string, orderObj: OrderObject` |
+| **StreamingApiClient**   |                                |     |                                      |
+| Initialize the WebSocket stream.                                |             `streamInit`             | None                                      |
+| Log in to the Schwab streaming service.                         |             `streamSchwabLogin`      | None                                      |
+| Log out of the Schwab streaming service.                        |             `streamSchwabLogout`     | None                                      |
+| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}` |
+| Listen for events from the WebSocket stream.                  |               `streamListen`           | None                                      |
+| Close the WebSocket stream.                                   |  `streamClose`            | None                                      |
 
 
 ## MIT License
