@@ -198,7 +198,7 @@ await streamclient.streamSchwabLogin();
 let params = { keys: "AMD,TSLA,GOOG", fields: "0,1,2,3,4,5" };
 await streamclient.streamSchwabRequest("ADD", "LEVELONE_EQUITIES", params);
 
-// LOGOUT of the stream
+// Close the Schwab stream
 await streamclient.streamSchwabLogout()
 streamclient.streamClose();
 ```
@@ -242,7 +242,24 @@ When fetch() calls throw an exception, the error is printed on the console.
 | **Subclass \| Description**                       | **Method**               | **Parameters**                           |
 |-------------------------|------------------|-------------------------------------------|
 | **MarketApiClient**     |                                       |                                      |                                           |
-| Get option chain for an optionable symbol.                      |             `chains`                 | `symbol: string, options: ChainsOptions = {}` |
+| Get option chain for an optionable symbol.                      |             `chains`                 | `symbol: string, options: ChainsOptions = {
+contractType?: string,
+  strikeCount?: number,
+  includeUnderlyingQuote?: boolean,
+  strategy?: string,
+  interval?: number,
+  strike?: number,
+  range?: string,
+  fromDate?: string,
+  toDate?: string,
+  volatility?: number,
+  underlyingPrice?: number,
+  interestRate?: number,
+  daysToExpiration?: number,
+  expMonth?: string,
+  optionType?: string,
+  entitlement?: string,
+}` |
 | Get Option Expiration info for an optionable symbol.            |             `expirationChain`        | `symbol: string`                          |
 | Get instrument details by CUSIP ID.                             |             `instrumentsCusip`       | `cusip_id: string`                        |
 | Get instrument details by symbol and projection.                |             `instrumentsSymbol`      | `symbol: string, projection: string`      |
@@ -264,11 +281,11 @@ When fetch() calls throw an exception, the error is printed on the console.
 | Initialize the WebSocket stream.                                |             `streamInit`             | None                                      |
 | Log in to the Schwab streaming service.                         |             `streamSchwabLogin`      | None                                      |
 | Log out of the Schwab streaming service.                        |             `streamSchwabLogout`     | None                                      |
-| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}`** |
+| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}` ** |
 | Listen for events from the WebSocket stream.    |    `streamListen`   | `eventName: string, listener: function()`                                      |
 | Close the WebSocket stream.                                   |  `streamClose`            | None                                      |
 
-- ** **See Schwab developer documentation for details of this structure**
+** **See Schwab developer documentation for details of this structure**
 
 ## MIT License
 
