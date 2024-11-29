@@ -264,10 +264,11 @@ When fetch() calls throw an exception, the error is printed on the console.
 | Initialize the WebSocket stream.                                |             `streamInit`             | None                                      |
 | Log in to the Schwab streaming service.                         |             `streamSchwabLogin`      | None                                      |
 | Log out of the Schwab streaming service.                        |             `streamSchwabLogout`     | None                                      |
-| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}` |
-| Listen for events from the WebSocket stream.                  |               `streamListen`           | None                                      |
+| Send a request to the Schwab streaming service.                |              `streamSchwabRequest`    | `command: string, service: string, params: Record<string, any> = {}`** |
+| Listen for events from the WebSocket stream.    |    `streamListen`   | `eventName: string, listener: function()`                                      |
 | Close the WebSocket stream.                                   |  `streamClose`            | None                                      |
 
+- ** **See Schwab developer documentation for details of this structure**
 
 ## MIT License
 
