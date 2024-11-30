@@ -70,9 +70,11 @@ async function fetchData(
         rt = JSON.parse(rt);
         if (isErrorResponse(rt)) {
           if (rt.errors[0]?.detail) {
+            // The "detail" has details about the error
             rt = rt.errors[0].detail;
           }
         } else if (isMessageResponse(rt)) {
+          // The "message" has details about the error
           rt = rt.message;
         } else {
           rt = "No details were returned";
