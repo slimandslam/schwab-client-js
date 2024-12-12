@@ -2,7 +2,7 @@
 
 ## A modern wrapper around the Schwab financial API for Typescript and Javascript projects
 
-[![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![Donate Venmo](https://img.shields.io/badge/Donate%20via-Venmo-blue)](https://venmo.com/JasonLevitt) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/slimandslam/schwab-client-js/total)
+[![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![Donate Venmo](https://img.shields.io/badge/Donate%20via-Venmo-blue)](https://venmo.com/JasonLevitt) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) [![npm version](https://badge.fury.io/js/schwab-client-js.svg)](https://www.npmjs.com/package/schwab-client-js)
 
 Disclaimer: This project is not affiliated with, endorsed by, or associated with The Charles Schwab Corporation. All registered trademarks are the property of their respective owners. Use of these names, logos, and brands is for identification purposes only. This project is licensed under the MIT license, and acts in accordance with Schwab's API terms and conditions.
 
@@ -27,7 +27,7 @@ Disclaimer: This project is not affiliated with, endorsed by, or associated with
 
 ## Installation
 
-**Software prerequisites: nodejs version 18 or newer.**
+**Software prerequisites: nodejs version 18 or newer and a nodejs package manager such as yarn or npm**
 
 **Install the package:**
 
@@ -51,7 +51,7 @@ yarn add schwab-client-js
    ▪ Login to your developer account and [create an "app"](https://developer.schwab.com/dashboard/apps) which is really just a web page where you configure the metadata for your API calls. <br />
    ▪ Create a new app and where it says "Select an API product" add both: "Accounts and Trading Production" and "Market Data Production". <br />
    ▪ You will probably want to use the callback url `https://127.0.0.1` <br />
-   ▪ You may have to wait a day or two for Schwab to approve your app. You cannot do anything while the status of your app is **Pending** or **Approved - Pending**. When the status of your app is **Ready for use**, you can proceed. <br />
+   ▪ You may have to wait a day or two for Schwab to approve your app. You cannot do anything while the status of your app is **Approved - Pending**. When the status of your app is **Ready For Use**, you can proceed. <br />
    ▪ Once your app is approved, go to the [apps section](https://developer.schwab.com/dashboard/apps) and click on **View Details** for your app. At the bottom you should see your **App Key** and **Secret**. <br />
 
 ## Configuring the package
@@ -237,7 +237,7 @@ When fetch() calls throw an exception, the error is printed on the console.
 ## Subclasses and Methods for Class SchwabAPIclient
 
 - In some method calls, the order of parameters is slightly different than the Schwab documentation. Those changes were made to make it easier to create method calls (putting the required arguments first).
-- In two cases, placeOrderByAcct() and orderDelete(), I return slightly different things when the call succeeds. placeOrderByAcct() returns a JSON object with the orderId, and orderDelete() returns null.
+- In two cases, placeOrderByAcct() and orderDelete(), when the call succeeds, I return slightly different things than what the Schwab documentation suggests. placeOrderByAcct() returns a JSON object with the orderId, and orderDelete() returns null.
 - Two types of date formats are used. Check the Schwab developer docs to see which one you need. The two types:
   - ISO 8601 format: "2024-11-28T12:17:41-05:00" or just "2024-11-28".
   - Milliseconds since the Epoch: 1730432440000 (2024-10-31T22:40:40-05:00 in CST)

@@ -123,7 +123,7 @@ class SchwabAPIclient {
       }
     } catch (error) {
       throw new Error(
-        `Error: failed to update access token. Details: ${(error as Error).message}`,
+        `Error: failed to update access token. You may need to run schwab-authorize. Details: ${(error as Error).message}`,
       );
     }
   }
