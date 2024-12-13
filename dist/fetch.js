@@ -42,10 +42,12 @@ async function fetchData(url, args = {}) {
         logger("fetch", "raw-response", "raw fetch response", response);
         // Handle non-OK responses
         if (!response.ok) {
+            // Get the text version of the response because we can't depend on JSON here
             let rt = await response.text();
             // Check for garbage nothingness that Schwab returns sometimes
             const cleanedString = rt.toString().replace(/\s+/g, "");
             if (rt && cleanedString.length !== 0) {
+                // We hope it's a real JSON object now
                 rt = JSON.parse(rt);
                 if (isErrorResponse(rt)) {
                     if (rt.errors[0]?.detail) {

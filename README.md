@@ -50,7 +50,7 @@ yarn add schwab-client-js
 2. You need to signup for a [Schwab developer account](https://developer.schwab.com). The account is free. <br />
    ▪ Login to your developer account and [create an "app"](https://developer.schwab.com/dashboard/apps) which is really just a web page where you configure the metadata for your API calls. <br />
    ▪ Create a new app and where it says "Select an API product" add both: "Accounts and Trading Production" and "Market Data Production". <br />
-   ▪ You will probably want to use the callback url `https://127.0.0.1` <br />
+   ▪ Use a callback url like `https://127.0.0.1:5556`. Port numbers below 1024 require superuser privileges to "listen" on most systems, so choose a port number above 1024. You can specify up to three callback URLs. <br />
    ▪ You may have to wait a day or two for Schwab to approve your app. You cannot do anything while the status of your app is **Approved - Pending**. When the status of your app is **Ready For Use**, you can proceed. <br />
    ▪ Once your app is approved, go to the [apps section](https://developer.schwab.com/dashboard/apps) and click on **View Details** for your app. At the bottom you should see your **App Key** and **Secret**. <br />
 
@@ -58,7 +58,7 @@ yarn add schwab-client-js
 
 **Schwab uses three-legged OAuth** for authentication. The details are on [developer.schwab.com here](https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth) and [here](https://developer.schwab.com/products/trader-api--individual/details/documentation/Retail%20Trader%20API%20Production).
 
-1. Create a `.env` file at the root of your project and add the App Key and Secret from developer.schwab.com. If your callback URL is anything besides `https://127.0.0.1` (for example, you added a port number), also add it to your .env file like this:
+1. Create a `.env` file at the root of your project and add the App Key and Secret from developer.schwab.com. Also add your callback URL to your .env file like this:
 
 ```
 SCHWAB_CALLBACK_URL=https://127.0.0.1:5556
@@ -73,10 +73,10 @@ SCHWAB_SECRET=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
    ▪ Note3: When you get the warning from your web browser about the self-signed cert, you'll have 30 seconds to click through before the retrieved token expires and you'll have to run `schwab-authorize` again. <br />
    ▪ Note4: `schwab-authorize` is written in Javascript. You can review the source at `node_modules/schwab-client-js/bin/schwab-authorize.js`. <br />
 
-3. Your `.env` file should now look like this (as previously mentioned, the SCHWAB_CALLBACK_URL is optional and will default to `https://127.0.0.1` if not provided):
+3. Your `.env` file should now look like this (as previously mentioned, the SCHWAB_CALLBACK_URL is optional and will default to `https://127.0.0.1:5556` if not provided):
 
 ```
-SCHWAB_CALLBACK_URL=https://somewhere.blahhhh
+SCHWAB_CALLBACK_URL=https://127.0.0.1:5556
 SCHWAB_APP_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 SCHWAB_SECRET=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 SCHWAB_REFRESH_TOKEN=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy

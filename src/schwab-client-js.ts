@@ -86,7 +86,7 @@ class SchwabAPIclient {
     const credentials: Credentials = {
       appKey: process.env.SCHWAB_APP_KEY || "",
       appSecret: process.env.SCHWAB_SECRET || "",
-      appRefresh: process.env.SCHWAB_REFRESH_TOKEN || "",
+      appRefresh: process.env.SCHWAB_REFRESH_TOKEN || "", // expires every seven days
       access_token: "", // expires every 30 minutes
       access_exp: Math.floor(Date.now() / 1000) + 29 * 60, // expiration is 29 minutes in the future
     };

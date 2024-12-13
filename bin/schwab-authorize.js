@@ -25,7 +25,7 @@ if (!process.env.SCHWAB_SECRET) {
 }
 if (!process.env.SCHWAB_CALLBACK_URL) {
   console.log(
-    "SCHWAB_CALLBACK_URL is not set. That is ok, but that will only work if the callback URL is defined as https://127.0.0.1 in your app settings on developer.schwab.com.",
+    "SCHWAB_CALLBACK_URL is not set. That is ok. I will use https://127.0.0.1:5556 . However, this will not work unless you have added https://127.0.0.1:5556 to your app settings on developer.schwab.com.",
   );
 }
 
@@ -73,7 +73,7 @@ const options = {
 };
 
 // Default callback URL (local only)
-const callbackUrl = process.env.SCHWAB_CALLBACK_URL || "https://127.0.0.1:8443";
+const callbackUrl = process.env.SCHWAB_CALLBACK_URL || "https://127.0.0.1:5556";
 
 // Authorization URL for Schwab API
 const authorizationUrl =
@@ -82,7 +82,7 @@ const authorizationUrl =
 
 // Extract port from callback URL
 const urlObj = new URL(callbackUrl);
-const port = urlObj.port || 8443;
+const port = urlObj.port || 5556;
 
 // Function to update .env file with a new refresh token
 function updateEnv(newToken) {
