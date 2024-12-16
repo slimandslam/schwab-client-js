@@ -2,7 +2,7 @@
   "name": "schwab-client-js",
   "author": "Jason Levitt",
   "description": "Javascript client for the Schwab API",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "homepage": "https://github.com/slimandslam/schwab-client-js#readme",
   "main": "./dist/schwab-client-js.js",
   "bugs": {
@@ -41,21 +41,21 @@
   },
   "dependencies": {
     "@types/debug": "^4.1.12",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.2",
     "@types/ws": "^8.5.13",
-    "debug": "^4.3.7",
-    "dotenv": "^16.4.5",
+    "debug": "^4.4.0",
+    "dotenv": "^16.4.7",
     "open": "^10.1.0",
     "selfsigned": "^2.4.1",
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "ws": "^8.18.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.14.0",
-    "@typescript-eslint/parser": "^8.14.0",
-    "eslint": "^9.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
     "eslint-define-config": "^2.1.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.4.2"
   },
   "engineStrict": true,
   "engines": {
