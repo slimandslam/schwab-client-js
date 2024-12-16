@@ -239,8 +239,8 @@ When fetch() calls throw an exception, the error is printed on the console.
 ### A Few Minor Changes I Made
 
 - In two methods, when the call succeeds, I return slightly different things than what the Schwab documentation says.
-  - ```placeOrderByAcct()``` - This is the method for placing trades. When you place an order, I return a JSON object containing the orderId (the raw Schwab API puts the orderID in a header and returns null).
-  - ```orderDelete()``` - I return null when you successfully delete an order.
+  - `placeOrderByAcct()` - This is the method for placing trades. When you place an order, I return a JSON object containing the orderId (the raw Schwab API puts the orderID in a header and returns null).
+  - `orderDelete()` - I return null when you successfully delete an order.
 - Two types of date/time formats are used. Check the Schwab developer docs to see which one you need. The two types:
   - **ISO 8601 format:** for example "2024-11-28T12:17:41-05:00" or just "2024-11-28".
   - **Milliseconds since the Epoch:** for example 1730432440000 (decoded, that's 2024-10-31T22:40:40-05:00 in CST)
