@@ -228,6 +228,7 @@ When fetch() calls throw an exception, the error is printed on the console.
 
 - **schwab-dashboard-react** A React-based stock dashboard using [recharts](https://www.npmjs.com/package/recharts)
 - **schwab-dashboard-forex** A pure HTML/CSS forex dashboard using [lightweight-charts](https://www.npmjs.com/package/lightweight-charts)
+- **schwab-dashboard-nextjs** A NextJS/React/Tailwind stock dashboard using [recharts](https://www.npmjs.com/package/recharts)
 
 <figure>
      <img src="examples/schwab-dashboard-react/public/stockdashboard.png" alt="Description" width="800">
