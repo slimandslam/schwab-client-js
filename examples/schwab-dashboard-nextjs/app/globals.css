@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans bg-gray-100 m-0 p-0;
+}
+
+code {
+  @apply font-mono;
+}

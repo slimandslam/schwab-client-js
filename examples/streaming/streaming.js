@@ -53,11 +53,20 @@ await streamclient.streamSchwabRequest("ADD", "CHART_FUTURES", params);
 params = { keys: "USD/EUR,USD/JPY,USD/CAD", fields: "0,1,2,6,14" };
 await streamclient.streamSchwabRequest("ADD", "LEVELONE_FOREX", params);
 
+// Subscribe to screener services
+params = { keys: "NASDAQ_VOLUME_5,$SPX_PERCENT_CHANGE_UP_0", fields: "0,1,2,3,4" };
+await streamclient.streamSchwabRequest("ADD", "SCREENER_EQUITY", params);
+
+// Subscribe to options info
+params = { keys: "MSFT  251219P00200000", fields: "0,2,3,4,8,9,10,16,17,20,21,22,28,29,30,31,38" };
+await streamclient.streamSchwabRequest("ADD", "LEVELONE_OPTIONS", params);
+
 // For demo purposes only, we'll wait 20 seconds to let data stream
 // before we send another message.
 function wait(seconds) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
+
 await wait(20);
 
 // UNsubscribe from TSLA prices

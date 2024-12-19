@@ -43,6 +43,7 @@
     "@types/debug": "^4.1.12",
     "@types/node": "^22.10.2",
     "@types/ws": "^8.5.13",
+    "bufferutil": "^4.0.8",
     "debug": "^4.4.0",
     "dotenv": "^16.4.7",
     "open": "^10.1.0",
