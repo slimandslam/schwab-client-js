@@ -224,7 +224,7 @@ When fetch() calls throw an exception, the error is printed on the console.
 
 ## Examples
 
-### The examples directory contains sample invocations including two different streaming dashboards
+### The examples directory contains sample invocations including three different streaming dashboards
 
 - **schwab-dashboard-react** A React-based stock dashboard using [recharts](https://www.npmjs.com/package/recharts)
 - **schwab-dashboard-forex** A pure HTML/CSS forex dashboard using [lightweight-charts](https://www.npmjs.com/package/lightweight-charts)
