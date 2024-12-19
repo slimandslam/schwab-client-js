@@ -1,3 +1,7 @@
+// route.js -- receives the websocket feed from Schwab and sends it
+// via SSE to the frontend
+// Author: Jason Levitt
+
 import { StreamingApiClient } from "schwab-client-js";
 
 let streamclient = null;

@@ -1,3 +1,6 @@
+// StockDashboard - Four charts that are populated by an SSE connection
+// Author: Jason Levitt
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -26,7 +29,7 @@ const StockDashboard = () => {
     eventSource.onmessage = (event) => {
       try {
         const parsedData = JSON.parse(event.data);
-        console.log("Incoming SSE Data:", parsedData); // Debug: Log the incoming data
+        console.log("Incoming SSE Data:", parsedData); // Log the incoming data
 
         if (parsedData?.data?.[0]?.content) {
           parsedData.data[0].content.forEach((entry) => {

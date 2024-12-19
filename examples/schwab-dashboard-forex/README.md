@@ -7,7 +7,7 @@
      <figcaption>schwab-dashboard-react</figcaption>
 </figure>
 
-## It streams real-time forex data from Schwab and displays it in charts in your web browser
+## This dashboard uses pure HTML/CSS and Lightweight-Charts to stream real-time forex data from Schwab and display it in your web browser
 
 ### **schwab-client-js** gives you complete access to the Schwab REST API using convenient classes and methods. You can stream real-time market data, create and track orders, and retrieve information about your account as well as retrieve different types of market data.
 

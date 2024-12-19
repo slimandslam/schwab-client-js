@@ -1,10 +1,11 @@
 # schwab-dashboard-nextjs
 
 ## A stock market dashboard using the streaming class from schwab-client-js
+
 ## Uses NextJS and Tailwind and reCharts
 
 <figure>
-     <img src="public/stockdashboard.png" alt="Description" width="800">
+     <img src="public/schwab-dashboard-nextjs.png" alt="Description" width="800">
      <figcaption>schwab-dashboard-nextjs</figcaption>
 </figure>
 
@@ -38,9 +39,9 @@ or
 npm run dev
 ```
 
-Those commands will run NextJS and then try to open the frontend in your default web browser. 
+Those commands will run NextJS and then try to open the frontend in your default web browser.
 The dashboard uses SSE (Server-Sent Events) to send the data from NextJS to the web browser.
-You can change the stock ticker symbol by editing the file: ```app/api/market-stream/route.js```
+You can change the stock ticker symbol by editing the file: `app/api/market-stream/route.js`
 
 ## MIT License
 
@@ -51,11 +52,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-
-
-
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
