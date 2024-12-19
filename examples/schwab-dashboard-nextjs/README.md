@@ -2,14 +2,12 @@
 
 ## A stock market dashboard using the streaming class from schwab-client-js
 
-## Uses NextJS and Tailwind and reCharts
-
 <figure>
      <img src="public/schwab-dashboard-nextjs.png" alt="Description" width="800">
      <figcaption>schwab-dashboard-nextjs</figcaption>
 </figure>
 
-## It streams real-time market data from Schwab and displays it in charts in your web browser
+## This dashboard uses NextJS, Tailwind, and Recharts to stream real-time market data from Schwab and display it in your web browser
 
 ### **schwab-client-js** gives you complete access to the Schwab REST API using convenient classes and methods. You can stream real-time market data, create and track orders, and retrieve information about your account as well as retrieve different types of market data.
 
