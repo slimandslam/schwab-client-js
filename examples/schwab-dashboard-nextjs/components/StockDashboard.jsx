@@ -1,9 +1,6 @@
-// StockDashboard - Four charts that are populated by an SSE connection
-// Author: Jason Levitt
-
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LineChart,
   Line,
@@ -22,50 +19,77 @@ const StockDashboard = () => {
   const [lastHighPrice, setLastHighPrice] = useState(null);
   const [lastLowPrice, setLastLowPrice] = useState(null);
   const [closePrice, setClosePrice] = useState(null);
+  const [error, setError] = useState(null);
+  const eventSourceRef = useRef(null); // Persist the SSE connection across re-renders
 
   useEffect(() => {
-    const eventSource = new EventSource("/api/market-stream");
+    if (!eventSourceRef.current) {
+      console.log("Establishing SSE connection...");
+      const eventSource = new EventSource("/api/market-stream");
+      eventSourceRef.current = eventSource;
 
-    eventSource.onmessage = (event) => {
-      try {
-        const parsedData = JSON.parse(event.data);
-        console.log("Incoming SSE Data:", parsedData); // Log the incoming data
+      eventSource.onopen = () => {
+        console.log("SSE connection established.");
+        setError(null); // Clear any existing error state
+      };
 
-        if (parsedData?.data?.[0]?.content) {
-          parsedData.data[0].content.forEach((entry) => {
-            const timestamp = new Date(
-              parsedData.data[0].timestamp,
-            ).toLocaleTimeString();
+      eventSource.onmessage = (event) => {
+        try {
+          const parsedData = JSON.parse(event.data);
+          console.log("Incoming SSE Data:", parsedData);
 
-            // Persist high/low prices and close price if they are undefined
-            const highPrice = entry[10] ?? lastHighPrice;
-            const lowPrice = entry[11] ?? lastLowPrice;
+          if (parsedData?.data?.[0]?.content) {
+            parsedData.data[0].content.forEach((entry) => {
+              const timestamp = new Date(
+                parsedData.data[0].timestamp,
+              ).toLocaleTimeString();
 
-            if (entry[10] !== undefined) setLastHighPrice(entry[10]);
-            if (entry[11] !== undefined) setLastLowPrice(entry[11]);
-            if (entry[12] !== undefined) setClosePrice(entry[12]);
+              const highPrice = entry[10] ?? lastHighPrice;
+              const lowPrice = entry[11] ?? lastLowPrice;
 
-            setData((prevData) => [
-              ...prevData.slice(-100), // Keep only the last 100 points to limit memory usage
-              {
-                time: timestamp,
-                bidPrice: entry[1],
-                askPrice: entry[2],
-                lastSize: entry[9],
-                highPrice,
-                lowPrice,
-                netChange: entry[18],
-              },
-            ]);
-          });
+              if (entry[10] !== undefined) setLastHighPrice(entry[10]);
+              if (entry[11] !== undefined) setLastLowPrice(entry[11]);
+              if (entry[12] !== undefined) setClosePrice(entry[12]);
+
+              setData((prevData) => [
+                ...prevData.slice(-100), // Keep only the last 100 points
+                {
+                  time: timestamp,
+                  bidPrice: entry[1],
+                  askPrice: entry[2],
+                  lastSize: entry[9],
+                  highPrice,
+                  lowPrice,
+                  netChange: entry[18],
+                },
+              ]);
+            });
+          }
+        } catch (error) {
+          console.error("Error processing SSE data:", error);
         }
-      } catch (error) {
-        console.error("Error processing SSE data:", error);
+      };
+
+      eventSource.onerror = () => {
+        console.error("SSE connection error. Reconnecting...");
+        setError("Connection lost. Reconnecting...");
+        eventSource.close();
+
+        // Reconnect after a delay
+        setTimeout(() => {
+          eventSourceRef.current = null; // Clear the ref for reconnection
+        }, 5000);
+      };
+    }
+
+    return () => {
+      if (eventSourceRef.current) {
+        console.log("Cleaning up SSE connection...");
+        eventSourceRef.current.close();
+        eventSourceRef.current = null;
       }
     };
-
-    return () => eventSource.close();
-  }, [lastHighPrice, lastLowPrice]);
+  }, [lastHighPrice, lastLowPrice]); // Dependencies ensure prices are preserved across re-renders
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
