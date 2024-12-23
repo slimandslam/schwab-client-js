@@ -37,7 +37,8 @@
     "lint": "eslint ."
   },
   "bin": {
-    "schwab-authorize": "bin/schwab-authorize.js"
+    "schwab-authorize": "bin/schwab-authorize.js",
+    "manual-authorize": "bin/manual-authorize.js"
   },
   "dependencies": {
     "@types/debug": "^4.1.12",
