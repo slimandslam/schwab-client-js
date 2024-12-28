@@ -55,7 +55,7 @@ interface ChainsOptions {
  * StreamingApiClient -- real-time streaming of market data
  */
 declare class SchwabAPIclient {
-    constructor();
+    constructor(appKey?: string, appSecret?: string, appRefresh?: string);
     /**
      * @method checkAccessToken
      * @description Refreshes the access token if it has expired

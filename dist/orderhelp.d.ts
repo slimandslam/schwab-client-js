@@ -4,7 +4,11 @@
  * @license MIT
  *
  * @description Provides helper methods to create JSON order objects for input
- * into Schwab API trading functions.
+ * into Schwab API trading functions. All 27 functions are listed in the export
+ * statement immediately below these comments. All of the functions except for
+ * optionSymbol() create output a JSON object suitable for creating a trade of
+ * some kind. optionSymbol() just generates option symbols in the format used
+ * by Schwab.
  *
  * These functions are based on the Python helper functions created by Alex Golec which
  * are documented here:  https://schwab-py.readthedocs.io/en/latest/order-templates.html
