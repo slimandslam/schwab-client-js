@@ -1,6 +1,23 @@
 # Schwab API Configuration
 
+## Contents
+  * [Creating Your Schwab App](#creating-your-schwab-app)
+    + [_Figure 1: Creating a new app_](#-figure-1--creating-a-new-app-)
+    + [Adding API Products](#adding-api-products)
+    + [Callback URL(s)](#callback-url-s-)
+  * [Modifying Your Schwab App](#modifying-your-schwab-app)
+    + [_Figure 2: Modifying an existing app_](#-figure-2--modifying-an-existing-app-)
+    + [API Rate Limits](#api-rate-limits)
+    + [_Figure 3: Changing the rate limit for orders_](#-figure-3--changing-the-rate-limit-for-orders-)
+  * [Schwab API Refresh Token](#schwab-api-refresh-token)
+  * [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
+- [Schwab-Authorize and Schwab-Manual](#schwab-authorize-and-schwab-manual)
+  * [Using schwab-authorize.js](#using-schwab-authorizejs)
+  * [Using manual-authorize.js](#using-manual-authorizejs)
+
+
 ## Creating Your Schwab App
+I'm assuming that you've logged into developer.schwab.com, went to your "dashboard" and are creating an app.
 
 ![Create A Schwab App](images/CreateApp.jpg)
 
@@ -8,7 +25,7 @@
 
 ### Adding API Products
 
-When you create your app on developer.schwab.com, you have to make some choices that impact the use of the API (See Figure 1 below). First, you have the option of including one or both of the API "products':
+When you create your app on developer.schwab.com, you have to make some choices that impact the use of the API (See Figure 1 above). First, you have the option of including one or both of the API "products':
 
 - Accounts and Trading Production
 - Market Data Production

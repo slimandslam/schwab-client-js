@@ -1,6 +1,22 @@
-# Developer Reference For The Schwab API
+# Developer Reference schwab-client-js
 
 ### This document is an overview of the classes, methods, and functions implemented in schwab-client-js. You may still need to look at the Schwab API documentation on developer.schwab.com to see what elements are returned by API calls, details of error messages, and various structures such as order objects and streaming subscription formats.
+
+# Contents
+
+* [The Classes](#the-classes)
+* [Subclasses and Methods for Class SchwabAPIclient](#subclasses-and-methods-for-class-schwabapiclient)
+    + [Two Minor Changes To The API That I Made](#two-minor-changes-to-the-api-that-i-made)
+    + [Date/Time Usage](#date-time-usage)
+    + [MarketApiClient() Usage](#marketapiclient---usage)
+    + [TradingApiClient() Usage](#tradingapiclient---usage)
+    + [StreamingApiClient() Usage](#streamingapiclient---usage)
+    + [Table 1: Table Of Classes And Methods](#table-1--table-of-classes-and-methods)
+  * [Helper Functions For Making Orders](#helper-functions-for-making-orders)
+    + [Creating Option Symbols](#creating-option-symbols)
+    + [Creating Order Objects](#creating-order-objects)
+    + [Table 2: Table Of Helper Functions](#table-2--table-of-helper-functions)
+  * [Debugging](#debugging)
 
 ## The Classes
 
