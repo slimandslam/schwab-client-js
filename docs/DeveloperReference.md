@@ -450,7 +450,7 @@ import { optionSymbol } from "schwab-client-js/orderhelp";
 const optsymbol = optionSymbol("XYZ", "210115", "C", "62.50");
 ```
 
-**The resulting option symbol is: <span style="display: inline-block; white-space: pre;">"XYZ   210115C00062500"</span>**
+**The resulting option symbol is: `"XYZ   210115C00062500"`** (there are three spaces between "XYZ" and "210"
 
 ### Creating Order Objects
 
