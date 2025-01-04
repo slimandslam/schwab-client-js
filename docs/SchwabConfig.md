@@ -2,13 +2,13 @@
 
 ## Contents
   * [Creating Your Schwab App](#creating-your-schwab-app)
-    + [_Figure 1: Creating a new app_](#-figure-1--creating-a-new-app-)
+    + [Figure 1: Creating a new app](#figure-1-creating-a-new-app)
     + [Adding API Products](#adding-api-products)
     + [Callback URL(s)](#callback-url-s-)
   * [Modifying Your Schwab App](#modifying-your-schwab-app)
-    + [_Figure 2: Modifying an existing app_](#-figure-2--modifying-an-existing-app-)
+    + [Figure 2: Modifying an existing app](#figure-2-modifying-an-existing-app)
     + [API Rate Limits](#api-rate-limits)
-    + [_Figure 3: Changing the rate limit for orders_](#-figure-3--changing-the-rate-limit-for-orders-)
+    + [Figure 3: Changing the rate limit for orders](#figure-3-changing-the-rate-limit-for-orders)
   * [Schwab API Refresh Token](#schwab-api-refresh-token)
      + [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
      + [schwab-authorize.js and manual-authorize.js](#schwab-authorizejs-and-manual-authorizejs)
@@ -21,7 +21,7 @@ I'm assuming that you've logged into developer.schwab.com, went to your "dashboa
 
 ![Create A Schwab App](images/CreateApp.jpg)
 
-### _Figure 1: Creating a new app_
+### Figure 1: Creating a new app
 
 ### Adding API Products
 
@@ -44,7 +44,7 @@ The assumption here is that you're creating a web application, and that the call
 
 ![Modify A Schwab App](images/CreateAfter.jpg)
 
-### _Figure 2: Modifying an existing app_
+### Figure 2: Modifying an existing app
 
 Once you've created your app, you have to wait for it to be approved by Schwab. That usually takes 1-3 days. Once it's approved, you'll see that the **Status** is **Ready For Use**.
 
@@ -56,7 +56,7 @@ You can adjust the rate limit for orders which is listed as `Order Limit` in Fig
 
 ![Modify A Schwab App](images/OrderLimit.jpg)
 
-### _Figure 3: Changing the rate limit for orders_
+### Figure 3: Changing the rate limit for orders
 
 ## Schwab API Refresh Token
 
@@ -95,19 +95,19 @@ On MacOS and Linux, you should be able to run it from the command line when you'
 
 ![Modify A Schwab App](images/chrome1.jpg)
 
-<h3 style="display: inline;">*Figure 4: Clicking Through The Connection Warning on MacOS Chrome*</h3><br /><br />
+<h3 style="display: inline;">Figure 4: Clicking Through The Connection Warning on MacOS Chrome*</h3><br /><br />
 
 ![Modify A Schwab App](images/chrome2.jpg)
 
-<h3 style="display: inline;"> *Figure 5: You Clicked On The "Advanced" button*</h3><br /><br />
+<h3 style="display: inline;">Figure 5: You Clicked On The "Advanced" button*</h3><br /><br />
 
 ![Modify A Schwab App](images/chrome3.jpg)
 
-<h3 style="display: inline;"> *Figure 6: You Clicked "Proceed to 127.0.0.1 (unsafe) in Figure 5 so the "Authorization successful" message appears in your web browser*</h3><br /><br />
+<h3 style="display: inline;">Figure 6: You Clicked "Proceed to 127.0.0.1 (unsafe) in Figure 5 so the "Authorization successful" message appears in your web browser*</h3><br /><br />
 
 ![Modify A Schwab App](images/chrome4.jpg)
 
-<h3 style="display: inline;">*Figure 7: What You See On The Console*</h3><br />
+<h3 style="display: inline;">Figure 7: What You See On The Console*</h3><br />
 
 When `schwab-authorize` finishes, it automtically edits your `.env` file and adds (or updates) the `SCHWAB_REFRESH_TOKEN`.
 
@@ -121,6 +121,6 @@ On MacOS and Linux, you should be able to run it from the command line when you'
 
 ![Modify A Schwab App](images/manual.jpg)
 
-<h3 style="display: inline;">*Figure 8: Using manual-authorize.js*</h3><br />
+<h3 style="display: inline;">Figure 8: Using manual-authorize.js*</h3><br />
 
 The app (see Figure 8) tells you everything you need to do. You have 30 seconds after the URL is returned in the web browser to cut and paste it into the prompt shown. After 30 seconds the code expires and you have to run it again.

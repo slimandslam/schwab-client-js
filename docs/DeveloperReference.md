@@ -7,15 +7,15 @@
 * [The Classes](#the-classes)
 * [Subclasses and Methods for Class SchwabAPIclient](#subclasses-and-methods-for-class-schwabapiclient)
     + [Two Minor Changes To The API That I Made](#two-minor-changes-to-the-api-that-i-made)
-    + [Date/Time Usage](#date-time-usage)
-    + [MarketApiClient() Usage](#marketapiclient---usage)
-    + [TradingApiClient() Usage](#tradingapiclient---usage)
-    + [StreamingApiClient() Usage](#streamingapiclient---usage)
-    + [Table 1: Table Of Classes And Methods](#table-1--table-of-classes-and-methods)
+    + [Using Dates In Methods](#using-dates-in-methods)
+    + [MarketApiClient() Usage](#marketapiclient-usage)
+    + [TradingApiClient() Usage](#tradingapiclient-usage)
+    + [StreamingApiClient() Usage](#streamingapiclient-usage)
+    + [Table 1: Table Of Classes And Methods](#table-1-table-of-classes-and-methods)
   * [Helper Functions For Making Orders](#helper-functions-for-making-orders)
     + [Creating Option Symbols](#creating-option-symbols)
     + [Creating Order Objects](#creating-order-objects)
-    + [Table 2: Table Of Helper Functions](#table-2--table-of-helper-functions)
+    + [Table 2: Table Of Helper Functions](#table-2-table-of-helper-functions)
   * [Debugging](#debugging)
 
 ## The Classes
@@ -41,7 +41,7 @@ In general, I pass through anything that Schwab API calls return without modifyi
 - `placeOrderByAcct()` - This is the method for placing trades. When you place an order, I return a JSON object containing the orderId (the underlying Schwab API call puts the orderID in a header and returns null).
 - `orderDelete()` - I return null when you successfully delete an order.
 
-### Date/Time Usage
+### Using Dates In Methods
 
 In various methods, you may have to specify day/time in order to retrieve data from within a certain period of time. Two types of date/time formats are used, depending on the call. Check the Schwab developer docs to see which one you need. The two types:
 
