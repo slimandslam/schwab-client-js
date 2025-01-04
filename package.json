@@ -2,7 +2,7 @@
   "name": "schwab-client-js",
   "author": "Jason Levitt",
   "description": "Javascript client for the Schwab API",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "homepage": "https://github.com/slimandslam/schwab-client-js#readme",
   "main": "./dist/schwab-client-js.js",
   "bugs": {
@@ -43,9 +43,9 @@
   },
   "dependencies": {
     "@types/debug": "^4.1.12",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@types/ws": "^8.5.13",
-    "bufferutil": "^4.0.8",
+    "bufferutil": "^4.0.9",
     "debug": "^4.4.0",
     "dotenv": "^16.4.7",
     "open": "^10.1.0",
