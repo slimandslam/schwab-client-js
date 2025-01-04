@@ -46,7 +46,7 @@ $ yarn add schwab-client-js
 3. You need to signup for a [Schwab developer account](https://developer.schwab.com). The account is free.
 4. Login to your developer account and [create an "app"](https://developer.schwab.com/dashboard/apps) which is really just a web page where you configure the metadata for your API calls.
 
-See the [Schwab-Client-JS Configuration doc](docs/SchwabConfig.md) for details on creating your Schwab app.
+See the [Schwab API Configuration doc](docs/SchwabConfig.md) for details on creating your Schwab app.
 
 5. You have to wait (probably 1-3 days) for your app to be approved. Go to your [dashboard](https://developer.schwab.com/dashboard) to check on the status of your app. You cannot use the API while the status of your app is **Approved - Pending**. When the status of your app is **Ready For Use**, you can proceed.
 6. Once your app is approved, click on **View Details** for your app. At the bottom you should see your **App Key** and **Secret**.
@@ -55,11 +55,11 @@ See the [Schwab-Client-JS Configuration doc](docs/SchwabConfig.md) for details o
 
 **Schwab uses three-legged OAuth** for authentication. The details are on [developer.schwab.com here](https://developer.schwab.com/user-guides/get-started/authenticate-with-oauth) and [here](https://developer.schwab.com/products/trader-api--individual/details/documentation/Retail%20Trader%20API%20Production).
 
-**Schwab-Client-JS** uses environment-based security e.g. it uses a `.env` file to store your security tokens.
+**schwab-client-js** uses environment-based security e.g. it uses a `.env` file to store your security tokens.
 
 [Note: For situtations where using a ```.env```file or environment variables may not be optimal (possibly AWS Lambda, for example), schwab-client-js also supports injecting your security tokens directly e.g. ```const mktclient = new MarketApiClient(appKey,appSecret,appRefresh);```]
 
-1. Create a `.env` file at the root of your project and add the App Key and Secret from your app on developer.schwab.com. Optionally, you can add your callback URL to your .env file like this (for details on creating your `SCHWAB_CALLBACK_URL`, see the [Schwab-Client-JS Configuration doc](docs/SchwabConfig.md)):
+1. Create a `.env` file at the root of your project and add the App Key and Secret from your app on developer.schwab.com. Optionally, you can add your callback URL to your .env file like this (for details on creating your `SCHWAB_CALLBACK_URL`, see the [Schwab API Configuration doc](docs/SchwabConfig.md)):
 
 ```
 SCHWAB_CALLBACK_URL=https://127.0.0.1:5556
@@ -73,7 +73,7 @@ If you don't specify a `SCHWAB_CALLBACK_URL`, I will assume a default value of `
    `C:\> node node_modules/schwab-client-js/bin/schwab-authorize.js`
    Same with `manual-authorize`. The script `manual-authorize` is for users who would rather not deal with the self-signed SSL certificate that `schwab-authorize` generates.
 
-See the [Schwab-Client-JS Configuration doc](docs/SchwabConfig.md) for details about `schwab-authorize` and `manual-authorize`.
+See the [Schwab API Configuration doc](docs/SchwabConfig.md) for details about `schwab-authorize` and `manual-authorize`.
 
 3. Your `.env` file should now look like this (as previously mentioned, the `SCHWAB_CALLBACK_URL` is optional and will default to `https://127.0.0.1:5556` if not provided):
 

@@ -1,9 +1,10 @@
-# Developer Reference schwab-client-js
+# schwab-client-js Developer Reference
 
 ### This document is an overview of the classes, methods, and functions implemented in schwab-client-js. You may still need to look at the Schwab API documentation on developer.schwab.com to see what elements are returned by API calls, details of error messages, and various structures such as order objects and streaming subscription formats.
 
-# Contents
+## Contents
 
+* [Debugging](#debugging)
 * [The Classes](#the-classes)
 * [Subclasses and Methods for Class SchwabAPIclient](#subclasses-and-methods-for-class-schwabapiclient)
     + [Two Minor Changes To The API That I Made](#two-minor-changes-to-the-api-that-i-made)
@@ -12,11 +13,30 @@
     + [TradingApiClient() Usage](#tradingapiclient-usage)
     + [StreamingApiClient() Usage](#streamingapiclient-usage)
     + [Table 1: Table Of Classes And Methods](#table-1-table-of-classes-and-methods)
-  * [Helper Functions For Making Orders](#helper-functions-for-making-orders)
+* [Helper Functions For Making Orders](#helper-functions-for-making-orders)
     + [Creating Option Symbols](#creating-option-symbols)
     + [Creating Order Objects](#creating-order-objects)
     + [Table 2: Table Of Helper Functions](#table-2-table-of-helper-functions)
-  * [Debugging](#debugging)
+
+## Debugging
+
+schwab-client-js uses the [debug](https://www.npmjs.com/package/debug) package for quick and easy
+debugging. Simply add the `DEBUG` environment var to your `.env` file or as an environment variable, and debugging info will show up on the console. <br />
+
+**Available DEBUG namespaces**
+
+- `DEBUG=streaming:msgs` Displays all streaming messages and events
+- `DEBUG=fetch:args` Displays arguments to fetch() calls
+- `DEBUG=fetch:raw-response` Displays raw response object from fetch() calls
+
+**Other ways to use DEBUG**
+
+- `DEBUG=streaming:msgs,fetch:raw-response` Display both of these
+- `DEBUG=fetch:*` Display both `fetch:args` and `fetch:raw-response`
+- `DEBUG=*` Display everything
+
+When fetch() calls throw an exception, the error is printed on the console.
+
 
 ## The Classes
 
@@ -542,21 +562,3 @@ Output:
 | If one of the orders is executed, immediately cancel the other.                                              | `oneCancelsOther()`      | `primaryOrder: Order`, `secondaryOrder: Order`                                           |
 | If primaryOrder is executed, immediately place secondaryOrder.                                               | `firstTriggersSecond()`  | `primaryOrder: Order`, `secondaryOrder: Order`                                           |
 
-## Debugging
-
-schwab-client-js uses the [debug](https://www.npmjs.com/package/debug) package for quick and easy
-debugging. Simply add the `DEBUG` environment var to your `.env` file or as an environment variable, and debugging info will show up on the console. <br />
-
-**Available DEBUG namespaces**
-
-- `DEBUG=streaming:msgs` Displays all streaming messages and events
-- `DEBUG=fetch:args` Displays arguments to fetch() calls
-- `DEBUG=fetch:raw-response` Displays raw response object from fetch() calls
-
-**Other ways to use DEBUG**
-
-- `DEBUG=streaming:msgs,fetch:raw-response` Display both of these
-- `DEBUG=fetch:*` Display both `fetch:args` and `fetch:raw-response`
-- `DEBUG=*` Display everything
-
-When fetch() calls throw an exception, the error is printed on the console.
