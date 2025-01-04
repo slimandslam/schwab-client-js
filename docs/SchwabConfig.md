@@ -76,19 +76,19 @@ On MacOS and Linux, you should be able to run it from the command line when you'
 
 ### Figures 4, 5, 6, and 7 below show you the last few steps of running `schwab-authorize.js` if your default browser is Chrome on MacOS. The reason for adding a port number (in this case: 5556) to the localhost URL is so that `schwab-authorize.js` can read the URL returned by Schwab. Port numbers 0-1024 require superuser privileges to read (using no port number defaults to port 443 or 80).
 
-![Modify A Schwab App](images/Chrome1.jpg)
+![Modify A Schwab App](images/chrome1.jpg)
 
 <h3 style="display: inline;">*Figure 4: Clicking Through The Connection Warning on MacOS Chrome*</h3><br /><br />
 
-![Modify A Schwab App](images/Chrome2.jpg)
+![Modify A Schwab App](images/chrome2.jpg)
 
 <h3 style="display: inline;"> *Figure 5: You Clicked On The "Advanced" button*</h3><br /><br />
 
-![Modify A Schwab App](images/Chrome3.jpg)
+![Modify A Schwab App](images/chrome3.jpg)
 
 <h3 style="display: inline;"> *Figure 6: You Clicked "Proceed to 127.0.0.1 (unsafe) in Figure 5 so the "Authorization successful" message appears in your web browser*</h3><br /><br />
 
-![Modify A Schwab App](images/Chrome4.jpg)
+![Modify A Schwab App](images/chrome4.jpg)
 
 <h3 style="display: inline;">*Figure 7: What You See On The Console*</h3><br />
 
