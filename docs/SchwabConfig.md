@@ -10,10 +10,10 @@
     + [API Rate Limits](#api-rate-limits)
     + [_Figure 3: Changing the rate limit for orders_](#-figure-3--changing-the-rate-limit-for-orders-)
   * [Schwab API Refresh Token](#schwab-api-refresh-token)
-  * [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
-- [schwab-authorize.js and manual-authorize.js](#schwab-authorizejs-and-manual-authorizejs)
-  * [Using schwab-authorize.js](#using-schwab-authorizejs)
-  * [Using manual-authorize.js](#using-manual-authorizejs)
+     + [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
+     + [schwab-authorize.js and manual-authorize.js](#schwab-authorizejs-and-manual-authorizejs)
+     + [Using schwab-authorize.js](#using-schwab-authorizejs)
+     + [Using manual-authorize.js](#using-manual-authorizejs)
 
 
 ## Creating Your Schwab App
