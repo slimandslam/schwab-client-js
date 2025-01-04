@@ -11,7 +11,7 @@
     + [_Figure 3: Changing the rate limit for orders_](#-figure-3--changing-the-rate-limit-for-orders-)
   * [Schwab API Refresh Token](#schwab-api-refresh-token)
   * [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
-- [Schwab-Authorize and Schwab-Manual](#schwab-authorize-and-schwab-manual)
+- [schwab-authorize.js and manual-authorize.js](#schwab-authorize.js-and-manual-authorize.js)
   * [Using schwab-authorize.js](#using-schwab-authorizejs)
   * [Using manual-authorize.js](#using-manual-authorizejs)
 
@@ -78,7 +78,7 @@ If your `SCHWAB_CALLBACK_URL` is `https://127.0.0.1:5556`, then you'll see a mes
 
 The `AUTHORIZATION_CODE` must be used, within 30 seconds, in an API call to get the new `SCHWAB_REFRESH_TOKEN`.
 
-# Schwab-Authorize and Schwab-Manual
+# schwab-authorize.js and manual-authorize.js
 
 As you can imagine, getting the `SCHWAB_REFRESH_TOKEN` manually would be a bit tricky and error-prone. To automate the process, I created two scripts:
 
