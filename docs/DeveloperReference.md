@@ -1,6 +1,6 @@
 # schwab-client-js Developer Reference
 
-### This document is an overview of the classes, methods, and functions implemented in schwab-client-js. You may still need to look at the Schwab API documentation on developer.schwab.com to see what elements are returned by API calls, details of error messages, and various structures such as order objects and streaming subscription formats.
+### This document is an overview of the classes, methods, and functions implemented in schwab-client-js. You may still need to look at the Schwab API documentation on developer.schwab.com to see what elements are returned by API calls, details of error messages, and various structures such as streaming subscription parameters.
 
 ## Contents
 
@@ -46,7 +46,7 @@ schwab-client-js defines a class ` SchwabAPIclient` and three subclasses
 - `MarketApiClient()` - retrieve all sorts of market data
 - `StreamingApiClient()` - real-time streaming of market data
 
-Once your `.env` file is setup (see the [Schwab API Configuration](SchwabConfig.md) guide), running any of the methods associated with these classes is straightforward.
+Once your `.env` file is setup (see the [Readme](../Readme.md) for setup details), running any of the methods associated with these classes is straightforward.
 
 [Note: For situtations where using a ```.env```file or environment variables may not be optimal (possibly AWS Lambda, for example), schwab-client-js also supports injecting your security tokens directly e.g. ```const mktclient = new MarketApiClient(appKey,appSecret,appRefresh);```]
 
@@ -54,12 +54,11 @@ Once your `.env` file is setup (see the [Schwab API Configuration](SchwabConfig.
 
 ## Subclasses and Methods for Class SchwabAPIclient
 
-### Two Minor Changes To The API That I Made
+### One Minor Change To An API Call That I Made
 
-In general, I pass through anything that Schwab API calls return without modifying anything. There are two exceptions. In two methods, **when the call succeeds**, I return slightly different things than what the Schwab documentation says:
+In general, I pass through anything that Schwab API calls return without modifying anything. There is one exception. In one method, **when the call succeeds**, I return a slightly different thing than what the Schwab documentation says:
 
 - `placeOrderByAcct()` - This is the method for placing trades. When you place an order, I return a JSON object containing the orderId (the underlying Schwab API call puts the orderID in a header and returns null).
-- `orderDelete()` - I return null when you successfully delete an order.
 
 ### Using Dates In Methods
 
@@ -72,7 +71,7 @@ In various methods, you may have to specify day/time in order to retrieve data f
 
 All of the `MarketApiClient()` calls are HTTP GET calls, so they are simply fetching market data for you. There is a wide range of data you can fetch. The calls are listed in Table 1 below.
 
-Here's an example of getting the price history for the stock ticker "AMD". The call `priceHistory()` uses millseconds since the epoch to represent date/time. The Schwab developer docs explain each parameter in detail.
+Here's an example of getting the price history for the stock ticker "AMD". The call `priceHistory()` uses millseconds since the epoch to represent date/time. 
 
 ```
 import { MarketApiClient } from "schwab-client-js";
@@ -185,14 +184,14 @@ Partial output:
 
 The `TradingApiClient()` is where you can make equity and options orders of various styles as well as access your personal current and historical trading data and account information.
 
-If you are going to make orders or look at your historical transaction data, you probably need to specify your hashed account number. Use `accountNumbers()` to retrieve all authorized Schwab account numbers and their hashes (you may have more than one):
+If you are going to make orders or look at your historical transaction data, you probably need to specify your hashed account number. Use `accountNumbers()` to retrieve all authorized Schwab account numbers and their hashes (you may have more than one Schwab account):
 
 ```
 import { TradingApiClient } from  "schwab-client-js";
 const trdclient = new TradingApiClient();
 const accounts = await trdclient.accountsNumbers();
-// If you have two accounts, like this one, you'll need
-// to do a test to make sure you're using the
+// If you have authorized two accounts, as shown here, 
+// you'll need to do a test to make sure you're using the
 // correct hashValue. With only one account, it will
 // be the first array value: accounts[0].hashValue
 console.log(JSON.stringify(accounts, null, 2));
@@ -255,13 +254,13 @@ One rejected order was found. The output (edited for brevity):
 ]
 ```
 
-We need to create an order object (JSON structure) in order to make an order. I'll use one of the helper functions to create a JSON structure that opens an equity sell limit order, `equitySellLimit()`
+We need to create an order object (JSON structure) in order to submit an order. I'll use one of the helper functions to create a JSON structure that opens an equity limit sell order, `equitySellLimit()`
 
 ```
 import { equitySellLimit } from "schwab-client-js/orderhelp";
 
-// Equity short sell market order
-let tradeObj = equitySellLimit("IBM", "SPY", 10, "55.25");
+// Submit a limit sell order
+let tradeObj = equitySellLimit("IBM", 10, "55.25");
 console.log(JSON.stringify(tradeObj, null, 2));
 ```
 
@@ -287,7 +286,7 @@ Output:
 }
 ```
 
-Taking the account hash from the previous code above, as well as the trading object just created, we can execute an equity short sell market order:
+Taking the account hash from the previous code above, as well as the trading object just created, we can execute an equity limit sell order:
 
 ```
 import { TradingApiClient } from  "schwab-client-js";
@@ -352,7 +351,7 @@ await streamclient.streamInit();
 await streamclient.streamSchwabLogin();
 ```
 
-At this point, you're ready to tell Schwab which equities, options, futures, and forex data that you want to stream data about. The choices are fairly large and are beyond the scope of this document, but you can see the choices on developer.schwab.com [in this section](https://developer.schwab.com/products/trader-api--individual/details/documentation/Market%20Data%20Production)
+At this point, you're ready to tell Schwab what equities, options, futures, or forex data that you want to stream. The choices are fairly large and are beyond the scope of this document, but you can see the choices on developer.schwab.com [in this section](https://developer.schwab.com/products/trader-api--individual/details/documentation/Market%20Data%20Production)
 
 As illustrated below, the `streamSchwabRequest()` takes three parameters:
 
@@ -451,11 +450,11 @@ schwab-client-js has helper functions that make it easier to create order object
 
 - `placeOrderByAcct()`
 - `updateOrderById()`
-- `orderPreview()` -- not yet implemented by Schwab but still in the Schwab docs
+- `orderPreview()` -- not yet implemented by Schwab but still listed in the Schwab docs
 
 ### Creating Option Symbols
 
-All of the helper functions create order objects except for `optionSymbol()` which helps you create the Schwab format for an option symbol, which is (from the Schwab docs): <br /><br />
+All of the helper functions create order objects except for `optionSymbol()` which mereley helps you create the Schwab format for an option symbol, which is (from the Schwab docs): <br /><br />
 **Symbol (6 characters including spaces) + Expiration (6 characters, YYMMDD) + Call/Put (1 character: 'C' or 'P') + Strike Price (5+3=8 characters)**
 
 The Symbol is left-justified and padded with spaces, the expiration date is in the form YYMMDD, and the Strike Price has three zeros to the right of the decimal point and is padded on the left with zeroes. <br />
@@ -463,18 +462,18 @@ The Symbol is left-justified and padded with spaces, the expiration date is in t
 Stock Symbol: XYZ<br />
 Expiration: 2021/01/15<br />
 Type: Call<br />
-Strike Price: $62.50**<br />
+Strike Price: $62.50**
 
 ```
 import { optionSymbol } from "schwab-client-js/orderhelp";
 const optsymbol = optionSymbol("XYZ", "210115", "C", "62.50");
 ```
 
-**The resulting option symbol is: `"XYZ   210115C00062500"`** (there are three spaces between "XYZ" and "210"
+**The resulting option symbol is: `"XYZ   210115C00062500"`** (there are three spaces between "XYZ" and "210115"
 
 ### Creating Order Objects
 
-The table below contains all the helper functions for creating order objects (as well as optionSymbol() ). The helper functions have various parameters but they all return a single JSON object which you can use directly in your orders or modify further as needed before using.
+The table below contains all the helper functions for creating order objects (as well as optionSymbol() ). The helper functions have various parameters but they all return a single JSON object which you can use directly in your orders or you can modify the order object further as needed before using.
 
 Example:
 
@@ -534,7 +533,7 @@ Output:
 
 | Description                                                                                                   | Function                | Parameters                                                                                     |
 |---------------------------------------------------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------|
-| Create an option symbol in the format required by Schwab. The expiration date should be in the format "YYMMDD". | `optionSymbol()`        | `symbol: string`, `expirationDate: string`, `contractType: "C" | "P"`, `strikePrice: string` |
+| Create an option symbol in the format required by Schwab. The expiration date should be in the format "YYMMDD". | `optionSymbol()`        | `symbol: string`, `expirationDate: string`, `contractType: "C" or "P"`, `strikePrice: string` |
 | Returns a pre-filled JSON order object for an equity buy limit order.                                        | `equityBuyLimit()`      | `symbol: string`, `quantity: number`, `price: string`                                         |
 | Returns a pre-filled JSON order object for an equity buy market order.                                       | `equityBuyMarket()`     | `symbol: string`, `quantity: number`                                                         |
 | Returns a pre-filled JSON order object for an equity sell market order.                                      | `equitySellMarket()`    | `symbol: string`, `quantity: number`                                                         |

@@ -1,6 +1,6 @@
 # trading
 
-## Fetching trading data using schwab-client-js
+# Fetching trading data and making a trade using schwab-client-js
 
 ### **schwab-client-js** gives you complete access to the Schwab REST API using convenient classes and methods. You can stream real-time market data, create and track orders, and retrieve information about your account as well as retrieve different types of market data.
 

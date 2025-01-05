@@ -71,3 +71,13 @@ let params = {
 data = await mktclient.priceHistory("AMD", params);
 console.log("priceHistory DATA=", JSON.stringify(data));
 console.log("\n\n");
+
+// Create a Schwab-formatted option symbol
+import { optionSymbol } from "schwab-client-js/orderhelp";
+const optsymbol = optionSymbol("TSLA", "250207", "C", "415.00");
+// optsymbol is now: "TSLA  250207C00415000"
+// Fetch info about the options symbol
+data = await mktclient.quotes(optsymbol, null, null);
+console.log("quotes DATA=", JSON.stringify(data));
+console.log("\n\n");
+
