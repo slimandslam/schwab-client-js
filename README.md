@@ -2,7 +2,7 @@
 
 ## A modern wrapper around the Schwab financial API for Typescript and Javascript projects
 
-[![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![Donate Venmo](https://img.shields.io/badge/Donate%20via-Venmo-blue)](https://venmo.com/JasonLevitt) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) [![npm version](https://badge.fury.io/js/schwab-client-js.svg)](https://www.npmjs.com/package/schwab-client-js)
+[![Join our Discord](https://img.shields.io/discord/1326044850524651540.svg?label=Discord&logo=discord&color=7289DA)](https://discord.gg/Q9z8EnB8xD) [![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) [![npm version](https://badge.fury.io/js/schwab-client-js.svg)](https://www.npmjs.com/package/schwab-client-js)
 
 Disclaimer: This project is not affiliated with, endorsed by, or associated with The Charles Schwab Corporation. All registered trademarks are the property of their respective owners. Use of these names, logos, and brands is for identification purposes only. This project is licensed under the MIT license, and acts in accordance with Schwab's API terms and conditions.
 
@@ -24,6 +24,8 @@ Disclaimer: This project is not affiliated with, endorsed by, or associated with
 ### **schwab-client-js** gives you complete access to the Schwab REST API using convenient classes and methods. You can stream real-time market data, create and track orders, and retrieve information about your account as well as retrieve different types of market data.
 
 ### Note: This project only supports [nodejs](https://nodejs.org/). Although technically you could tweak schwab-client-js to run in a web browser, security concerns make that a poor choice.
+
+### Join the dicussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
 
 ## Installation
 
@@ -180,7 +182,11 @@ const data2 = await trdclient.ordersByAccount(accountHash, fromDate, toDate);
 console.log("ordersByAccount DATA=", JSON.stringify(data2));
 
 // Create a limit order during normal trading hours to buy
-// one share of CTRN (Citi Trends Inc) stock for $1 USD
+// one share of CTRN (Citi Trends Inc) stock for $1 USD.
+// You can use the helper functions mentioned in the section
+// above to create this object: 
+// const orderObj = equityBuyLimit("CTRN", 1, "1.00");
+
 const orderObj = {
          "orderType": "LIMIT",
          "session": "NORMAL",
@@ -199,16 +205,19 @@ const orderObj = {
          ]
 };
 
-// Place the above trade using the specified Schwab account
+// Before placing the order, you can preview the order to see the fees (if any) and status
 const accountHash="4B9A9B50B7886A574E2A793DFE9B944EA2DAB9"; // Your hashed account number
-const data3 = await trdclient.placeOrderByAcct(accountHash, orderObj);
-console.log("placeOrderByAcct DATA=", JSON.stringify(data3)); // Should return an orderId
+const data3 = await trdclient.orderPreview(accountHash, orderObj);
+console.log("orderPreview DATA=", JSON.stringify(data3)); // Should return a `trueCommission` section and `status`
+
+// Place the trade using the specified Schwab account
+const data4 = await trdclient.placeOrderByAcct(accountHash, orderObj);
+console.log("placeOrderByAcct DATA=", JSON.stringify(data4)); // Should return an orderId
 
 // Delete an existing order
-const accountHash="4B9A9B50B7886A574E2A793DFE9B944EA2DAB9";
 const orderID="435234523452345";
-const data4 = await trdclient.orderDelete(accountHash, orderId);
-console.log("orderDelete DATA=", JSON.stringify(data4)); // Successful deletes return null so this should show no JSON
+const data5 = await trdclient.orderDelete(accountHash, orderId);
+console.log("orderDelete DATA=", JSON.stringify(data5)); // Successful deletes return null so this should show no JSON
 
 ```
 

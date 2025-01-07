@@ -306,6 +306,14 @@ Output:
 
 The `orderId` can then be used in the `orderById()` call to check the status of the order, or with `orderDelete()` to delete the order.
 
+Before you place your order, you may wish to use the method `orderPreview()` to see any fees (if any) associated with the trade, or to see the status of your trade, for example, if it's rejected for some reason.
+
+```
+const previewObj = await trdclient.orderPreview(acctHash, 
+tradeObj);
+console.log(JSON.stringify(previewObj, null, 2));
+```
+
 #### See the [examples directory](examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
 
 ### StreamingApiClient() Usage
@@ -446,11 +454,11 @@ streamclient.streamClose();
 
 [Note: These helper functions were ported by me from [Alex Golec's Python project](https://github.com/alexgolec/schwab-py) to NodeJS]
 
-schwab-client-js has helper functions that make it easier to create order object(s). Creating an order object -- a JSON structure -- is necessary in order to place or update an order. The two functions you use for placing and updating an order are:
+schwab-client-js has helper functions that make it easier to create order object(s). Creating an order object -- a JSON structure -- is necessary in order to place or update an order. The three functions you use for placing, updating, or previewing an order are:
 
-- `placeOrderByAcct()`
-- `updateOrderById()`
-- `orderPreview()` -- not yet implemented by Schwab but still listed in the Schwab docs
+- `placeOrderByAcct()` -- place an order
+- `updateOrderById()` -- update an existing order
+- `orderPreview()` -- preview order before placing
 
 ### Creating Option Symbols
 
@@ -515,6 +523,15 @@ tradeObj.duration = "END_OF_WEEK";
 const trdclient = new TradingApiClient();
 const acctData = await trdclient.accountsNumbers();
 const acctHash = acctData[0].hashValue;
+
+// Optional: preview your order before submitting.
+// You can see any fees (if any) associated with the trade
+// (such as the $6.95 Schwab charges for OTC stock trades).
+// If your trade is rejected for some reason, the 
+// explanation will be returned. 
+const previewObj = await trdclient.orderPreview(acctHash, 
+tradeObj);
+// console.log(JSON.stringify(previewObj, null, 2));
 
 // Submit your order
 const orderId = await trdclient.placeOrderByAcct(acctHash, tradeObj);
