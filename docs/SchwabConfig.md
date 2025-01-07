@@ -1,5 +1,7 @@
 # Schwab API Configuration
 
+### Join the discussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
+
 ## Contents
   * [Creating Your Schwab App](#creating-your-schwab-app)
     + [Figure 1: Creating a new app](#figure-1-creating-a-new-app)

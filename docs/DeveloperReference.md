@@ -2,6 +2,8 @@
 
 ### This document is an overview of the classes, methods, and functions implemented in schwab-client-js. You may still need to look at the Schwab API documentation on developer.schwab.com to see what elements are returned by API calls, details of error messages, and various structures such as streaming subscription parameters.
 
+### Join the discussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
+
 ## Contents
 
 * [Debugging](#debugging)

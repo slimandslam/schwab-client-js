@@ -25,7 +25,7 @@ Disclaimer: This project is not affiliated with, endorsed by, or associated with
 
 ### Note: This project only supports [nodejs](https://nodejs.org/). Although technically you could tweak schwab-client-js to run in a web browser, security concerns make that a poor choice.
 
-### Join the dicussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
+### Join the discussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
 
 ## Installation
 
