@@ -1,6 +1,6 @@
 # schwab-client-js
 
-## A modern wrapper around the Schwab financial API for Typescript and Javascript projects
+## A modern wrapper around the Schwab financial API for NodeJS Typescript and Javascript projects
 
 [![Join our Discord](https://img.shields.io/discord/1326044850524651540.svg?label=Discord&logo=discord&color=7289DA)](https://discord.gg/Q9z8EnB8xD) [![Donate Paypal](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/jlevittpay?country.x=US&locale.x=en_US) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit) ![Node.js supported](https://img.shields.io/node/v/schwab-client-js.svg) ![npm Downloads](https://img.shields.io/npm/dt/schwab-client-js) [![npm version](https://badge.fury.io/js/schwab-client-js.svg)](https://www.npmjs.com/package/schwab-client-js)
 
