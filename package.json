@@ -2,7 +2,7 @@
   "name": "schwab-client-js",
   "author": "Jason Levitt",
   "description": "Javascript client for the Schwab API",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "homepage": "https://github.com/slimandslam/schwab-client-js#readme",
   "main": "./dist/schwab-client-js.js",
   "bugs": {

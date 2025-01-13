@@ -1,0 +1,10 @@
+# Do not include stocks with a closing price greater than PRICE_UPPER
+PRICE_UPPER=10
+# Do not include stocks with a closing price less than PRICE_LOWER
+PRICE_LOWER=.50
+# Do not include stocks with a total volume on last market day of less than VOLUME_LOWER
+VOLUME_LOWER=0
+# Do not include stocks on the BLACKLIST
+# BLACKLIST=AMZN,AMD,TSLA
+# Include trades of OTC stocks -- NOTE: Schwab charges $6.95 per trade for OTC stocks
+INCLUDE_OTC=false
