@@ -184,7 +184,7 @@ console.log("ordersByAccount DATA=", JSON.stringify(data2));
 // Create a limit order during normal trading hours to buy
 // one share of CTRN (Citi Trends Inc) stock for $1 USD.
 // You can use the helper functions mentioned in the section
-// above to create this object: 
+// above to create this object:
 // const orderObj = equityBuyLimit("CTRN", 1, "1.00");
 
 const orderObj = {
@@ -267,6 +267,12 @@ await streamclient.streamSchwabRequest("ADD", "LEVELONE_EQUITIES", params);
 await streamclient.streamSchwabLogout()
 streamclient.streamClose();
 ```
+
+## Code Examples
+
+### Algo-Trading
+
+The [algo-trading folder](examples/algo-trading) contains scripts that conveniently generate many common statistical indicators that you can use in your algo-trading projects. There is also a function `StockList()` which generates a large set of stock symbols and associated data.
 
 ### Streaming Dashboards
 

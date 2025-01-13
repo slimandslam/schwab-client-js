@@ -47,25 +47,23 @@ console.log("\n\n");
 /*  trading object.                                 */
 /*                                                  */
 
-
 console.log("Creating trading object.....");
 import { equityBuyLimit } from "schwab-client-js/orderhelp";
-let tradeObj = equityBuyLimit("CDT", 1, "0.50"); 
+let tradeObj = equityBuyLimit("CDT", 1, "0.50");
 console.log("Here is your trading object:");
 console.log(JSON.stringify(tradeObj, null, 2));
 
-console.log("Edit this file and uncomment the five lines below to make a trade using this trading object and then immediately check the status of the trade.....");
+console.log(
+  "Edit this file and uncomment the five lines below to make a trade using this trading object and then immediately check the status of the trade.....",
+);
 // const orderIdObj = await trdclient.placeOrderByAcct(acctHash, tradeObj);
 // const orderId = orderIdObj.orderId;
 // console.log("ORDERID=", orderId);
 // const status = await trdclient.orderById(acctHash, orderId);
 // console.log("ORDERSTATUS=", JSON.stringify(status));
 
-
 // To delete the order:
 // let data = await trdclient.orderDelete(acctHash, orderid);
 // orderDelete returns null if successful
 // You can also login to your account on schwab.com and manually delete orders
 //
-
-

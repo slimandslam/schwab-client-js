@@ -49,7 +49,7 @@ Note that `StockList()` generates a large array of objects where each object is 
 
 ## stocklist.js
 
-`stocklist.js` generates a giant list of stock symbols with accompanying statistical data. To use it, you need to get a free account at [Alpaca](https://alpaca.markets). Add your Alpaca keys to the usual `.env` file:
+`stocklist.js` generates a giant list of stock symbols with accompanying statistical data. To use it, you need to get a free account at [Alpaca](https://alpaca.markets). [Note: only `StockList()` requires an Alpaca account. All other functions just use the Schwab API only] Add your Alpaca keys to the usual `.env` file:
 
 ```
 APCA_API_KEY_ID=PKOXXXXXX93JL

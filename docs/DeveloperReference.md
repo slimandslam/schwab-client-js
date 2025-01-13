@@ -6,19 +6,19 @@
 
 ## Contents
 
-* [Debugging](#debugging)
-* [The Classes](#the-classes)
-* [Subclasses and Methods for Class SchwabAPIclient](#subclasses-and-methods-for-class-schwabapiclient)
-    + [Two Minor Changes To The API That I Made](#two-minor-changes-to-the-api-that-i-made)
-    + [Using Dates In Methods](#using-dates-in-methods)
-    + [MarketApiClient() Usage](#marketapiclient-usage)
-    + [TradingApiClient() Usage](#tradingapiclient-usage)
-    + [StreamingApiClient() Usage](#streamingapiclient-usage)
-    + [Table 1: Table Of Classes And Methods](#table-1-table-of-classes-and-methods)
-* [Helper Functions For Making Orders](#helper-functions-for-making-orders)
-    + [Creating Option Symbols](#creating-option-symbols)
-    + [Creating Order Objects](#creating-order-objects)
-    + [Table 2: Table Of Helper Functions](#table-2-table-of-helper-functions)
+- [Debugging](#debugging)
+- [The Classes](#the-classes)
+- [Subclasses and Methods for Class SchwabAPIclient](#subclasses-and-methods-for-class-schwabapiclient)
+  - [Two Minor Changes To The API That I Made](#two-minor-changes-to-the-api-that-i-made)
+  - [Using Dates In Methods](#using-dates-in-methods)
+  - [MarketApiClient() Usage](#marketapiclient-usage)
+  - [TradingApiClient() Usage](#tradingapiclient-usage)
+  - [StreamingApiClient() Usage](#streamingapiclient-usage)
+  - [Table 1: Table Of Classes And Methods](#table-1-table-of-classes-and-methods)
+- [Helper Functions For Making Orders](#helper-functions-for-making-orders)
+  - [Creating Option Symbols](#creating-option-symbols)
+  - [Creating Order Objects](#creating-order-objects)
+  - [Table 2: Table Of Helper Functions](#table-2-table-of-helper-functions)
 
 ## Debugging
 
@@ -38,7 +38,6 @@ debugging. Simply add the `DEBUG` environment var to your `.env` file or as an e
 - `DEBUG=*` Display everything
 
 When fetch() calls throw an exception, the error is printed on the console.
-
 
 ## The Classes
 
@@ -73,7 +72,7 @@ In various methods, you may have to specify day/time in order to retrieve data f
 
 All of the `MarketApiClient()` calls are HTTP GET calls, so they are simply fetching market data for you. There is a wide range of data you can fetch. The calls are listed in Table 1 below.
 
-Here's an example of getting the price history for the stock ticker "AMD". The call `priceHistory()` uses millseconds since the epoch to represent date/time. 
+Here's an example of getting the price history for the stock ticker "AMD". The call `priceHistory()` uses millseconds since the epoch to represent date/time.
 
 ```
 import { MarketApiClient } from "schwab-client-js";
@@ -192,7 +191,7 @@ If you are going to make orders or look at your historical transaction data, you
 import { TradingApiClient } from  "schwab-client-js";
 const trdclient = new TradingApiClient();
 const accounts = await trdclient.accountsNumbers();
-// If you have authorized two accounts, as shown here, 
+// If you have authorized two accounts, as shown here,
 // you'll need to do a test to make sure you're using the
 // correct hashValue. With only one account, it will
 // be the first array value: accounts[0].hashValue
@@ -311,7 +310,7 @@ The `orderId` can then be used in the `orderById()` call to check the status of 
 Before you place your order, you may wish to use the method `orderPreview()` to see any fees (if any) associated with the trade, or to see the status of your trade, for example, if it's rejected for some reason.
 
 ```
-const previewObj = await trdclient.orderPreview(acctHash, 
+const previewObj = await trdclient.orderPreview(acctHash,
 tradeObj);
 console.log(JSON.stringify(previewObj, null, 2));
 ```
@@ -529,9 +528,9 @@ const acctHash = acctData[0].hashValue;
 // Optional: preview your order before submitting.
 // You can see any fees (if any) associated with the trade
 // (such as the $6.95 Schwab charges for OTC stock trades).
-// If your trade is rejected for some reason, the 
-// explanation will be returned. 
-const previewObj = await trdclient.orderPreview(acctHash, 
+// If your trade is rejected for some reason, the
+// explanation will be returned.
+const previewObj = await trdclient.orderPreview(acctHash,
 tradeObj);
 // console.log(JSON.stringify(previewObj, null, 2));
 
@@ -550,33 +549,32 @@ Output:
 
 ### Table 2: Table Of Helper Functions
 
-| Description                                                                                                   | Function                | Parameters                                                                                     |
-|---------------------------------------------------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------|
-| Create an option symbol in the format required by Schwab. The expiration date should be in the format "YYMMDD". | `optionSymbol()`        | `symbol: string`, `expirationDate: string`, `contractType: "C" or "P"`, `strikePrice: string` |
-| Returns a pre-filled JSON order object for an equity buy limit order.                                        | `equityBuyLimit()`      | `symbol: string`, `quantity: number`, `price: string`                                         |
-| Returns a pre-filled JSON order object for an equity buy market order.                                       | `equityBuyMarket()`     | `symbol: string`, `quantity: number`                                                         |
-| Returns a pre-filled JSON order object for an equity sell market order.                                      | `equitySellMarket()`    | `symbol: string`, `quantity: number`                                                         |
-| Returns a pre-filled JSON order object for an equity sell limit order.                                       | `equitySellLimit()`     | `symbol: string`, `quantity: number`, `price: string`                                        |
-| Returns a pre-filled JSON order object for an equity short sell market order.                                | `equitySellShortMarket()` | `symbol: string`, `quantity: number`                                                       |
-| Returns a pre-filled JSON order object for an equity short sell limit order.                                 | `equitySellShortLimit()` | `symbol: string`, `quantity: number`, `price: string`                                       |
-| Returns a pre-filled JSON order object for an equity buy-to-cover market order.                              | `equityBuyToCoverMarket()` | `symbol: string`, `quantity: number`                                                      |
-| Returns a pre-filled JSON order object for an equity buy-to-cover limit order.                               | `equityBuyToCoverLimit()` | `symbol: string`, `quantity: number`, `price: string`                                      |
-| Returns a pre-filled JSON order object for a buy-to-open market order.                                       | `optionBuyToOpenMarket()` | `symbol: string`, `quantity: number`                                                      |
-| Returns a pre-filled JSON order object for a buy-to-open limit order.                                        | `optionBuyToOpenLimit()` | `symbol: string`, `quantity: number`, `price: string`                                      |
-| Returns a pre-filled JSON order object for a sell-to-open market order.                                      | `optionSellToOpenMarket()` | `symbol: string`, `quantity: number`                                                     |
-| Returns a pre-filled JSON order object for a sell-to-open limit order.                                       | `optionSellToOpenLimit()` | `symbol: string`, `quantity: number`, `price: string`                                     |
-| Returns a pre-filled JSON order object for a buy-to-close market order.                                      | `optionBuyToCloseMarket()` | `symbol: string`, `quantity: number`                                                     |
-| Returns a pre-filled JSON order object for a buy-to-close limit order.                                       | `optionBuyToCloseLimit()` | `symbol: string`, `quantity: number`, `price: string`                                     |
-| Returns a pre-filled JSON order object for a sell-to-close market order.                                     | `optionSellToCloseMarket()` | `symbol: string`, `quantity: number`                                                    |
-| Returns a pre-filled JSON order object for a sell-to-close limit order.                                      | `optionSellToCloseLimit()` | `symbol: string`, `quantity: number`, `price: string`                                    |
-| Returns a pre-filled JSON order object that opens a bull call vertical position.                             | `bullCallVerticalOpen()` | `long_symbol: string`, `short_symbol: string`, `quantity: number`, `price: string`        |
-| Returns a pre-filled JSON order object that closes a bull call vertical position.                            | `bullCallVerticalClose()` | `short_symbol: string`, `long_symbol: string`, `quantity: number`, `price: string`       |
-| Returns a pre-filled JSON order object that opens a bull put vertical position.                              | `bullPutVerticalOpen()` | `long_put_symbol: string`, `short_put_symbol: string`, `quantity: number`, `price: string` |
-| Returns a pre-filled JSON order object that closes a bull put vertical position.                             | `bullPutVerticalClose()` | `long_put_symbol: string`, `short_put_symbol: string`, `quantity: number`, `price: string` |
-| Returns a pre-filled JSON order object that opens a bear call vertical position.                             | `bearCallVerticalOpen()` | `short_symbol: string`, `long_symbol: string`, `quantity: number`, `price: string`       |
-| Returns a pre-filled JSON order object that closes a bear call vertical position.                            | `bearCallVerticalClose()` | `symbol1: string`, `symbol2: string`, `quantity: number`, `price: string`               |
-| Returns a pre-filled JSON order object that closes a bear put vertical position.                             | `bearPutVerticalClose()` | `short_put_symbol: string`, `long_put_symbol: string`, `quantity: number`, `price: string` |
-| Returns a pre-filled JSON order object that opens a bear put vertical position.                              | `bearPutVerticalOpen()` | `short_put_symbol: string`, `long_put_symbol: string`, `quantity: number`, `price: string` |
-| If one of the orders is executed, immediately cancel the other.                                              | `oneCancelsOther()`      | `primaryOrder: Order`, `secondaryOrder: Order`                                           |
-| If primaryOrder is executed, immediately place secondaryOrder.                                               | `firstTriggersSecond()`  | `primaryOrder: Order`, `secondaryOrder: Order`                                           |
-
+| Description                                                                                                     | Function                    | Parameters                                                                                    |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------- |
+| Create an option symbol in the format required by Schwab. The expiration date should be in the format "YYMMDD". | `optionSymbol()`            | `symbol: string`, `expirationDate: string`, `contractType: "C" or "P"`, `strikePrice: string` |
+| Returns a pre-filled JSON order object for an equity buy limit order.                                           | `equityBuyLimit()`          | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for an equity buy market order.                                          | `equityBuyMarket()`         | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for an equity sell market order.                                         | `equitySellMarket()`        | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for an equity sell limit order.                                          | `equitySellLimit()`         | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for an equity short sell market order.                                   | `equitySellShortMarket()`   | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for an equity short sell limit order.                                    | `equitySellShortLimit()`    | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for an equity buy-to-cover market order.                                 | `equityBuyToCoverMarket()`  | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for an equity buy-to-cover limit order.                                  | `equityBuyToCoverLimit()`   | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for a buy-to-open market order.                                          | `optionBuyToOpenMarket()`   | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for a buy-to-open limit order.                                           | `optionBuyToOpenLimit()`    | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for a sell-to-open market order.                                         | `optionSellToOpenMarket()`  | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for a sell-to-open limit order.                                          | `optionSellToOpenLimit()`   | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for a buy-to-close market order.                                         | `optionBuyToCloseMarket()`  | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for a buy-to-close limit order.                                          | `optionBuyToCloseLimit()`   | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object for a sell-to-close market order.                                        | `optionSellToCloseMarket()` | `symbol: string`, `quantity: number`                                                          |
+| Returns a pre-filled JSON order object for a sell-to-close limit order.                                         | `optionSellToCloseLimit()`  | `symbol: string`, `quantity: number`, `price: string`                                         |
+| Returns a pre-filled JSON order object that opens a bull call vertical position.                                | `bullCallVerticalOpen()`    | `long_symbol: string`, `short_symbol: string`, `quantity: number`, `price: string`            |
+| Returns a pre-filled JSON order object that closes a bull call vertical position.                               | `bullCallVerticalClose()`   | `short_symbol: string`, `long_symbol: string`, `quantity: number`, `price: string`            |
+| Returns a pre-filled JSON order object that opens a bull put vertical position.                                 | `bullPutVerticalOpen()`     | `long_put_symbol: string`, `short_put_symbol: string`, `quantity: number`, `price: string`    |
+| Returns a pre-filled JSON order object that closes a bull put vertical position.                                | `bullPutVerticalClose()`    | `long_put_symbol: string`, `short_put_symbol: string`, `quantity: number`, `price: string`    |
+| Returns a pre-filled JSON order object that opens a bear call vertical position.                                | `bearCallVerticalOpen()`    | `short_symbol: string`, `long_symbol: string`, `quantity: number`, `price: string`            |
+| Returns a pre-filled JSON order object that closes a bear call vertical position.                               | `bearCallVerticalClose()`   | `symbol1: string`, `symbol2: string`, `quantity: number`, `price: string`                     |
+| Returns a pre-filled JSON order object that closes a bear put vertical position.                                | `bearPutVerticalClose()`    | `short_put_symbol: string`, `long_put_symbol: string`, `quantity: number`, `price: string`    |
+| Returns a pre-filled JSON order object that opens a bear put vertical position.                                 | `bearPutVerticalOpen()`     | `short_put_symbol: string`, `long_put_symbol: string`, `quantity: number`, `price: string`    |
+| If one of the orders is executed, immediately cancel the other.                                                 | `oneCancelsOther()`         | `primaryOrder: Order`, `secondaryOrder: Order`                                                |
+| If primaryOrder is executed, immediately place secondaryOrder.                                                  | `firstTriggersSecond()`     | `primaryOrder: Order`, `secondaryOrder: Order`                                                |

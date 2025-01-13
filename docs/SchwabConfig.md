@@ -3,22 +3,23 @@
 ### Join the discussion on our [Discord Server](https://discord.gg/Q9z8EnB8xD)
 
 ## Contents
-  * [Creating Your Schwab App](#creating-your-schwab-app)
-    + [Figure 1: Creating a new app](#figure-1-creating-a-new-app)
-    + [Adding API Products](#adding-api-products)
-    + [Callback URL(s)](#callback-url-s-)
-  * [Modifying Your Schwab App](#modifying-your-schwab-app)
-    + [Figure 2: Modifying an existing app](#figure-2-modifying-an-existing-app)
-    + [API Rate Limits](#api-rate-limits)
-    + [Figure 3: Changing the rate limit for orders](#figure-3-changing-the-rate-limit-for-orders)
-  * [Schwab API Refresh Token](#schwab-api-refresh-token)
-     + [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
-     + [schwab-authorize.js and manual-authorize.js](#schwab-authorizejs-and-manual-authorizejs)
-     + [Using schwab-authorize.js](#using-schwab-authorizejs)
-     + [Using manual-authorize.js](#using-manual-authorizejs)
 
+- [Creating Your Schwab App](#creating-your-schwab-app)
+  - [Figure 1: Creating a new app](#figure-1-creating-a-new-app)
+  - [Adding API Products](#adding-api-products)
+  - [Callback URL(s)](#callback-url-s-)
+- [Modifying Your Schwab App](#modifying-your-schwab-app)
+  - [Figure 2: Modifying an existing app](#figure-2-modifying-an-existing-app)
+  - [API Rate Limits](#api-rate-limits)
+  - [Figure 3: Changing the rate limit for orders](#figure-3-changing-the-rate-limit-for-orders)
+- [Schwab API Refresh Token](#schwab-api-refresh-token)
+  - [How The Schwab Refresh Token Is Created](#how-the-schwab-refresh-token-is-created)
+  - [schwab-authorize.js and manual-authorize.js](#schwab-authorizejs-and-manual-authorizejs)
+  - [Using schwab-authorize.js](#using-schwab-authorizejs)
+  - [Using manual-authorize.js](#using-manual-authorizejs)
 
 ## Creating Your Schwab App
+
 I'm assuming that you've logged into developer.schwab.com, went to your "[dashboard](https://developer.schwab.com/dashboard/apps)," and are creating an app.
 
 ![Create A Schwab App](images/CreateApp.jpg)

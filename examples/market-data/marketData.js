@@ -80,4 +80,3 @@ const optsymbol = optionSymbol("TSLA", "250207", "C", "415.00");
 data = await mktclient.quotes(optsymbol, null, null);
 console.log("quotes DATA=", JSON.stringify(data));
 console.log("\n\n");
-
