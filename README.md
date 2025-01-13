@@ -270,6 +270,9 @@ streamclient.streamClose();
 
 ## Code Examples
 
+### General Examples
+The [trading](examples/trading), [market-data](examples/market-data), and [streaming](examples/streaming) directories contain examples of using most of the API calls. 
+
 ### Algo-Trading
 
 The [algo-trading folder](examples/algo-trading) contains scripts that conveniently generate many common statistical indicators that you can use in your algo-trading projects. There is also a function `StockList()` which generates a large set of stock symbols and associated data.
