@@ -93,6 +93,7 @@ INCLUDE_OTC=false
 
 There is some info in the Alpaca data that I am ignoring but which you might choose to use. For each symbol, you get:
 
+```
 {
 "id": "03fb07bb-5db1-4077-8dea-5d711b272625",
 "class": "us_equity",
@@ -109,93 +110,96 @@ There is some info in the Alpaca data that I am ignoring but which you might cho
 "easy_to_borrow": true,
 "fractionable": true,
 "attributes": [
-"fractional_eh_enabled",
-"has_options"
-]
+  "fractional_eh_enabled",
+  "has_options"
+ ]
 }
+```
 
 I'm only using the "symbol" from each entry. You could refer back to the information if you want.
 
 In the final array, each symbol has this information with it:
 
+```
 {
-"assetMainType": "EQUITY",
-"assetSubType": "COE",
-"quoteType": "NBBO",
-"realtime": true,
-"ssid": 1449199007,
-"symbol": "AMD",
-"extended": {
-"askPrice": 0,
-"askSize": 0,
-"bidPrice": 0,
-"bidSize": 0,
-"lastPrice": 119.57,
-"lastSize": 1,
-"mark": 0,
-"quoteTime": 1736499600000,
-"totalVolume": 0,
-"tradeTime": 1736499595000
-},
-"fundamental": {
-"avg10DaysVolume": 34860299,
-"avg1YearVolume": 52675474,
-"divAmount": 0,
-"divFreq": 0,
-"divPayAmount": 0,
-"divYield": 0,
-"eps": 0.52912,
-"fundLeverageFactor": 0,
-"lastEarningsDate": "2024-10-29T04:00:00Z",
-"peRatio": 107.99408
-},
-"quote": {
-"52WeekHigh": 227.3,
-"52WeekLow": 114.4501,
-"askMICId": "XNAS",
-"askPrice": 115.6,
-"askSize": 1,
-"askTime": 1736557198826,
-"bidMICId": "MEMX",
-"bidPrice": 115.59,
-"bidSize": 1,
-"bidTime": 1736557198797,
-"closePrice": 121.84,
-"highPrice": 118.71,
-"lastMICId": "XADF",
-"lastPrice": 115.6,
-"lastSize": 1,
-"lowPrice": 114.4501,
-"mark": 115.6,
-"markChange": -6.24,
-"markPercentChange": -5.12147078,
-"netChange": -6.24,
-"netPercentChange": -5.12147078,
-"openPrice": 118.18,
-"postMarketChange": -0.44,
-"postMarketPercentChange": -0.37917959,
-"quoteTime": 1736557198826,
-"securityStatus": "Normal",
-"totalVolume": 59415614,
-"tradeTime": 1736557199347
-},
-"reference": {
-"cusip": "007903107",
-"description": "Advanced Micro Devic",
-"exchange": "Q",
-"exchangeName": "NASDAQ",
-"isHardToBorrow": false,
-"isShortable": true,
-"htbRate": 0
-},
-"regular": {
-"regularMarketLastPrice": 116.04,
-"regularMarketLastSize": 600,
-"regularMarketNetChange": -5.8,
-"regularMarketPercentChange": -4.76034143,
-"regularMarketTradeTime": 1736542800285
+	"assetMainType": "EQUITY",
+	"assetSubType": "COE",
+	"quoteType": "NBBO",
+	"realtime": true,
+	"ssid": 1449199007,
+	"symbol": "AMD",
+	"extended": {
+		"askPrice": 0,
+		"askSize": 0,
+		"bidPrice": 0,
+		"bidSize": 0,
+		"lastPrice": 119.57,
+		"lastSize": 1,
+		"mark": 0,
+		"quoteTime": 1736499600000,
+		"totalVolume": 0,
+		"tradeTime": 1736499595000
+	},
+	"fundamental": {
+		"avg10DaysVolume": 34860299,
+		"avg1YearVolume": 52675474,
+		"divAmount": 0,
+		"divFreq": 0,
+		"divPayAmount": 0,
+		"divYield": 0,
+		"eps": 0.52912,
+		"fundLeverageFactor": 0,
+		"lastEarningsDate": "2024-10-29T04:00:00Z",
+		"peRatio": 107.99408
+	},
+	"quote": {
+		"52WeekHigh": 227.3,
+		"52WeekLow": 114.4501,
+		"askMICId": "XNAS",
+		"askPrice": 115.6,
+		"askSize": 1,
+		"askTime": 1736557198826,
+		"bidMICId": "MEMX",
+		"bidPrice": 115.59,
+		"bidSize": 1,
+		"bidTime": 1736557198797,
+		"closePrice": 121.84,
+		"highPrice": 118.71,
+		"lastMICId": "XADF",
+		"lastPrice": 115.6,
+		"lastSize": 1,
+		"lowPrice": 114.4501,
+		"mark": 115.6,
+		"markChange": -6.24,
+		"markPercentChange": -5.12147078,
+		"netChange": -6.24,
+		"netPercentChange": -5.12147078,
+		"openPrice": 118.18,
+		"postMarketChange": -0.44,
+		"postMarketPercentChange": -0.37917959,
+		"quoteTime": 1736557198826,
+		"securityStatus": "Normal",
+		"totalVolume": 59415614,
+		"tradeTime": 1736557199347
+	},
+	"reference": {
+		"cusip": "007903107",
+		"description": "Advanced Micro Devic",
+		"exchange": "Q",
+		"exchangeName": "NASDAQ",
+		"isHardToBorrow": false,
+		"isShortable": true,
+		"htbRate": 0
+	},
+	"regular": {
+		"regularMarketLastPrice": 116.04,
+		"regularMarketLastSize": 600,
+		"regularMarketNetChange": -5.8,
+		"regularMarketPercentChange": -4.76034143,
+		"regularMarketTradeTime": 1736542800285
+	}
 }
-}
+```
 
 ## MIT License
 
