@@ -18,7 +18,7 @@ const App = () => {
   const [candlestickData, setCandlestickData] = useState({ SPY: [], AAPL: [] });
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:5000/market-stream");
+    const eventSource = new EventSource("http://localhost:5001/market-stream");
 
     eventSource.onmessage = (event) => {
       const message = JSON.parse(event.data);

@@ -3,7 +3,7 @@ import cors from "cors";
 import { StreamingApiClient } from "schwab-client-js";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 const corsOptions = {
   origin: "http://localhost:5173", // Allow your client app's origin
   methods: ["GET", "POST"], // Allow specific HTTP methods

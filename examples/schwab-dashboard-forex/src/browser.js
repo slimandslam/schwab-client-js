@@ -38,7 +38,7 @@ const forexChartContainers = {
 };
 
 // Connect to the SSE endpoint
-const eventSource = new EventSource("http://localhost:5000/forex-stream");
+const eventSource = new EventSource("http://localhost:5001/forex-stream");
 
 eventSource.onmessage = (event) => {
   try {

@@ -3,7 +3,7 @@ import cors from "cors";
 import { StreamingApiClient } from "schwab-client-js";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 let streamclient = null;
 
 // Apply CORS to allow requests from the React app
