@@ -18,22 +18,47 @@ const chart2 = createChart(document.getElementById("chart2"), chartOptions);
 const chart3 = createChart(document.getElementById("chart3"), chartOptions);
 const chart4 = createChart(document.getElementById("chart4"), chartOptions);
 
+// We are rounding the prices to four decimal places
 const forexChartContainers = {
   "EUR/USD": {
-    bid: chart1.addLineSeries({ color: "blue" }),
-    ask: chart1.addLineSeries({ color: "red" }),
+    bid: chart1.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "blue",
+    }),
+    ask: chart1.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "red",
+    }),
   },
   "USD/JPY": {
-    bid: chart2.addLineSeries({ color: "blue" }),
-    ask: chart2.addLineSeries({ color: "red" }),
+    bid: chart2.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "blue",
+    }),
+    ask: chart2.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "red",
+    }),
   },
   "USD/CAD": {
-    bid: chart3.addLineSeries({ color: "blue" }),
-    ask: chart3.addLineSeries({ color: "red" }),
+    bid: chart3.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "blue",
+    }),
+    ask: chart3.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "red",
+    }),
   },
   "USD/MXN": {
-    bid: chart4.addLineSeries({ color: "blue" }),
-    ask: chart4.addLineSeries({ color: "red" }),
+    bid: chart4.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "blue",
+    }),
+    ask: chart4.addLineSeries({
+      priceFormat: { type: 'custom', formatter: (price) => price.toFixed(4) },
+      color: "red",
+    }),
   },
 };
 
