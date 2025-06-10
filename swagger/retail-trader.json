@@ -1,0 +1,3665 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Trader API - Account Access and User Preferences",
+        "description": "Schwab Trader API access to Account, Order entry and User Preferences",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Schwab Trader API team",
+            "email": "TraderAPI@Schwab.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://api.schwabapi.com/trader/v1"
+        }
+    ],
+    "security": [
+        {
+            "oauth": [
+                "read",
+                "write"
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "name": "Accounts"
+        },
+        {
+            "name": "Orders"
+        },
+        {
+            "name": "Transactions"
+        }
+    ],
+    "paths": {
+        "/accounts/accountNumbers": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Get list of account numbers and their encrypted values",
+                "description": "Account numbers in plain text cannot be used outside of headers or request/response bodies. As the first step consumers must invoke this service to retrieve the list of plain text/encrypted value pairs, and use encrypted account values for all subsequent calls for any accountNumber request.",
+                "operationId": "getAccountNumbers",
+                "responses": {
+                    "200": {
+                        "description": "List of valid \"accounts\", matching the provided input parameters.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AccountNumberHash"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Get linked account(s) balances and positions for the logged in user.",
+                "description": "All the linked account information for the user logged in. The\nbalances on these accounts are displayed by default however the positions\non these accounts will be displayed based on the \"positions\" flag.",
+                "operationId": "getAccounts",
+                "parameters": [
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "This allows one to determine which fields they want returned. Possible value in this String can be:\n<br><code>positions</code><br> Example:<br><code>fields=positions</code>",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of valid \"accounts\", matching the provided input parameters.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Account"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountNumber}": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Get a specific account balance and positions for the logged in user.",
+                "description": "Specific account information with balances and positions.\nThe balance information on these accounts is displayed by default but\nPositions will be returned based on the \"positions\" flag.",
+                "operationId": "getAccount",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "This allows one to determine\nwhich fields they want returned. Possible values in this String can be:\n<br><code>positions</code><br> Example:<br><code>fields=positions</code>",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A valid account, matching the provided input parameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountNumber}/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get all orders for a specific account.",
+                "description": "All orders for a specific account. Orders retrieved can be filtered based on input parameters below. Maximum date range is 1 year.",
+                "operationId": "getOrdersByPathParam",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "The max number of orders to retrieve. Default is 3000.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "fromEnteredTime",
+                        "in": "query",
+                        "description": "Specifies that no orders entered before this time should be returned.\nValid ISO-8601 formats are :<br> <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>  Example fromEnteredTime is '2024-03-29T00:00:00.000Z'.\n'toEnteredTime' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "toEnteredTime",
+                        "in": "query",
+                        "description": "Specifies that no orders entered after this time should be returned.Valid\nISO-8601 formats are :<br> <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>.  Example toEnteredTime is '2024-04-28T23:59:59.000Z'.\n'fromEnteredTime' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Specifies that only orders of this status should be returned.",
+                        "schema": {
+                            "$ref": "#/components/schemas/apiOrderStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A List of orders for the account, matching the provided input parameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Order"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Place order for a specific account.",
+                "description": "Place an order for a specific account.",
+                "operationId": "placeOrder",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The new Order Object.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empty response body if an order was successfully placed/created.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            },
+                            "Location": {
+                                "description": "Link to the newly created order if order was successfully\ncreated.",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "content": {}
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            }
+        },
+        "/accounts/{accountNumber}/orders/{orderId}": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get a specific order by its ID, for a specific account",
+                "description": "Get a specific order by its ID, for a specific account",
+                "operationId": "getOrder",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "The ID of the order being retrieved.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An order object, matching the input parameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Order"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Cancel an order for a specific account",
+                "description": "Cancel a specific order for a specific account<br>",
+                "operationId": "cancelOrder",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "The ID of the order being cancelled",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empty response body if an order was successfully canceled.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {}
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Replace order for a specific account",
+                "description": "Replace an existing order for an account. The existing order will be replaced by the new               order. Once replaced, the old order will be canceled and a new order will be created.",
+                "operationId": "replaceOrder",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "The ID of the order being retrieved.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The Order Object.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empty response body if an order was successfully replaced/created.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            },
+                            "Location": {
+                                "description": "Link to the newly created order if order was successfully\ncreated.",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "content": {}
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                },
+                "x-codegen-request-body-name": "body"
+            }
+        },
+        "/orders": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Get all orders for all accounts",
+                "description": "Get all orders for all accounts<br>",
+                "operationId": "getOrdersByQueryParam",
+                "parameters": [
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "The max number of orders to retrieve. Default is 3000.",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "fromEnteredTime",
+                        "in": "query",
+                        "description": "Specifies that no orders entered before this time should be returned. Valid ISO-8601 formats are-\nyyyy-MM-dd'T'HH:mm:ss.SSSZ Date must be within 60 days from today's date.\n'toEnteredTime' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "toEnteredTime",
+                        "in": "query",
+                        "description": "Specifies that no orders entered after this time should be returned.Valid ISO-8601 formats are -\nyyyy-MM-dd'T'HH:mm:ss.SSSZ. 'fromEnteredTime' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Specifies that only orders of this status should be returned.",
+                        "schema": {
+                            "$ref": "#/components/schemas/apiOrderStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A List of orders for the specified account or if its not mentioned,\nfor all the linked accounts, matching the provided input parameters.",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Order"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountNumber}/previewOrder": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Preview order for a specific account. **Coming Soon**.",
+                "description": "Preview an order for a specific account.",
+                "operationId": "previewOrder",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The Order Object.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PreviewOrder"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "An order object, matching the input parameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PreviewOrder"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountNumber}/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get all transactions information for a specific account.",
+                "description": "All transactions for a specific account. Maximum number of transactions in response is 3000. Maximum date range is 1 year.",
+                "operationId": "getTransactionsByPathParam",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "description": "Specifies that no transactions entered before this time should be returned.\nValid ISO-8601 formats are :<br> <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code> .  Example start date is '2024-03-28T21:10:42.000Z'. The 'endDate' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "endDate",
+                        "in": "query",
+                        "description": "Specifies that no transactions entered after this time should be returned.Valid\nISO-8601 formats are :<br> <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>. Example start date is '2024-05-10T21:10:42.000Z'.\nThe 'startDate' must also be set.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "symbol",
+                        "in": "query",
+                        "description": "It filters all the transaction activities based on the symbol specified. <u>NOTE:</u> If there is any special character in the symbol, please send th encoded value.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "types",
+                        "in": "query",
+                        "description": "Specifies that only transactions of this status should be returned.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/TransactionType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A List of orders for the account, matching the provided input\nparameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountNumber}/transactions/{transactionId}": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get specific transaction information for a specific account",
+                "description": "Get specific transaction information for a specific account",
+                "operationId": "getTransactionsById",
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "path",
+                        "description": "The encrypted ID of the account",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "transactionId",
+                        "in": "path",
+                        "description": "The ID of the transaction being retrieved.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A List of orders for the account, matching the provided input parameters",
+                        "headers": {
+                            "Schwab-Client-CorrelId": {
+                                "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        },
+        "/userPreference": {
+            "get": {
+                "tags": [
+                    "UserPreference"
+                ],
+                "summary": "Get user preference information for the logged in user.",
+                "description": "Get user preference information for the logged in user.",
+                "operationId": "getUserPreference",
+                "responses": {
+                    "200": {
+                        "description": "List of user preference values.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserPreference"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/NotAuthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    },
+                    "503": {
+                        "$ref": "#/components/responses/ServiceUnavailable"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "oauth": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "https://api.schwabapi.com/v1/oauth/authorize?response_type=code&client_id=1wzwOrhivb2PkR1UCAUVTKYqC4MTNYlj&scope=readonly&redirect_uri=https://developer.schwab.com/oauth2-redirect.html",
+                        "tokenUrl": "https://api.schwabapi.com/v1/oauth/token",
+                        "scopes": {}
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "ThirdPartyId": {
+                "name": "ThirdPartyId",
+                "in": "header",
+                "description": "The ID of the registered third party application",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "8e0744d6-c9c3-490e-9d00-2c62de9275f3"
+            },
+            "Accept": {
+                "name": "Accept",
+                "in": "header",
+                "description": "application/json",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "application/json"
+            },
+            "ContentType": {
+                "name": "Content-Type",
+                "in": "header",
+                "description": "application/json",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "application/json"
+            },
+            "Schwab-Client-Channel": {
+                "name": "Schwab-Client-Channel",
+                "in": "header",
+                "description": "Channel name. e.g- GW",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "GW"
+            },
+            "Schwab-Client-CorrelId": {
+                "name": "Schwab-Client-CorrelId",
+                "in": "header",
+                "description": "Correlation Id. Auto generated",
+                "schema": {
+                    "type": "string"
+                },
+                "example": "e1a8f21f-c08c-4a3b-b721-3219e391c415"
+            },
+            "Schwab-Resource-Version": {
+                "name": "Schwab-Resource-Version",
+                "in": "header",
+                "description": "version. e.g- 1.0",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "Schwab-Client-AppId": {
+                "name": "Schwab-Client-AppId",
+                "in": "header",
+                "description": "schwab appId. e.g- AD00007919",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                },
+                "example": "AD00007919"
+            },
+            "Schwab-RRBus-PilotRollout": {
+                "name": "Schwab-RRBus-PilotRollout",
+                "in": "header",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "Region=TUP"
+                }
+            }
+        },
+        "headers": {
+            "Schwab-Client-CorrelId": {
+                "description": "Correlation Id. Auto generated",
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "responses": {
+            "BadRequest": {
+                "description": "An error message indicating the validation problem with the request.",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            },
+            "NotAuthorized": {
+                "description": "An error message indicating either authorization token is invalid or there are no accounts the caller is allowed to view or use for trading that are registered with the provided third party application",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            },
+            "Forbidden": {
+                "description": "An error message indicating the caller is forbidden from accessing this service",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            },
+            "NotFound": {
+                "description": "An error message indicating the resource is not found",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            },
+            "InternalServerError": {
+                "description": "An error message indicating there was an unexpected server error",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            },
+            "ServiceUnavailable": {
+                "description": "An error message indicating server has a temporary problem responding",
+                "headers": {
+                    "Schwab-Client-CorrelID": {
+                        "$ref": "#/components/headers/Schwab-Client-CorrelId"
+                    }
+                },
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ServiceError"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "AccountNumberHash": {
+                "type": "object",
+                "properties": {
+                    "accountNumber": {
+                        "type": "string"
+                    },
+                    "hashValue": {
+                        "type": "string"
+                    }
+                }
+            },
+            "session": {
+                "type": "string",
+                "enum": [
+                    "NORMAL",
+                    "AM",
+                    "PM",
+                    "SEAMLESS"
+                ]
+            },
+            "duration": {
+                "type": "string",
+                "enum": [
+                    "DAY",
+                    "GOOD_TILL_CANCEL",
+                    "FILL_OR_KILL",
+                    "IMMEDIATE_OR_CANCEL",
+                    "END_OF_WEEK",
+                    "END_OF_MONTH",
+                    "NEXT_END_OF_MONTH",
+                    "UNKNOWN"
+                ]
+            },
+            "orderType": {
+                "type": "string",
+                "enum": [
+                    "MARKET",
+                    "LIMIT",
+                    "STOP",
+                    "STOP_LIMIT",
+                    "TRAILING_STOP",
+                    "CABINET",
+                    "NON_MARKETABLE",
+                    "MARKET_ON_CLOSE",
+                    "EXERCISE",
+                    "TRAILING_STOP_LIMIT",
+                    "NET_DEBIT",
+                    "NET_CREDIT",
+                    "NET_ZERO",
+                    "LIMIT_ON_CLOSE",
+                    "UNKNOWN"
+                ]
+            },
+            "orderTypeRequest": {
+                "description": "Same as orderType, but does not have UNKNOWN since this type is not allowed as an input",
+                "type": "string",
+                "enum": [
+                    "MARKET",
+                    "LIMIT",
+                    "STOP",
+                    "STOP_LIMIT",
+                    "TRAILING_STOP",
+                    "CABINET",
+                    "NON_MARKETABLE",
+                    "MARKET_ON_CLOSE",
+                    "EXERCISE",
+                    "TRAILING_STOP_LIMIT",
+                    "NET_DEBIT",
+                    "NET_CREDIT",
+                    "NET_ZERO",
+                    "LIMIT_ON_CLOSE"
+                ]
+            },
+            "complexOrderStrategyType": {
+                "type": "string",
+                "enum": [
+                    "NONE",
+                    "COVERED",
+                    "VERTICAL",
+                    "BACK_RATIO",
+                    "CALENDAR",
+                    "DIAGONAL",
+                    "STRADDLE",
+                    "STRANGLE",
+                    "COLLAR_SYNTHETIC",
+                    "BUTTERFLY",
+                    "CONDOR",
+                    "IRON_CONDOR",
+                    "VERTICAL_ROLL",
+                    "COLLAR_WITH_STOCK",
+                    "DOUBLE_DIAGONAL",
+                    "UNBALANCED_BUTTERFLY",
+                    "UNBALANCED_CONDOR",
+                    "UNBALANCED_IRON_CONDOR",
+                    "UNBALANCED_VERTICAL_ROLL",
+                    "MUTUAL_FUND_SWAP",
+                    "CUSTOM"
+                ]
+            },
+            "requestedDestination": {
+                "type": "string",
+                "enum": [
+                    "INET",
+                    "ECN_ARCA",
+                    "CBOE",
+                    "AMEX",
+                    "PHLX",
+                    "ISE",
+                    "BOX",
+                    "NYSE",
+                    "NASDAQ",
+                    "BATS",
+                    "C2",
+                    "AUTO"
+                ]
+            },
+            "stopPriceLinkBasis": {
+                "type": "string",
+                "enum": [
+                    "MANUAL",
+                    "BASE",
+                    "TRIGGER",
+                    "LAST",
+                    "BID",
+                    "ASK",
+                    "ASK_BID",
+                    "MARK",
+                    "AVERAGE"
+                ]
+            },
+            "stopPriceLinkType": {
+                "type": "string",
+                "enum": [
+                    "VALUE",
+                    "PERCENT",
+                    "TICK"
+                ]
+            },
+            "stopPriceOffset": {
+                "type": "number",
+                "format": "double"
+            },
+            "stopType": {
+                "type": "string",
+                "enum": [
+                    "STANDARD",
+                    "BID",
+                    "ASK",
+                    "LAST",
+                    "MARK"
+                ]
+            },
+            "priceLinkBasis": {
+                "type": "string",
+                "enum": [
+                    "MANUAL",
+                    "BASE",
+                    "TRIGGER",
+                    "LAST",
+                    "BID",
+                    "ASK",
+                    "ASK_BID",
+                    "MARK",
+                    "AVERAGE"
+                ]
+            },
+            "priceLinkType": {
+                "type": "string",
+                "enum": [
+                    "VALUE",
+                    "PERCENT",
+                    "TICK"
+                ]
+            },
+            "taxLotMethod": {
+                "type": "string",
+                "enum": [
+                    "FIFO",
+                    "LIFO",
+                    "HIGH_COST",
+                    "LOW_COST",
+                    "AVERAGE_COST",
+                    "SPECIFIC_LOT",
+                    "LOSS_HARVESTER"
+                ]
+            },
+            "specialInstruction": {
+                "type": "string",
+                "enum": [
+                    "ALL_OR_NONE",
+                    "DO_NOT_REDUCE",
+                    "ALL_OR_NONE_DO_NOT_REDUCE"
+                ]
+            },
+            "orderStrategyType": {
+                "type": "string",
+                "enum": [
+                    "SINGLE",
+                    "CANCEL",
+                    "RECALL",
+                    "PAIR",
+                    "FLATTEN",
+                    "TWO_DAY_SWAP",
+                    "BLAST_ALL",
+                    "OCO",
+                    "TRIGGER"
+                ]
+            },
+            "status": {
+                "type": "string",
+                "enum": [
+                    "AWAITING_PARENT_ORDER",
+                    "AWAITING_CONDITION",
+                    "AWAITING_STOP_CONDITION",
+                    "AWAITING_MANUAL_REVIEW",
+                    "ACCEPTED",
+                    "AWAITING_UR_OUT",
+                    "PENDING_ACTIVATION",
+                    "QUEUED",
+                    "WORKING",
+                    "REJECTED",
+                    "PENDING_CANCEL",
+                    "CANCELED",
+                    "PENDING_REPLACE",
+                    "REPLACED",
+                    "FILLED",
+                    "EXPIRED",
+                    "NEW",
+                    "AWAITING_RELEASE_TIME",
+                    "PENDING_ACKNOWLEDGEMENT",
+                    "PENDING_RECALL",
+                    "UNKNOWN"
+                ]
+            },
+            "amountIndicator": {
+                "type": "string",
+                "enum": [
+                    "DOLLARS",
+                    "SHARES",
+                    "ALL_SHARES",
+                    "PERCENTAGE",
+                    "UNKNOWN"
+                ]
+            },
+            "settlementInstruction": {
+                "type": "string",
+                "enum": [
+                    "REGULAR",
+                    "CASH",
+                    "NEXT_DAY",
+                    "UNKNOWN"
+                ]
+            },
+            "OrderStrategy": {
+                "type": "object",
+                "properties": {
+                    "accountNumber": {
+                        "type": "string"
+                    },
+                    "advancedOrderType": {
+                        "type": "string",
+                        "enum": [
+                            "NONE",
+                            "OTO",
+                            "OCO",
+                            "OTOCO",
+                            "OT2OCO",
+                            "OT3OCO",
+                            "BLAST_ALL",
+                            "OTA",
+                            "PAIR"
+                        ]
+                    },
+                    "closeTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "enteredTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "orderBalance": {
+                        "$ref": "#/components/schemas/OrderBalance"
+                    },
+                    "orderStrategyType": {
+                        "$ref": "#/components/schemas/orderStrategyType"
+                    },
+                    "orderVersion": {
+                        "type": "number"
+                    },
+                    "session": {
+                        "$ref": "#/components/schemas/session"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/apiOrderStatus"
+                    },
+                    "allOrNone": {
+                        "type": "boolean"
+                    },
+                    "discretionary": {
+                        "type": "boolean"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "filledQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "orderType": {
+                        "$ref": "#/components/schemas/orderType"
+                    },
+                    "orderValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "remainingQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "sellNonMarginableFirst": {
+                        "type": "boolean"
+                    },
+                    "settlementInstruction": {
+                        "$ref": "#/components/schemas/settlementInstruction"
+                    },
+                    "strategy": {
+                        "$ref": "#/components/schemas/complexOrderStrategyType"
+                    },
+                    "amountIndicator": {
+                        "$ref": "#/components/schemas/amountIndicator"
+                    },
+                    "orderLegs": {
+                        "type": "array",
+                        "xml": {
+                            "name": "orderLeg",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderLeg"
+                        }
+                    }
+                }
+            },
+            "OrderLeg": {
+                "type": "object",
+                "properties": {
+                    "askPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "bidPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "lastPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "markPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "projectedCommission": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "finalSymbol": {
+                        "type": "string"
+                    },
+                    "legId": {
+                        "type": "number",
+                        "format": "long"
+                    },
+                    "assetType": {
+                        "$ref": "#/components/schemas/assetType"
+                    },
+                    "instruction": {
+                        "$ref": "#/components/schemas/instruction"
+                    }
+                }
+            },
+            "OrderBalance": {
+                "type": "object",
+                "properties": {
+                    "orderValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "projectedAvailableFund": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "projectedBuyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "projectedCommission": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "OrderValidationResult": {
+                "type": "object",
+                "properties": {
+                    "alerts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderValidationDetail"
+                        }
+                    },
+                    "accepts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderValidationDetail"
+                        }
+                    },
+                    "rejects": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderValidationDetail"
+                        }
+                    },
+                    "reviews": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderValidationDetail"
+                        }
+                    },
+                    "warns": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderValidationDetail"
+                        }
+                    }
+                }
+            },
+            "OrderValidationDetail": {
+                "type": "object",
+                "properties": {
+                    "validationRuleName": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "activityMessage": {
+                        "type": "string"
+                    },
+                    "originalSeverity": {
+                        "$ref": "#/components/schemas/APIRuleAction"
+                    },
+                    "overrideName": {
+                        "type": "string"
+                    },
+                    "overrideSeverity": {
+                        "$ref": "#/components/schemas/APIRuleAction"
+                    }
+                }
+            },
+            "APIRuleAction": {
+                "type": "string",
+                "enum": [
+                    "ACCEPT",
+                    "ALERT",
+                    "REJECT",
+                    "REVIEW",
+                    "UNKNOWN"
+                ]
+            },
+            "CommissionAndFee": {
+                "type": "object",
+                "properties": {
+                    "commission": {
+                        "$ref": "#/components/schemas/Commission"
+                    },
+                    "fee": {
+                        "$ref": "#/components/schemas/Fees"
+                    },
+                    "trueCommission": {
+                        "$ref": "#/components/schemas/Commission"
+                    }
+                }
+            },
+            "Commission": {
+                "type": "object",
+                "properties": {
+                    "commissionLegs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CommissionLeg"
+                        }
+                    }
+                }
+            },
+            "CommissionLeg": {
+                "type": "object",
+                "properties": {
+                    "commissionValues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CommissionValue"
+                        }
+                    }
+                }
+            },
+            "CommissionValue": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/FeeType"
+                    }
+                }
+            },
+            "Fees": {
+                "type": "object",
+                "properties": {
+                    "feeLegs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FeeLeg"
+                        }
+                    }
+                }
+            },
+            "FeeLeg": {
+                "type": "object",
+                "properties": {
+                    "feeValues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FeeValue"
+                        }
+                    }
+                }
+            },
+            "FeeValue": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/FeeType"
+                    }
+                }
+            },
+            "FeeType": {
+                "type": "string",
+                "enum": [
+                    "COMMISSION",
+                    "SEC_FEE",
+                    "STR_FEE",
+                    "R_FEE",
+                    "CDSC_FEE",
+                    "OPT_REG_FEE",
+                    "ADDITIONAL_FEE",
+                    "MISCELLANEOUS_FEE",
+                    "FTT",
+                    "FUTURES_CLEARING_FEE",
+                    "FUTURES_DESK_OFFICE_FEE",
+                    "FUTURES_EXCHANGE_FEE",
+                    "FUTURES_GLOBEX_FEE",
+                    "FUTURES_NFA_FEE",
+                    "FUTURES_PIT_BROKERAGE_FEE",
+                    "FUTURES_TRANSACTION_FEE",
+                    "LOW_PROCEEDS_COMMISSION",
+                    "BASE_CHARGE",
+                    "GENERAL_CHARGE",
+                    "GST_FEE",
+                    "TAF_FEE",
+                    "INDEX_OPTION_FEE",
+                    "TEFRA_TAX",
+                    "STATE_TAX",
+                    "UNKNOWN"
+                ]
+            },
+            "Account": {
+                "type": "object",
+                "properties": {
+                    "securitiesAccount": {
+                        "$ref": "#/components/schemas/SecuritiesAccount"
+                    }
+                }
+            },
+            "DateParam": {
+                "type": "object",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "description": "Valid ISO-8601 format is :<br> <code>yyyy-MM-dd'T'HH:mm:ss.SSSZ</code>"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "session": {
+                        "$ref": "#/components/schemas/session"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "orderType": {
+                        "$ref": "#/components/schemas/orderType"
+                    },
+                    "cancelTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "complexOrderStrategyType": {
+                        "$ref": "#/components/schemas/complexOrderStrategyType"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "filledQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "remainingQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "requestedDestination": {
+                        "$ref": "#/components/schemas/requestedDestination"
+                    },
+                    "destinationLinkName": {
+                        "type": "string"
+                    },
+                    "releaseTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "stopPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "stopPriceLinkBasis": {
+                        "$ref": "#/components/schemas/stopPriceLinkBasis"
+                    },
+                    "stopPriceLinkType": {
+                        "$ref": "#/components/schemas/stopPriceLinkType"
+                    },
+                    "stopPriceOffset": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "stopType": {
+                        "$ref": "#/components/schemas/stopType"
+                    },
+                    "priceLinkBasis": {
+                        "$ref": "#/components/schemas/priceLinkBasis"
+                    },
+                    "priceLinkType": {
+                        "$ref": "#/components/schemas/priceLinkType"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "taxLotMethod": {
+                        "$ref": "#/components/schemas/taxLotMethod"
+                    },
+                    "orderLegCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "orderLegCollection",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderLegCollection"
+                        }
+                    },
+                    "activationPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "specialInstruction": {
+                        "$ref": "#/components/schemas/specialInstruction"
+                    },
+                    "orderStrategyType": {
+                        "$ref": "#/components/schemas/orderStrategyType"
+                    },
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "cancelable": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "editable": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/status"
+                    },
+                    "enteredTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "closeTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "tag": {
+                        "type": "string"
+                    },
+                    "accountNumber": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "orderActivityCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "orderActivity",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderActivity"
+                        }
+                    },
+                    "replacingOrderCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "replacingOrder",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    },
+                    "childOrderStrategies": {
+                        "type": "array",
+                        "xml": {
+                            "name": "childOrder",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/Order"
+                        }
+                    },
+                    "statusDescription": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrderRequest": {
+                "type": "object",
+                "properties": {
+                    "session": {
+                        "$ref": "#/components/schemas/session"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "orderType": {
+                        "$ref": "#/components/schemas/orderTypeRequest"
+                    },
+                    "cancelTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "complexOrderStrategyType": {
+                        "$ref": "#/components/schemas/complexOrderStrategyType"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "filledQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "remainingQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "destinationLinkName": {
+                        "type": "string"
+                    },
+                    "releaseTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "stopPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "stopPriceLinkBasis": {
+                        "$ref": "#/components/schemas/stopPriceLinkBasis"
+                    },
+                    "stopPriceLinkType": {
+                        "$ref": "#/components/schemas/stopPriceLinkType"
+                    },
+                    "stopPriceOffset": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "stopType": {
+                        "$ref": "#/components/schemas/stopType"
+                    },
+                    "priceLinkBasis": {
+                        "$ref": "#/components/schemas/priceLinkBasis"
+                    },
+                    "priceLinkType": {
+                        "$ref": "#/components/schemas/priceLinkType"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "taxLotMethod": {
+                        "$ref": "#/components/schemas/taxLotMethod"
+                    },
+                    "orderLegCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "orderLegCollection",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderLegCollection"
+                        }
+                    },
+                    "activationPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "specialInstruction": {
+                        "$ref": "#/components/schemas/specialInstruction"
+                    },
+                    "orderStrategyType": {
+                        "$ref": "#/components/schemas/orderStrategyType"
+                    },
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "cancelable": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "editable": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/status"
+                    },
+                    "enteredTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "closeTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "accountNumber": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "orderActivityCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "orderActivity",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderActivity"
+                        }
+                    },
+                    "replacingOrderCollection": {
+                        "type": "array",
+                        "xml": {
+                            "name": "replacingOrder",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderRequest"
+                        }
+                    },
+                    "childOrderStrategies": {
+                        "type": "array",
+                        "xml": {
+                            "name": "childOrder",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/OrderRequest"
+                        }
+                    },
+                    "statusDescription": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PreviewOrder": {
+                "type": "object",
+                "properties": {
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "orderStrategy": {
+                        "$ref": "#/components/schemas/OrderStrategy"
+                    },
+                    "orderValidationResult": {
+                        "$ref": "#/components/schemas/OrderValidationResult"
+                    },
+                    "commissionAndFee": {
+                        "$ref": "#/components/schemas/CommissionAndFee"
+                    }
+                }
+            },
+            "OrderActivity": {
+                "type": "object",
+                "properties": {
+                    "activityType": {
+                        "type": "string",
+                        "enum": [
+                            "EXECUTION",
+                            "ORDER_ACTION"
+                        ]
+                    },
+                    "executionType": {
+                        "type": "string",
+                        "enum": [
+                            "FILL"
+                        ]
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "orderRemainingQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "executionLegs": {
+                        "type": "array",
+                        "xml": {
+                            "name": "executionLegs",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/ExecutionLeg"
+                        }
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "activityType"
+                }
+            },
+            "ExecutionLeg": {
+                "type": "object",
+                "properties": {
+                    "legId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "mismarkedQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "instrumentId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "time": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Position": {
+                "type": "object",
+                "properties": {
+                    "shortQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "averagePrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "currentDayProfitLoss": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "currentDayProfitLossPercentage": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "settledLongQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "settledShortQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "agedQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "instrument": {
+                        "$ref": "#/components/schemas/AccountsInstrument"
+                    },
+                    "marketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maintenanceRequirement": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "averageLongPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "averageShortPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "taxLotAverageLongPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "taxLotAverageShortPrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longOpenProfitLoss": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortOpenProfitLoss": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "previousSessionLongQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "previousSessionShortQuantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "currentDayCost": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "ServiceError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "OrderLegCollection": {
+                "type": "object",
+                "properties": {
+                    "orderLegType": {
+                        "type": "string",
+                        "enum": [
+                            "EQUITY",
+                            "OPTION",
+                            "INDEX",
+                            "MUTUAL_FUND",
+                            "CASH_EQUIVALENT",
+                            "FIXED_INCOME",
+                            "CURRENCY",
+                            "COLLECTIVE_INVESTMENT"
+                        ]
+                    },
+                    "legId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "instrument": {
+                        "$ref": "#/components/schemas/AccountsInstrument"
+                    },
+                    "instruction": {
+                        "$ref": "#/components/schemas/instruction"
+                    },
+                    "positionEffect": {
+                        "type": "string",
+                        "enum": [
+                            "OPENING",
+                            "CLOSING",
+                            "AUTOMATIC"
+                        ]
+                    },
+                    "quantity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "quantityType": {
+                        "type": "string",
+                        "enum": [
+                            "ALL_SHARES",
+                            "DOLLARS",
+                            "SHARES"
+                        ]
+                    },
+                    "divCapGains": {
+                        "type": "string",
+                        "enum": [
+                            "REINVEST",
+                            "PAYOUT"
+                        ]
+                    },
+                    "toSymbol": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SecuritiesAccount": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/MarginAccount"
+                    },
+                    {
+                        "$ref": "#/components/schemas/CashAccount"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "MARGIN": "#/components/schemas/MarginAccount",
+                        "CASH": "#/components/schemas/CashAccount"
+                    }
+                }
+            },
+            "SecuritiesAccountBase": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "CASH",
+                            "MARGIN"
+                        ]
+                    },
+                    "accountNumber": {
+                        "type": "string"
+                    },
+                    "roundTrips": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "isDayTrader": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "isClosingOnlyRestricted": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "pfcbFlag": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "positions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Position"
+                        }
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "type"
+                }
+            },
+            "MarginAccount": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/SecuritiesAccountBase"
+                    }
+                ],
+                "properties": {
+                    "initialBalances": {
+                        "$ref": "#/components/schemas/MarginInitialBalance"
+                    },
+                    "currentBalances": {
+                        "$ref": "#/components/schemas/MarginBalance"
+                    },
+                    "projectedBalances": {
+                        "$ref": "#/components/schemas/MarginBalance"
+                    }
+                }
+            },
+            "MarginInitialBalance": {
+                "type": "object",
+                "properties": {
+                    "accruedInterest": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "availableFundsNonMarginableTrade": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "bondValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "buyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashAvailableForTrading": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashReceipts": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dayTradingBuyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dayTradingBuyingPowerCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dayTradingEquityCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "equity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "equityPercentage": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "liquidationValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longMarginValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longOptionMarketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longStockValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maintenanceCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maintenanceRequirement": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "margin": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "marginEquity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "moneyMarketFund": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "mutualFundValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "regTCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortMarginValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortOptionMarketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortStockValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalCash": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isInCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "unsettledCash": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "pendingDeposits": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "marginBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "accountValue": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "MarginBalance": {
+                "type": "object",
+                "properties": {
+                    "availableFunds": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "availableFundsNonMarginableTrade": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "buyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "buyingPowerNonMarginableTrade": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dayTradingBuyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "dayTradingBuyingPowerCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "equity": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "equityPercentage": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longMarginValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maintenanceCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maintenanceRequirement": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "marginBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "regTCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortMarginValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "sma": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isInCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "stockBuyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "optionBuyingPower": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "CashAccount": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/SecuritiesAccountBase"
+                    }
+                ],
+                "properties": {
+                    "initialBalances": {
+                        "$ref": "#/components/schemas/CashInitialBalance"
+                    },
+                    "currentBalances": {
+                        "$ref": "#/components/schemas/CashBalance"
+                    },
+                    "projectedBalances": {
+                        "$ref": "#/components/schemas/CashBalance"
+                    }
+                }
+            },
+            "CashInitialBalance": {
+                "type": "object",
+                "properties": {
+                    "accruedInterest": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashAvailableForTrading": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashAvailableForWithdrawal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashBalance": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "bondValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashReceipts": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "liquidationValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longOptionMarketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longStockValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "moneyMarketFund": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "mutualFundValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortOptionMarketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "shortStockValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isInCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "unsettledCash": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashDebitCallValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "pendingDeposits": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "accountValue": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "CashBalance": {
+                "type": "object",
+                "properties": {
+                    "cashAvailableForTrading": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashAvailableForWithdrawal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashCall": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "longNonMarginableMarketValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalCash": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cashDebitCallValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "unsettledCash": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "TransactionBaseInstrument": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "assetType"
+                ],
+                "properties": {
+                    "assetType": {
+                        "type": "string",
+                        "enum": [
+                            "EQUITY",
+                            "OPTION",
+                            "INDEX",
+                            "MUTUAL_FUND",
+                            "CASH_EQUIVALENT",
+                            "FIXED_INCOME",
+                            "CURRENCY",
+                            "COLLECTIVE_INVESTMENT"
+                        ]
+                    },
+                    "cusip": {
+                        "type": "string"
+                    },
+                    "symbol": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "instrumentId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "netChange": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "AccountsBaseInstrument": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "assetType"
+                ],
+                "properties": {
+                    "assetType": {
+                        "type": "string",
+                        "enum": [
+                            "EQUITY",
+                            "OPTION",
+                            "INDEX",
+                            "MUTUAL_FUND",
+                            "CASH_EQUIVALENT",
+                            "FIXED_INCOME",
+                            "CURRENCY",
+                            "COLLECTIVE_INVESTMENT"
+                        ]
+                    },
+                    "cusip": {
+                        "type": "string"
+                    },
+                    "symbol": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "instrumentId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "netChange": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "AccountsInstrument": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountCashEquivalent"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AccountEquity"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AccountFixedIncome"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AccountMutualFund"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AccountOption"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "assetType",
+                    "mapping": {
+                        "CASH_EQUIVALENT": "#/components/schemas/AccountCashEquivalent",
+                        "EQUITY": "#/components/schemas/AccountEquity",
+                        "FIXED_INCOME": "#/components/schemas/AccountFixedIncome",
+                        "MUTUAL_FUND": "#/components/schemas/AccountMutualFund",
+                        "OPTION": "#/components/schemas/AccountOption"
+                    }
+                }
+            },
+            "TransactionInstrument": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionCashEquivalent"
+                    },
+                    {
+                        "$ref": "#/components/schemas/CollectiveInvestment"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    {
+                        "$ref": "#/components/schemas/TransactionEquity"
+                    },
+                    {
+                        "$ref": "#/components/schemas/TransactionFixedIncome"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Forex"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Future"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Index"
+                    },
+                    {
+                        "$ref": "#/components/schemas/TransactionMutualFund"
+                    },
+                    {
+                        "$ref": "#/components/schemas/TransactionOption"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Product"
+                    }
+                ],
+                "discriminator": {
+                    "propertyName": "assetType",
+                    "mapping": {
+                        "CASH_EQUIVALENT": "#/components/schemas/TransactionCashEquivalent",
+                        "COLLECTIVE_INVESTMENT": "#/components/schemas/CollectiveInvestment",
+                        "CURRENCY": "#/components/schemas/Currency",
+                        "EQUITY": "#/components/schemas/TransactionEquity",
+                        "FIXED_INCOME": "#/components/schemas/TransactionFixedIncome",
+                        "FOREX": "#/components/schemas/Forex",
+                        "FUTURE": "#/components/schemas/Future",
+                        "INDEX": "#/components/schemas/Index",
+                        "MUTUAL_FUND": "#/components/schemas/TransactionMutualFund",
+                        "OPTION": "#/components/schemas/TransactionOption",
+                        "PRODUCT": "#/components/schemas/Product"
+                    }
+                }
+            },
+            "TransactionCashEquivalent": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "SWEEP_VEHICLE",
+                            "SAVINGS",
+                            "MONEY_MARKET_FUND",
+                            "UNKNOWN"
+                        ]
+                    }
+                }
+            },
+            "CollectiveInvestment": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "UNIT_INVESTMENT_TRUST",
+                            "EXCHANGE_TRADED_FUND",
+                            "CLOSED_END_FUND",
+                            "INDEX",
+                            "UNITS"
+                        ]
+                    }
+                }
+            },
+            "instruction": {
+                "type": "string",
+                "enum": [
+                    "BUY",
+                    "SELL",
+                    "BUY_TO_COVER",
+                    "SELL_SHORT",
+                    "BUY_TO_OPEN",
+                    "BUY_TO_CLOSE",
+                    "SELL_TO_OPEN",
+                    "SELL_TO_CLOSE",
+                    "EXCHANGE",
+                    "SELL_SHORT_EXEMPT"
+                ]
+            },
+            "assetType": {
+                "type": "string",
+                "enum": [
+                    "EQUITY",
+                    "MUTUAL_FUND",
+                    "OPTION",
+                    "FUTURE",
+                    "FOREX",
+                    "INDEX",
+                    "CASH_EQUIVALENT",
+                    "FIXED_INCOME",
+                    "PRODUCT",
+                    "CURRENCY",
+                    "COLLECTIVE_INVESTMENT"
+                ]
+            },
+            "Currency": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ]
+            },
+            "TransactionEquity": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "COMMON_STOCK",
+                            "PREFERRED_STOCK",
+                            "DEPOSITORY_RECEIPT",
+                            "PREFERRED_DEPOSITORY_RECEIPT",
+                            "RESTRICTED_STOCK",
+                            "COMPONENT_UNIT",
+                            "RIGHT",
+                            "WARRANT",
+                            "CONVERTIBLE_PREFERRED_STOCK",
+                            "CONVERTIBLE_STOCK",
+                            "LIMITED_PARTNERSHIP",
+                            "WHEN_ISSUED",
+                            "UNKNOWN"
+                        ]
+                    }
+                }
+            },
+            "TransactionFixedIncome": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "BOND_UNIT",
+                            "CERTIFICATE_OF_DEPOSIT",
+                            "CONVERTIBLE_BOND",
+                            "COLLATERALIZED_MORTGAGE_OBLIGATION",
+                            "CORPORATE_BOND",
+                            "GOVERNMENT_MORTGAGE",
+                            "GNMA_BONDS",
+                            "MUNICIPAL_ASSESSMENT_DISTRICT",
+                            "MUNICIPAL_BOND",
+                            "OTHER_GOVERNMENT",
+                            "SHORT_TERM_PAPER",
+                            "US_TREASURY_BOND",
+                            "US_TREASURY_BILL",
+                            "US_TREASURY_NOTE",
+                            "US_TREASURY_ZERO_COUPON",
+                            "AGENCY_BOND",
+                            "WHEN_AS_AND_IF_ISSUED_BOND",
+                            "ASSET_BACKED_SECURITY",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "maturityDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "factor": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "multiplier": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "variableRate": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "Forex": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "STANDARD",
+                            "NBBO",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "baseCurrency": {
+                        "$ref": "#/components/schemas/Currency"
+                    },
+                    "counterCurrency": {
+                        "$ref": "#/components/schemas/Currency"
+                    }
+                }
+            },
+            "Future": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionInstrument"
+                    }
+                ],
+                "properties": {
+                    "activeContract": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "STANDARD",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "expirationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastTradingDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "firstNoticeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "multiplier": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "Index": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionInstrument"
+                    }
+                ],
+                "properties": {
+                    "activeContract": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "BROAD_BASED",
+                            "NARROW_BASED",
+                            "UNKNOWN"
+                        ]
+                    }
+                }
+            },
+            "TransactionMutualFund": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "fundFamilyName": {
+                        "type": "string"
+                    },
+                    "fundFamilySymbol": {
+                        "type": "string"
+                    },
+                    "fundGroup": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "NOT_APPLICABLE",
+                            "OPEN_END_NON_TAXABLE",
+                            "OPEN_END_TAXABLE",
+                            "NO_LOAD_NON_TAXABLE",
+                            "NO_LOAD_TAXABLE",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "exchangeCutoffTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "purchaseCutoffTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "redemptionCutoffTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TransactionOption": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "expirationDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "optionDeliverables": {
+                        "type": "array",
+                        "xml": {
+                            "name": "optionDeliverables",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/TransactionAPIOptionDeliverable"
+                        }
+                    },
+                    "optionPremiumMultiplier": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "putCall": {
+                        "type": "string",
+                        "enum": [
+                            "PUT",
+                            "CALL",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "strikePrice": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "VANILLA",
+                            "BINARY",
+                            "BARRIER",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "underlyingSymbol": {
+                        "type": "string"
+                    },
+                    "underlyingCusip": {
+                        "type": "string"
+                    },
+                    "deliverable": {
+                        "$ref": "#/components/schemas/TransactionInstrument"
+                    }
+                }
+            },
+            "Product": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TransactionBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "TBD",
+                            "UNKNOWN"
+                        ]
+                    }
+                }
+            },
+            "AccountCashEquivalent": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountsBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "SWEEP_VEHICLE",
+                            "SAVINGS",
+                            "MONEY_MARKET_FUND",
+                            "UNKNOWN"
+                        ]
+                    }
+                }
+            },
+            "AccountEquity": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountsBaseInstrument"
+                    }
+                ]
+            },
+            "AccountFixedIncome": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountsBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "maturityDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "factor": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "variableRate": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "AccountMutualFund": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountsBaseInstrument"
+                    }
+                ]
+            },
+            "AccountOption": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AccountsBaseInstrument"
+                    }
+                ],
+                "properties": {
+                    "optionDeliverables": {
+                        "type": "array",
+                        "xml": {
+                            "name": "optionDeliverables",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/AccountAPIOptionDeliverable"
+                        }
+                    },
+                    "putCall": {
+                        "type": "string",
+                        "enum": [
+                            "PUT",
+                            "CALL",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "optionMultiplier": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "VANILLA",
+                            "BINARY",
+                            "BARRIER",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "underlyingSymbol": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AccountAPIOptionDeliverable": {
+                "type": "object",
+                "properties": {
+                    "symbol": {
+                        "type": "string",
+                        "format": "int64"
+                    },
+                    "deliverableUnits": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "apiCurrencyType": {
+                        "type": "string",
+                        "enum": [
+                            "USD",
+                            "CAD",
+                            "EUR",
+                            "JPY"
+                        ]
+                    },
+                    "assetType": {
+                        "$ref": "#/components/schemas/assetType"
+                    }
+                }
+            },
+            "TransactionAPIOptionDeliverable": {
+                "type": "object",
+                "properties": {
+                    "rootSymbol": {
+                        "type": "string"
+                    },
+                    "strikePercent": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "deliverableNumber": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "deliverableUnits": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "deliverable": {
+                        "$ref": "#/components/schemas/TransactionInstrument"
+                    },
+                    "assetType": {
+                        "$ref": "#/components/schemas/assetType"
+                    }
+                }
+            },
+            "apiOrderStatus": {
+                "type": "string",
+                "enum": [
+                    "AWAITING_PARENT_ORDER",
+                    "AWAITING_CONDITION",
+                    "AWAITING_STOP_CONDITION",
+                    "AWAITING_MANUAL_REVIEW",
+                    "ACCEPTED",
+                    "AWAITING_UR_OUT",
+                    "PENDING_ACTIVATION",
+                    "QUEUED",
+                    "WORKING",
+                    "REJECTED",
+                    "PENDING_CANCEL",
+                    "CANCELED",
+                    "PENDING_REPLACE",
+                    "REPLACED",
+                    "FILLED",
+                    "EXPIRED",
+                    "NEW",
+                    "AWAITING_RELEASE_TIME",
+                    "PENDING_ACKNOWLEDGEMENT",
+                    "PENDING_RECALL",
+                    "UNKNOWN"
+                ]
+            },
+            "TransactionType": {
+                "type": "string",
+                "enum": [
+                    "TRADE",
+                    "RECEIVE_AND_DELIVER",
+                    "DIVIDEND_OR_INTEREST",
+                    "ACH_RECEIPT",
+                    "ACH_DISBURSEMENT",
+                    "CASH_RECEIPT",
+                    "CASH_DISBURSEMENT",
+                    "ELECTRONIC_FUND",
+                    "WIRE_OUT",
+                    "WIRE_IN",
+                    "JOURNAL",
+                    "MEMORANDUM",
+                    "MARGIN_CALL",
+                    "MONEY_MARKET",
+                    "SMA_ADJUSTMENT"
+                ]
+            },
+            "Transaction": {
+                "type": "object",
+                "properties": {
+                    "activityId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "time": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserDetails"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "accountNumber": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TransactionType"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "VALID",
+                            "INVALID",
+                            "PENDING",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "subAccount": {
+                        "type": "string",
+                        "enum": [
+                            "CASH",
+                            "MARGIN",
+                            "SHORT",
+                            "DIV",
+                            "INCOME",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "tradeDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "settlementDate": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "positionId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "orderId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "netAmount": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "activityType": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIVITY_CORRECTION",
+                            "EXECUTION",
+                            "ORDER_ACTION",
+                            "TRANSFER",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "transferItems": {
+                        "type": "array",
+                        "xml": {
+                            "name": "transferItems",
+                            "wrapped": true
+                        },
+                        "items": {
+                            "$ref": "#/components/schemas/TransferItem"
+                        }
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "activityType"
+                }
+            },
+            "UserDetails": {
+                "type": "object",
+                "properties": {
+                    "cdDomainId": {
+                        "type": "string"
+                    },
+                    "login": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "ADVISOR_USER",
+                            "BROKER_USER",
+                            "CLIENT_USER",
+                            "SYSTEM_USER",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "systemUserName": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "brokerRepCode": {
+                        "type": "string"
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "activityType"
+                }
+            },
+            "TransferItem": {
+                "type": "object",
+                "properties": {
+                    "instrument": {
+                        "$ref": "#/components/schemas/TransactionInstrument"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "feeType": {
+                        "type": "string",
+                        "enum": [
+                            "COMMISSION",
+                            "SEC_FEE",
+                            "STR_FEE",
+                            "R_FEE",
+                            "CDSC_FEE",
+                            "OPT_REG_FEE",
+                            "ADDITIONAL_FEE",
+                            "MISCELLANEOUS_FEE",
+                            "FUTURES_EXCHANGE_FEE",
+                            "LOW_PROCEEDS_COMMISSION",
+                            "BASE_CHARGE",
+                            "GENERAL_CHARGE",
+                            "GST_FEE",
+                            "TAF_FEE",
+                            "INDEX_OPTION_FEE",
+                            "UNKNOWN"
+                        ]
+                    },
+                    "positionEffect": {
+                        "type": "string",
+                        "enum": [
+                            "OPENING",
+                            "CLOSING",
+                            "AUTOMATIC",
+                            "UNKNOWN"
+                        ]
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "activityType"
+                }
+            },
+            "UserPreference": {
+                "type": "object",
+                "properties": {
+                    "accounts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserPreferenceAccount"
+                        }
+                    },
+                    "streamerInfo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StreamerInfo"
+                        }
+                    },
+                    "offers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Offer"
+                        }
+                    }
+                }
+            },
+            "UserPreferenceAccount": {
+                "type": "object",
+                "properties": {
+                    "accountNumber": {
+                        "type": "string"
+                    },
+                    "primaryAccount": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "nickName": {
+                        "type": "string"
+                    },
+                    "accountColor": {
+                        "type": "string",
+                        "description": "Green | Blue"
+                    },
+                    "displayAcctId": {
+                        "type": "string"
+                    },
+                    "autoPositionEffect": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            },
+            "StreamerInfo": {
+                "type": "object",
+                "properties": {
+                    "streamerSocketUrl": {
+                        "type": "string"
+                    },
+                    "schwabClientCustomerId": {
+                        "type": "string"
+                    },
+                    "schwabClientCorrelId": {
+                        "type": "string"
+                    },
+                    "schwabClientChannel": {
+                        "type": "string"
+                    },
+                    "schwabClientFunctionId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Offer": {
+                "type": "object",
+                "properties": {
+                    "level2Permissions": {
+                        "type": "boolean",
+                        "default": false
+                    },
+                    "mktDataPermission": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
