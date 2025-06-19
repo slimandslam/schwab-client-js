@@ -179,7 +179,7 @@ Partial output:
 					...
 ```
 
-#### See the [examples directory](examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
+#### See the [examples directory](../examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
 
 ### TradingApiClient() Usage
 
