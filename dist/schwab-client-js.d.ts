@@ -6,6 +6,7 @@
  * @author Jason Levitt
  */
 import "./initenv.js";
+import { RetailTrader, Transaction } from "./sdk/retail-trader";
 interface Credentials {
     appKey: string;
     appSecret: string;
@@ -75,7 +76,9 @@ declare class SchwabAPIclient {
  *
  */
 declare class TradingApiClient extends SchwabAPIclient {
-    ordersByAccount(accountHash: string, fromEnteredTime: string, toEnteredTime: string, status?: string | null, maxResults?: number | null): Promise<any>;
+    retailTrader: RetailTrader<unknown>;
+    constructor();
+    ordersByAccount(accountHash: string, fromEnteredTime: string, toEnteredTime: string): Promise<Transaction[]>;
     orderById(accountHash: string, orderId: string): Promise<any>;
     orderAll(fromEnteredTime: string, toEnteredTime: string, status?: string | null, maxResults?: number | null): Promise<any>;
     placeOrderByAcct(accountHash: string, orderObj: OrderObject): Promise<any>;

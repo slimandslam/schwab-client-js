@@ -38,7 +38,10 @@
     "build": "tsc",
     "watch": "tsc -w",
     "format": "prettier --write .",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "types": "npm run types:market-data && npm run types:retail-trader",
+    "types:market-data": "swagger-typescript-api generate --path ./swagger/market-data.json -o ./src/sdk --axios --api-class-name MarketData --name market-data.ts",
+    "types:retail-trader": "swagger-typescript-api generate --path ./swagger/retail-trader.json -o ./src/sdk --axios --api-class-name RetailTrader --name retail-trader.ts"
   },
   "bin": {
     "schwab-authorize": "bin/schwab-authorize.js",
@@ -61,7 +64,8 @@
     "@typescript-eslint/parser": "^8.18.0",
     "eslint": "^9.17.0",
     "eslint-define-config": "^2.1.0",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "swagger-typescript-api": "13.1.3"
   },
   "engineStrict": true,
   "engines": {

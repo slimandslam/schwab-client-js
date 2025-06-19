@@ -12,6 +12,7 @@ import { EventEmitter } from "events";
 import endpoint from "./endpoints.js";
 import fetchData from "./fetch.js";
 import fetchToken from "./access.js";
+import { RetailTrader, TransactionType } from "./sdk/retail-trader";
 // Create WeakMap for private credential storage
 const _credentials = new WeakMap();
 /**
@@ -76,21 +77,21 @@ class SchwabAPIclient {
  *
  */
 class TradingApiClient extends SchwabAPIclient {
-    async ordersByAccount(accountHash, fromEnteredTime, toEnteredTime, status = null, maxResults = null) {
+    retailTrader;
+    constructor() {
+        super();
+        this.retailTrader = new RetailTrader();
+    }
+    async ordersByAccount(accountHash, fromEnteredTime, toEnteredTime) {
         await this.checkAccessToken(_credentials.get(this));
         if (!accountHash || accountHash.trim().length === 0) {
             throw new Error("Error: accountHash parameter is not a string or is empty.");
         }
-        const params = new URLSearchParams();
-        params.append("fromEnteredTime", fromEnteredTime);
-        params.append("toEnteredTime", toEnteredTime);
-        if (status)
-            params.append("status", status);
-        if (maxResults !== null)
-            params.append("maxResults", maxResults.toString());
-        const url = `${endpoint.ORDS(accountHash)}?${params.toString()}`;
-        return fetchData(url, {
-            type: "GET",
+        return this.retailTrader.accounts.getTransactionsByPathParam(accountHash, {
+            startDate: fromEnteredTime,
+            endDate: toEnteredTime,
+            types: TransactionType.TRADE,
+        }, {
             headers: {
                 accept: "application/json",
                 Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
