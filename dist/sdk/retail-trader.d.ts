@@ -1085,7 +1085,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request GET:/accounts/accountNumbers
          * @secure
          */
-        getAccountNumbers: (params?: RequestParams) => Promise<AxiosResponse<T>>;
+        getAccountNumbers: (params?: RequestParams) => Promise<AxiosResponse<AccountNumberHash[], any>>;
         /**
          * @description All the linked account information for the user logged in. The balances on these accounts are displayed by default however the positions on these accounts will be displayed based on the "positions" flag.
          *
@@ -1101,7 +1101,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
              * <br><code>positions</code><br> Example:<br><code>fields=positions</code>
              */
             fields?: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Account[], any>>;
         /**
          * @description Specific account information with balances and positions. The balance information on these accounts is displayed by default but Positions will be returned based on the "positions" flag.
          *
@@ -1118,7 +1118,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
              * <br><code>positions</code><br> Example:<br><code>fields=positions</code>
              */
             fields?: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Account, any>>;
         /**
          * @description All orders for a specific account. Orders retrieved can be filtered based on input parameters below. Maximum date range is 1 year.
          *
@@ -1148,7 +1148,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
             toEnteredTime: string;
             /** Specifies that only orders of this status should be returned. */
             status?: ApiOrderStatus;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Order[], any>>;
         /**
          * @description Place an order for a specific account.
          *
@@ -1158,7 +1158,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request POST:/accounts/{accountNumber}/orders
          * @secure
          */
-        placeOrder: (accountNumber: string, data: OrderRequest, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        placeOrder: (accountNumber: string, data: OrderRequest, params?: RequestParams) => Promise<AxiosResponse<void, any>>;
         /**
          * @description Get a specific order by its ID, for a specific account
          *
@@ -1168,7 +1168,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request GET:/accounts/{accountNumber}/orders/{orderId}
          * @secure
          */
-        getOrder: (accountNumber: string, orderId: number, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        getOrder: (accountNumber: string, orderId: number, params?: RequestParams) => Promise<AxiosResponse<Order, any>>;
         /**
          * @description Cancel a specific order for a specific account<br>
          *
@@ -1178,7 +1178,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request DELETE:/accounts/{accountNumber}/orders/{orderId}
          * @secure
          */
-        cancelOrder: (accountNumber: string, orderId: number, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        cancelOrder: (accountNumber: string, orderId: number, params?: RequestParams) => Promise<AxiosResponse<void, any>>;
         /**
          * @description Replace an existing order for an account. The existing order will be replaced by the new               order. Once replaced, the old order will be canceled and a new order will be created.
          *
@@ -1188,7 +1188,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request PUT:/accounts/{accountNumber}/orders/{orderId}
          * @secure
          */
-        replaceOrder: (accountNumber: string, orderId: number, data: OrderRequest, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        replaceOrder: (accountNumber: string, orderId: number, data: OrderRequest, params?: RequestParams) => Promise<AxiosResponse<void, any>>;
         /**
          * @description Preview an order for a specific account.
          *
@@ -1198,7 +1198,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request POST:/accounts/{accountNumber}/previewOrder
          * @secure
          */
-        previewOrder: (accountNumber: string, data: PreviewOrder, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        previewOrder: (accountNumber: string, data: PreviewOrder, params?: RequestParams) => Promise<AxiosResponse<PreviewOrder, any>>;
         /**
          * @description All transactions for a specific account. Maximum number of transactions in response is 3000. Maximum date range is 1 year.
          *
@@ -1224,7 +1224,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
             symbol?: string;
             /** Specifies that only transactions of this status should be returned. */
             types: TransactionType;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Transaction[], any>>;
         /**
          * @description Get specific transaction information for a specific account
          *
@@ -1234,7 +1234,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request GET:/accounts/{accountNumber}/transactions/{transactionId}
          * @secure
          */
-        getTransactionsById: (accountNumber: string, transactionId: number, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        getTransactionsById: (accountNumber: string, transactionId: number, params?: RequestParams) => Promise<AxiosResponse<Transaction[], any>>;
     };
     orders: {
         /**
@@ -1265,7 +1265,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
             toEnteredTime: string;
             /** Specifies that only orders of this status should be returned. */
             status?: ApiOrderStatus;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Order[], any>>;
     };
     userPreference: {
         /**
@@ -1277,7 +1277,7 @@ export declare class RetailTrader<SecurityDataType extends unknown> extends Http
          * @request GET:/userPreference
          * @secure
          */
-        getUserPreference: (params?: RequestParams) => Promise<AxiosResponse<T>>;
+        getUserPreference: (params?: RequestParams) => Promise<AxiosResponse<UserPreference[], any>>;
     };
 }
 //# sourceMappingURL=retail-trader.d.ts.map

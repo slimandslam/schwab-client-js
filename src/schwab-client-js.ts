@@ -13,7 +13,9 @@ import { EventEmitter } from "events";
 import endpoint from "./endpoints.js";
 import fetchData from "./fetch.js";
 import fetchToken from "./access.js";
-import { RetailTrader, Transaction, TransactionType } from "./sdk/retail-trader";
+import { RetailTrader, Transaction } from "./sdk/retail-trader.js";
+import { onRequest, onRequestError, onResponse, onResponseError } from "./sdk/interceptors.js";
+import { AxiosResponse } from "axios";
 
 // Create WeakMap for private credential storage
 const _credentials: WeakMap<SchwabAPIclient, Credentials> = new WeakMap();
@@ -82,7 +84,7 @@ interface ChainsOptions {
  * TradingApiClient -- trading capabilities and account information
  * StreamingApiClient -- real-time streaming of market data
  */
-class SchwabAPIclient {
+export class SchwabAPIclient {
   constructor(
     appKey: string = "",
     appSecret: string = "",
@@ -108,7 +110,6 @@ class SchwabAPIclient {
 
     // Store credentials privately in the WeakMap
     _credentials.set(this, credentials);
-    
   }
 
   /**
@@ -146,19 +147,22 @@ class SchwabAPIclient {
  *
  */
 class TradingApiClient extends SchwabAPIclient {
-  retailTrader: RetailTrader<unknown>;
-
+  retailTrader: RetailTrader<unknown>
   constructor() {
     super();
 
     this.retailTrader = new RetailTrader();
+    this.retailTrader.instance.interceptors.request.use(onRequest, onRequestError);
+    this.retailTrader.instance.interceptors.response.use(onResponse, onResponseError);
   }
 
   async ordersByAccount(
     accountHash: string,
     fromEnteredTime: string,
     toEnteredTime: string,
-  ): Promise<Transaction[]> {
+    status: string | null = null,
+    maxResults: number | null = null,
+  ): Promise<Transaction[] | Record<string, unknown> | null> {
     await this.checkAccessToken(_credentials.get(this)!);
 
     if (!accountHash || accountHash.trim().length === 0) {
@@ -167,11 +171,15 @@ class TradingApiClient extends SchwabAPIclient {
       );
     }
 
-    return this.retailTrader.accounts.getTransactionsByPathParam(accountHash, {
-      startDate: fromEnteredTime,
-      endDate: toEnteredTime,
-      types: TransactionType.TRADE,
-    }, {
+    const params = new URLSearchParams();
+    params.append("fromEnteredTime", fromEnteredTime);
+    params.append("toEnteredTime", toEnteredTime);
+    if (status) params.append("status", status);
+    if (maxResults !== null) params.append("maxResults", maxResults.toString());
+
+    const url = `${endpoint.ORDS(accountHash)}?${params.toString()}`;
+    return fetchData<Transaction[]>(url, {
+      type: "GET",
       headers: {
         accept: "application/json",
         Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
@@ -256,7 +264,7 @@ class TradingApiClient extends SchwabAPIclient {
     });
   }
 
-  async orderDelete(accountHash: string, orderId: number): Promise<any> {
+  async orderDelete(accountHash: string, orderId: number): Promise<AxiosResponse<void>> {
     await this.checkAccessToken(_credentials.get(this)!);
 
     if (!accountHash || accountHash.trim().length === 0) {
@@ -269,14 +277,7 @@ class TradingApiClient extends SchwabAPIclient {
       throw new Error("Error: Order Id parameter is missing.");
     }
 
-    const url = endpoint.ORDID(accountHash, orderId.toString());
-    return fetchData(url, {
-      type: "DELETE",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
-      },
-    });
+    return this.retailTrader.accounts.cancelOrder(accountHash, orderId);
   }
 
   async updateOrderById(

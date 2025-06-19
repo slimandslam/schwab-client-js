@@ -6,7 +6,8 @@
  * @author Jason Levitt
  */
 import "./initenv.js";
-import { RetailTrader, Transaction } from "./sdk/retail-trader";
+import { RetailTrader, Transaction } from "./sdk/retail-trader.js";
+import { AxiosResponse } from "axios";
 interface Credentials {
     appKey: string;
     appSecret: string;
@@ -55,7 +56,7 @@ interface ChainsOptions {
  * TradingApiClient -- trading capabilities and account information
  * StreamingApiClient -- real-time streaming of market data
  */
-declare class SchwabAPIclient {
+export declare class SchwabAPIclient {
     constructor(appKey?: string, appSecret?: string, appRefresh?: string);
     /**
      * @method checkAccessToken
@@ -78,11 +79,11 @@ declare class SchwabAPIclient {
 declare class TradingApiClient extends SchwabAPIclient {
     retailTrader: RetailTrader<unknown>;
     constructor();
-    ordersByAccount(accountHash: string, fromEnteredTime: string, toEnteredTime: string): Promise<Transaction[]>;
+    ordersByAccount(accountHash: string, fromEnteredTime: string, toEnteredTime: string, status?: string | null, maxResults?: number | null): Promise<Transaction[] | Record<string, unknown> | null>;
     orderById(accountHash: string, orderId: string): Promise<any>;
     orderAll(fromEnteredTime: string, toEnteredTime: string, status?: string | null, maxResults?: number | null): Promise<any>;
     placeOrderByAcct(accountHash: string, orderObj: OrderObject): Promise<any>;
-    orderDelete(accountHash: string, orderId: number): Promise<any>;
+    orderDelete(accountHash: string, orderId: number): Promise<AxiosResponse<void>>;
     updateOrderById(accountHash: string, orderId: number, orderObj: OrderObject): Promise<any>;
     orderPreview(accountHash: string, orderObj: OrderObject): Promise<any>;
     accountsNumbers(): Promise<any>;

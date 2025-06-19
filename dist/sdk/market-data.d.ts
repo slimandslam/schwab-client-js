@@ -2237,7 +2237,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @example false
              */
             indicative?: true | false;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<QuoteResponse, any>>;
     };
     symbolId: {
         /**
@@ -2256,7 +2256,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @example "quote,reference"
              */
             fields?: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<QuoteResponse, any>>;
     };
     chains: {
         /**
@@ -2332,7 +2332,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
             optionType?: string;
             /** Applicable only if its retail token, entitlement of client PP-PayingPro, NP-NonPro and PN-NonPayingPro */
             entitlement?: "PN" | "NP" | "PP" | null;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<OptionChain, any>>;
     };
     expirationchain: {
         /**
@@ -2350,7 +2350,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @example "AAPL"
              */
             symbol: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<ExpirationChain, any>>;
     };
     pricehistory: {
         /**
@@ -2396,7 +2396,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
             needExtendedHoursData?: boolean;
             /** Need previous close price/date */
             needPreviousClose?: boolean;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<CandleList, any>>;
     };
     movers: {
         /**
@@ -2420,7 +2420,9 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @default 0
              */
             frequency?: 0 | 1 | 5 | 10 | 30 | 60;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<{
+            screeners?: Screener[];
+        }, any>>;
     };
     markets: {
         /**
@@ -2443,7 +2445,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @format date
              */
             date?: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Record<string, Record<string, Hours>>, any>>;
         /**
          * @description Get Market Hours for dates in the future for a single market.
          *
@@ -2459,7 +2461,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
              * @format date
              */
             date?: string;
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<Record<string, Record<string, Hours>>, any>>;
     };
     instruments: {
         /**
@@ -2476,7 +2478,9 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
             symbol: string;
             /** search by */
             projection: "symbol-search" | "symbol-regex" | "desc-search" | "desc-regex" | "search" | "fundamental";
-        }, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        }, params?: RequestParams) => Promise<AxiosResponse<{
+            instruments?: InstrumentResponse[];
+        }, any>>;
         /**
          * @description Get basic instrument details by cusip
          *
@@ -2486,7 +2490,7 @@ export declare class MarketData<SecurityDataType extends unknown> extends HttpCl
          * @request GET:/instruments/{cusip_id}
          * @secure
          */
-        getInstrumentsByCusip: (cusipId: string, params?: RequestParams) => Promise<AxiosResponse<T>>;
+        getInstrumentsByCusip: (cusipId: string, params?: RequestParams) => Promise<AxiosResponse<InstrumentResponse, any>>;
     };
 }
 //# sourceMappingURL=market-data.d.ts.map
