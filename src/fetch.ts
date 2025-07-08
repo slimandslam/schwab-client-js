@@ -32,10 +32,10 @@ interface RequestArgs {
   body?: Record<string, unknown> | string; // Request body as an object or already stringified
 }
 
-async function fetchData(
+async function fetchData<T>(
   url: string,
   args: RequestArgs = {},
-): Promise<Record<string, unknown> | null> {
+): Promise<T | Record<string, unknown> | null> {
   // Just for logging, let's combine url into args
   const combinedArgs = { ...args, url };
   logger("fetch", "args", "fetch call args: ", combinedArgs);
@@ -92,7 +92,7 @@ async function fetchData(
       // In the case of deleteOrder(), return null.
       const responseText = await response.text();
       if (responseText) {
-        const data: Record<string, unknown> = JSON.parse(responseText);
+        const data: T = JSON.parse(responseText);
         return data;
       } else {
         const orderId =

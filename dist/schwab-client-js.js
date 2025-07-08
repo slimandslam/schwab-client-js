@@ -12,6 +12,8 @@ import { EventEmitter } from "events";
 import endpoint from "./endpoints.js";
 import fetchData from "./fetch.js";
 import fetchToken from "./access.js";
+import { RetailTrader } from "./sdk/retail-trader.js";
+import { onRequest, onRequestError, onResponse, onResponseError } from "./sdk/interceptors.js";
 // Create WeakMap for private credential storage
 const _credentials = new WeakMap();
 /**
@@ -24,7 +26,7 @@ const _credentials = new WeakMap();
  * TradingApiClient -- trading capabilities and account information
  * StreamingApiClient -- real-time streaming of market data
  */
-class SchwabAPIclient {
+export class SchwabAPIclient {
     constructor(appKey = "", appSecret = "", appRefresh = "") {
         const credentials = {
             appKey: process.env.SCHWAB_APP_KEY || appKey,
@@ -76,6 +78,13 @@ class SchwabAPIclient {
  *
  */
 class TradingApiClient extends SchwabAPIclient {
+    retailTrader;
+    constructor() {
+        super();
+        this.retailTrader = new RetailTrader();
+        this.retailTrader.instance.interceptors.request.use(onRequest, onRequestError);
+        this.retailTrader.instance.interceptors.response.use(onResponse, onResponseError);
+    }
     async ordersByAccount(accountHash, fromEnteredTime, toEnteredTime, status = null, maxResults = null) {
         await this.checkAccessToken(_credentials.get(this));
         if (!accountHash || accountHash.trim().length === 0) {
@@ -159,14 +168,7 @@ class TradingApiClient extends SchwabAPIclient {
         if (!orderId) {
             throw new Error("Error: Order Id parameter is missing.");
         }
-        const url = endpoint.ORDID(accountHash, orderId.toString());
-        return fetchData(url, {
-            type: "DELETE",
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${_credentials.get(this)?.access_token}`,
-            },
-        });
+        return this.retailTrader.accounts.cancelOrder(accountHash, orderId);
     }
     async updateOrderById(accountHash, orderId, orderObj) {
         await this.checkAccessToken(_credentials.get(this));

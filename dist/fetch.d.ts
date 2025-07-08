@@ -15,6 +15,6 @@ interface RequestArgs {
     headers?: Record<string, string>;
     body?: Record<string, unknown> | string;
 }
-declare function fetchData(url: string, args?: RequestArgs): Promise<Record<string, unknown> | null>;
+declare function fetchData<T>(url: string, args?: RequestArgs): Promise<T | Record<string, unknown> | null>;
 export default fetchData;
 //# sourceMappingURL=fetch.d.ts.map
