@@ -1,7 +1,7 @@
 {
   "name": "trading",
   "author": "Jason Levitt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch trading data using schwab-client-js and the Schwab API",
   "main": "trading.js",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "dev": "node trading.js"
   },
   "dependencies": {
-    "schwab-client-js": "^1.0.0"
+    "schwab-client-js": "^1.1.2"
   },
   "engines": {
     "node": ">= 18"

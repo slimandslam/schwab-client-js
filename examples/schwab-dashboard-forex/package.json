@@ -1,7 +1,7 @@
 {
   "name": "schwab-dashboard-forex",
   "Author": "Jason Levitt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A NodeJS Financial Dashboard Using Lightweight-Charts and the schwab-client-js library",
   "main": "server.js",
   "license": "MIT",
@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "lightweight-charts": "^4.2.1",
-    "schwab-client-js": "^1.0.0"
+    "express": "^5.1.0",
+    "lightweight-charts": "^4.2.3",
+    "schwab-client-js": "^1.1.2"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
-    "nodemon": "^3.1.7",
-    "vite": "^5.4.10"
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10",
+    "vite": "^6.3.5"
   },
   "engines": {
     "node": ">= 18"

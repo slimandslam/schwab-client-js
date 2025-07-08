@@ -51,7 +51,7 @@ Once your `.env` file is setup (see the [Readme](../Readme.md) for setup details
 
 [Note: For situtations where using a ```.env```file or environment variables may not be optimal (possibly AWS Lambda, for example), schwab-client-js also supports injecting your security tokens directly e.g. ```const mktclient = new MarketApiClient(appKey,appSecret,appRefresh);```]
 
-### See the [examples directory](examples) for usage examples
+### See the [examples directory](../examples) for usage examples
 
 ## Subclasses and Methods for Class SchwabAPIclient
 
@@ -315,7 +315,7 @@ tradeObj);
 console.log(JSON.stringify(previewObj, null, 2));
 ```
 
-#### See the [examples directory](examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
+#### See the [examples directory](../examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
 
 ### StreamingApiClient() Usage
 
@@ -408,7 +408,7 @@ await streamclient.streamSchwabLogout();
 streamclient.streamClose();
 ```
 
-#### See the [examples directory](examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
+#### See the [examples directory](../examples) for further usage examples. See the Schwab documentation on developer.schwab.com for detailed parameter descriptions.
 
 ### Table 1: Table Of Classes And Methods
 

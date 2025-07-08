@@ -1,7 +1,7 @@
 {
   "name": "AlgoTradingHelp",
   "Author": "Jason Levitt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Some helpful scripts to help build algorithmic trading apps",
   "main": "index.js",
   "license": "MIT",
@@ -14,9 +14,9 @@
     "dev": "node src/index.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "prettier": "^3.4.2",
-    "schwab-client-js": "^1.1.1"
+    "dotenv": "^17.1.0",
+    "prettier": "^3.6.2",
+    "schwab-client-js": "^1.1.2"
   },
   "engines": {
     "node": ">= 18"

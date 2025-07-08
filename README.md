@@ -271,7 +271,8 @@ streamclient.streamClose();
 ## Code Examples
 
 ### General Examples
-The [trading](examples/trading), [market-data](examples/market-data), and [streaming](examples/streaming) directories contain examples of using most of the API calls. 
+
+The [trading](examples/trading), [market-data](examples/market-data), and [streaming](examples/streaming) directories contain examples of using most of the API calls.
 
 ### Algo-Trading
 

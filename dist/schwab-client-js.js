@@ -503,8 +503,8 @@ class StreamingApiClient extends SchwabAPIclient {
     channel;
     functionId;
     streamUrl;
-    constructor() {
-        super();
+    constructor(appKey = "", appSecret = "", appRefresh = "") {
+        super(appKey, appSecret, appRefresh);
         this.streamEvents = new EventEmitter();
         this.stream = null;
         this.counterId = 0;

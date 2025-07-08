@@ -129,7 +129,7 @@ declare class StreamingApiClient extends SchwabAPIclient {
     private channel;
     private functionId;
     private streamUrl;
-    constructor();
+    constructor(appKey?: string, appSecret?: string, appRefresh?: string);
     private generateRequestMessage;
     private generateLoginMessage;
     private generateLogoutMessage;
